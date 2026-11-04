@@ -18,23 +18,6 @@
   border-radius: 50%;
   transform: rotate(-5deg);
 }
-.mini-cat {
-  position: absolute;
-  bottom: 36px;
-  font-size: 28px;
-  white-space: nowrap;
-  z-index: 2;
-  transition: left 0.65s ease;
-  letter-spacing: -4px;
-}
-.mini-cat.dark {
-  left: 4%;
-  color: #43444a;
-}
-.mini-cat.light {
-  right: 5%;
-  color: #ae846a;
-}
 .hearts {
   position: absolute;
   inset: 0;
@@ -105,9 +88,6 @@
     height: 260px;
     margin: 25px -7px 20px;
   }
-  .mini-cat {
-    font-size: 22px;
-  }
   .heart {
     font-size: 31px;
   }
@@ -118,4 +98,35 @@
 }
 .progress {
   overflow: hidden;
+}
+
+.journey-character {
+  position: absolute;
+  bottom: 30px;
+  width: clamp(64px, 13vw, 100px);
+  height: clamp(78px, 15.6vw, 120px);
+  transform: translateX(-50%);
+  transition: left 800ms cubic-bezier(0.22, 0.68, 0.2, 1);
+  pointer-events: none;
+}
+.journey-character-white {
+  width: clamp(70px, 14vw, 108px);
+  height: clamp(84px, 16.8vw, 130px);
+}
+.game-board-complete {
+  background: linear-gradient(#efe7df88, #f0d6deaa);
+}
+.game-board-complete::after {
+  content: '♡';
+  position: absolute;
+  left: 70%;
+  bottom: 144px;
+  color: var(--rose);
+  font: 32px var(--serif);
+  animation: float 3s ease-in-out infinite;
+}
+@media (max-width: 760px) {
+  .game-board-complete::after {
+    bottom: 112px;
+  }
 }

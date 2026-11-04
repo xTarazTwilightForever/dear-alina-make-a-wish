@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Welcome } from '../features/welcome/Welcome';
 import { HeartGame } from '../features/heart-game/HeartGame';
+import { Album } from '../features/album/Album';
 import { Letter } from '../features/letter/Letter';
 import { useMusic } from '../features/music/useMusic';
 
-type Chapter = 'intro' | 'game' | 'letter';
+type Chapter = 'intro' | 'game' | 'album' | 'letter';
 
 export function App() {
   const [chapter, setChapter] = useState<Chapter>('intro');
@@ -61,7 +62,10 @@ export function App() {
             <Welcome onStart={() => setChapter('game')} />
           )}
           {chapter === 'game' && (
-            <HeartGame onFinish={() => setChapter('letter')} />
+            <HeartGame onFinish={() => setChapter('album')} />
+          )}
+          {chapter === 'album' && (
+            <Album onContinue={() => setChapter('letter')} />
           )}
           {chapter === 'letter' && (
             <Letter onRestart={() => setChapter('intro')} />

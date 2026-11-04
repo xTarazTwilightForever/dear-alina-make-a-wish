@@ -1,14 +1,9 @@
 import './game.css';
+import { CatCharacter } from '../../shared/characters/CatCharacter';
+import { collectHeart, getJourneyProgress, heartPositions } from './model';
 import { useEffect, useRef, useState } from 'react';
 import { birthdayContent } from '../../content/birthday';
 
-const positions = [
-  [12, 32],
-  [29, 16],
-  [45, 34],
-  [61, 16],
-  [77, 32],
-] as const;
 interface HeartGameProps {
   onFinish: () => void;
 }
@@ -19,18 +14,19 @@ export function HeartGame({ onFinish }: HeartGameProps) {
     'Каждое сердечко хранит одно маленькое пожелание.',
   );
   const finishButton = useRef<HTMLButtonElement>(null);
-  const complete = collected.length === positions.length;
+  const { complete, progress, travelerPosition, companionPosition } =
+    getJourneyProgress(collected.length);
 
   useEffect(() => {
     if (complete) finishButton.current?.focus({ preventScroll: true });
   }, [complete]);
 
   function collect(index: number) {
-    if (collected.includes(index)) return;
-    const next = [...collected, index];
+    const next = collectHeart(collected, index);
+    if (next === collected) return;
     setCollected(next);
     setMessage(
-      next.length === positions.length
+      next.length === heartPositions.length
         ? 'Нашлись. Вместе всегда немного теплее ♡'
         : birthdayContent.wishes[index],
     );
@@ -45,24 +41,35 @@ export function HeartGame({ onFinish }: HeartGameProps) {
         <em>маленькие лапки.</em>
       </h2>
       <p className="section-description">
-        Два котика немного разминулись.
+        Он уже ждёт её на другом конце дорожки.
         <br />
-        Собери пять сердечек, чтобы они встретились.
+        Помоги кошечке дойти до своего белого котика.
       </p>
-      <div className="game-board">
+      <div
+        className={`game-board${complete ? ' game-board-complete' : ''}`}
+        aria-label={
+          complete
+            ? 'Кошечка добралась до белого котика'
+            : 'Кошечка идёт к белому котику'
+        }
+      >
         <div className="path" aria-hidden="true" />
         <div
-          className="mini-cat dark"
-          style={{ left: `${4 + collected.length * 12}%` }}
+          className="journey-character journey-character-alina"
+          style={{ left: `${travelerPosition}%` }}
           aria-hidden="true"
         >
-          ฅ^•ﻌ•^ฅ
+          <CatCharacter character="dark" />
         </div>
-        <div className="mini-cat light" aria-hidden="true">
-          ฅ^•ﻌ•^ฅ
+        <div
+          className="journey-character journey-character-white"
+          style={{ left: `${companionPosition}%` }}
+          aria-hidden="true"
+        >
+          <CatCharacter character="white" />
         </div>
         <div className="hearts">
-          {positions.map(([left, top], index) => (
+          {heartPositions.map(([left, top], index) => (
             <button
               key={index}
               className={`heart${collected.includes(index) ? ' collected' : ''}`}
@@ -86,19 +93,17 @@ export function HeartGame({ onFinish }: HeartGameProps) {
       </div>
       <div className="game-status">
         <span>
-          {collected.length} из {positions.length} сердечек
+          {collected.length} из {heartPositions.length} сердечек
         </span>
         <div
           className="progress"
           role="progressbar"
           aria-label="Собранные сердечки"
           aria-valuemin={0}
-          aria-valuemax={positions.length}
+          aria-valuemax={heartPositions.length}
           aria-valuenow={collected.length}
         >
-          <div
-            style={{ width: `${(collected.length / positions.length) * 100}%` }}
-          />
+          <div style={{ width: `${progress * 100}%` }} />
         </div>
       </div>
       <p className="heart-message" aria-live="polite">
@@ -110,10 +115,11 @@ export function HeartGame({ onFinish }: HeartGameProps) {
         disabled={!complete}
         onClick={onFinish}
       >
-        {complete ? 'Открыть письмо' : 'Впереди кое-что ещё'} <span>→</span>
+        {complete ? 'Посмотреть наш маленький мир' : 'Впереди кое-что ещё'}{' '}
+        <span>→</span>
       </button>
       <button className="text-button" onClick={onFinish}>
-        Сразу к письму
+        Продолжить без игры
       </button>
     </>
   );

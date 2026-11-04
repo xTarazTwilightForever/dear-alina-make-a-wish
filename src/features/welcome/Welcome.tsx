@@ -1,3 +1,4 @@
+import { CatCharacter } from '../../shared/characters/CatCharacter';
 import './welcome.css';
 interface WelcomeProps {
   onStart: () => void;
@@ -36,31 +37,11 @@ export function Welcome({ onStart }: WelcomeProps) {
           <div className="orbit orbit-one"></div>
           <div className="orbit orbit-two"></div>
           <div className="pink-planet"></div>
-          <div className="cat cat-dark">
-            <div className="ear left"></div>
-            <div className="ear right"></div>
-            <div className="cat-body"></div>
-            <div className="cat-head">
-              <i className="eye left"></i>
-              <i className="eye right"></i>
-              <i className="nose"></i>
-              <i className="cheek left"></i>
-              <i className="cheek right"></i>
-            </div>
-            <div className="tail"></div>
+          <div className="scene-character scene-character-alina">
+            <CatCharacter character="dark" />
           </div>
-          <div className="cat cat-cream">
-            <div className="ear left"></div>
-            <div className="ear right"></div>
-            <div className="cat-body"></div>
-            <div className="cat-head">
-              <i className="eye left"></i>
-              <i className="eye right"></i>
-              <i className="nose"></i>
-              <i className="cheek left"></i>
-              <i className="cheek right"></i>
-            </div>
-            <div className="tail"></div>
+          <div className="scene-character scene-character-white">
+            <CatCharacter character="white" />
           </div>
           <div className="floating-heart">♡</div>
           <div className="ground"></div>
@@ -75,7 +56,7 @@ export function Welcome({ onStart }: WelcomeProps) {
 
       <div className="intro-bottom">
         <span>СОЗДАНО С ТЕПЛОМ, В ОДНОМ ЭКЗЕМПЛЯРЕ</span>
-        <span>01 / 03</span>
+        <span>01 / 04</span>
       </div>
     </>
   );
