@@ -1,93 +1,116 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const melody = [
   523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880, 698.46, 523.25, 659.25,
   783.99, 1046.5, 880, 783.99, 659.25, 587.33,
 ];
+type MusicStatus = 'waiting' | 'playing' | 'unavailable';
 
+/** One soundtrack for the whole adventure, unlocked by the first user gesture. */
 export function useMusic() {
-  const [playing, setPlaying] = useState(false);
-  const [unavailable, setUnavailable] = useState(false);
-  const context = useRef<AudioContext | null>(null);
-  const output = useRef<GainNode | null>(null);
-  const note = useRef(0);
-  const pending = useRef(false);
-  const requested = useRef(false);
+  const [status, setStatus] = useState<MusicStatus>('waiting');
 
   useEffect(() => {
-    if (!playing || !context.current || !output.current) return;
-    const audio = context.current;
-    const volume = output.current;
-    volume.gain.setTargetAtTime(0.4, audio.currentTime, 0.08);
+    let audio: AudioContext | null = null;
+    let volume: GainNode | null = null;
+    let timer: ReturnType<typeof window.setInterval> | undefined;
+    let note = 0;
+    let started = false;
+    let disposed = false;
+    let pending = false;
+
+    function stopScheduler() {
+      if (timer !== undefined) window.clearInterval(timer);
+      timer = undefined;
+    }
+
     function playNote() {
+      if (!audio || !volume || audio.state !== 'running') return;
       const oscillator = audio.createOscillator();
       const gain = audio.createGain();
       oscillator.type = 'sine';
-      oscillator.frequency.value = melody[note.current++ % melody.length];
+      oscillator.frequency.value = melody[note++ % melody.length];
       gain.gain.setValueAtTime(0, audio.currentTime);
-      gain.gain.linearRampToValueAtTime(0.11, audio.currentTime + 0.04);
-      gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 1.7);
+      gain.gain.linearRampToValueAtTime(0.1, audio.currentTime + 0.04);
+      gain.gain.exponentialRampToValueAtTime(0.001, audio.currentTime + 1.9);
       oscillator.connect(gain);
       gain.connect(volume);
       oscillator.start();
-      oscillator.stop(audio.currentTime + 1.8);
+      oscillator.stop(audio.currentTime + 2);
       oscillator.onended = () => {
         oscillator.disconnect();
         gain.disconnect();
       };
     }
-    playNote();
-    const timer = window.setInterval(playNote, 700);
-    return () => {
-      window.clearInterval(timer);
-      volume.gain.setTargetAtTime(0, audio.currentTime, 0.08);
-    };
-  }, [playing]);
 
-  useEffect(() => {
-    const handleVisibility = () => {
-      if (document.hidden) {
-        requested.current = false;
-        setPlaying(false);
+    function syncPlayback() {
+      if (disposed || !audio) return;
+      if (audio.state !== 'running' || document.hidden) {
+        stopScheduler();
+        setStatus('waiting');
+        return;
       }
-    };
-    document.addEventListener('visibilitychange', handleVisibility);
+      if (timer === undefined) {
+        playNote();
+        timer = window.setInterval(playNote, 760);
+      }
+      setStatus('playing');
+    }
+
+    async function start() {
+      if (disposed || pending || document.hidden) return;
+      started = true;
+      if (audio?.state === 'running') {
+        syncPlayback();
+        return;
+      }
+      pending = true;
+      try {
+        if (!audio) {
+          audio = new AudioContext();
+          volume = audio.createGain();
+          volume.gain.value = 0.27;
+          volume.connect(audio.destination);
+          audio.addEventListener('statechange', syncPlayback);
+        }
+        await audio.resume();
+        syncPlayback();
+      } catch {
+        if (!disposed) setStatus('unavailable');
+      } finally {
+        pending = false;
+      }
+    }
+
+    function onInteraction(event: Event) {
+      if (
+        event instanceof KeyboardEvent &&
+        !['Enter', ' ', 'ArrowRight', 'ArrowLeft'].includes(event.key)
+      )
+        return;
+      void start();
+    }
+
+    function onVisibility() {
+      if (document.hidden) {
+        stopScheduler();
+        if (audio?.state === 'running') void audio.suspend().catch(() => {});
+      } else if (started) void start();
+    }
+
+    document.addEventListener('click', onInteraction, true);
+    document.addEventListener('keydown', onInteraction, true);
+    document.addEventListener('visibilitychange', onVisibility);
     return () => {
-      requested.current = false;
-      document.removeEventListener('visibilitychange', handleVisibility);
-      void context.current?.close();
-      context.current = null;
-      output.current = null;
+      disposed = true;
+      stopScheduler();
+      document.removeEventListener('click', onInteraction, true);
+      document.removeEventListener('keydown', onInteraction, true);
+      document.removeEventListener('visibilitychange', onVisibility);
+      audio?.removeEventListener('statechange', syncPlayback);
+      if (audio && audio.state !== 'closed') void audio.close().catch(() => {});
     };
   }, []);
 
-  async function toggle() {
-    if (pending.current) return;
-    if (playing) {
-      requested.current = false;
-      setPlaying(false);
-      return;
-    }
-    pending.current = true;
-    requested.current = true;
-    try {
-      if (!context.current) {
-        context.current = new AudioContext();
-        output.current = context.current.createGain();
-        output.current.gain.value = 0;
-        output.current.connect(context.current.destination);
-      }
-      await context.current.resume();
-      if (requested.current && !document.hidden) {
-        setPlaying(true);
-        setUnavailable(false);
-      }
-    } catch {
-      setUnavailable(true);
-    } finally {
-      pending.current = false;
-    }
-  }
-
-  return { playing, unavailable, toggle };
+  return { status };
 }

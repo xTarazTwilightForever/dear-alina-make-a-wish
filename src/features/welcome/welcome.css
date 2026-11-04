@@ -243,7 +243,7 @@
   bottom: 96px;
   animation: breathe 4s ease-in-out infinite;
 }
-.scene-character-alina {
+.scene-character-tishka {
   left: 44px;
   transform: rotate(-5deg);
 }
@@ -260,7 +260,7 @@
     height: 154px;
     bottom: 65px;
   }
-  .scene-character-alina {
+  .scene-character-tishka {
     left: calc(50% - 130px);
   }
   .scene-character-white {

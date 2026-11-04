@@ -2,7 +2,8 @@ import './game.css';
 import { CatCharacter } from '../../shared/characters/CatCharacter';
 import { collectHeart, getJourneyProgress, heartPositions } from './model';
 import { useEffect, useRef, useState } from 'react';
-import { birthdayContent } from '../../content/birthday';
+import { trailWishes } from '../../content/story';
+import { JourneyMap } from '../adventure/JourneyMap';
 
 interface HeartGameProps {
   onFinish: () => void;
@@ -11,7 +12,7 @@ interface HeartGameProps {
 export function HeartGame({ onFinish }: HeartGameProps) {
   const [collected, setCollected] = useState<readonly number[]>([]);
   const [message, setMessage] = useState(
-    'Каждое сердечко хранит одно маленькое пожелание.',
+    '«Мама хозяйка, зажги сердечки. Пусть Иксик видит, что мы идём». — Тишка',
   );
   const finishButton = useRef<HTMLButtonElement>(null);
   const { complete, progress, travelerPosition, companionPosition } =
@@ -27,35 +28,36 @@ export function HeartGame({ onFinish }: HeartGameProps) {
     setCollected(next);
     setMessage(
       next.length === heartPositions.length
-        ? 'Нашлись. Вместе всегда немного теплее ♡'
-        : birthdayContent.wishes[index],
+        ? '«Тропа зажглась, мама хозяйка! Следом — мост нежности». — Тишка'
+        : trailWishes[index],
     );
   }
 
   return (
     <>
-      <div className="step">ГЛАВА 01 · НАЙТИ ДРУГ ДРУГА</div>
+      <JourneyMap stage={0} />
+      <div className="step">ИСПЫТАНИЕ 01 · ТРОПА СЕРДЕЧЕК</div>
       <h2 id="game-title" tabIndex={-1}>
         У счастья есть
         <br />
         <em>маленькие лапки.</em>
       </h2>
       <p className="section-description">
-        Он уже ждёт её на другом конце дорожки.
+        Мама хозяйка, Иксик ждёт нас впереди.
         <br />
-        Помоги кошечке дойти до своего белого котика.
+        Зажги пять сердечек. Тишка покажет тебе дорогу.
       </p>
       <div
         className={`game-board${complete ? ' game-board-complete' : ''}`}
         aria-label={
           complete
-            ? 'Кошечка добралась до белого котика'
-            : 'Кошечка идёт к белому котику'
+            ? 'Тишка зажёг тропу к Иксику вместе с хозяйкой'
+            : 'Тишка сопровождает хозяйку к белому котику Иксику'
         }
       >
         <div className="path" aria-hidden="true" />
         <div
-          className="journey-character journey-character-alina"
+          className="journey-character journey-character-tishka"
           style={{ left: `${travelerPosition}%` }}
           aria-hidden="true"
         >
@@ -115,12 +117,11 @@ export function HeartGame({ onFinish }: HeartGameProps) {
         disabled={!complete}
         onClick={onFinish}
       >
-        {complete ? 'Посмотреть наш маленький мир' : 'Впереди кое-что ещё'}{' '}
-        <span>→</span>
+        {complete ? 'К мосту нежности' : 'Впереди кое-что ещё'} <span>→</span>
       </button>
-      <button className="text-button" onClick={onFinish}>
-        Продолжить без игры
-      </button>
+      <p className="game-help">
+        Тишка идёт рядом, а белый Иксик ждёт хозяйку впереди.
+      </p>
     </>
   );
 }

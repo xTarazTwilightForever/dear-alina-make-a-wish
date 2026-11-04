@@ -1,0 +1,58 @@
+.reunion-screen {
+  text-align: center;
+}
+.reunion-scene {
+  position: relative;
+  width: min(100%, 390px);
+  margin: 35px auto 25px;
+  padding-top: 35px;
+  border-radius: 50% 50% 12px 12px;
+  background: radial-gradient(ellipse at center, #efd4db, transparent 70%);
+}
+.reunion-stars {
+  color: var(--rose);
+  font: 35px var(--serif);
+}
+.reunion-characters {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  padding-inline: 30px;
+}
+.reunion-characters svg {
+  width: 48%;
+  height: auto;
+  animation: breathe 4s ease-in-out infinite;
+}
+.reunion-characters svg:last-child {
+  animation-delay: -2s;
+}
+.reunion-names {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 8px 0;
+  font: italic 25px var(--serif);
+  color: #9d7c80;
+}
+.reunion-dialogue {
+  max-width: 590px;
+  margin: auto;
+}
+.reunion-dialogue > p {
+  color: #777067;
+  font-size: 12px;
+  line-height: 2;
+  margin: 24px 0;
+}
+.reunion-dialogue > p > span {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--rose);
+  margin-bottom: 9px;
+}
+.reunion-dialogue .reunion-ending {
+  font: italic 26px/1.5 var(--serif);
+  color: var(--rose);
+}

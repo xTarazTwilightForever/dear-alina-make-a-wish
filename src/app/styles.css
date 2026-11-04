@@ -69,7 +69,7 @@ header {
   display: inline-block;
   margin-left: 14px;
 }
-.sound {
+.music-status {
   border: 1px solid var(--line);
   border-radius: 30px;
   background: transparent;
@@ -80,7 +80,7 @@ header {
   align-items: center;
   gap: 10px;
 }
-.sound > span:first-child {
+.music-status > span:first-child {
   font-size: 18px;
 }
 .screen {
@@ -248,4 +248,28 @@ h2 {
 .screen h1:focus,
 .screen h2:focus {
   outline: none;
+}
+
+.music-status.is-playing .music-notes {
+  color: var(--rose);
+  animation: float 3s ease-in-out infinite;
+}
+.music-status {
+  user-select: none;
+}
+.story-screen,
+.memory-screen,
+.message-screen,
+.reunion-screen {
+  text-align: center;
+}
+@media (max-width: 400px) {
+  .wordmark {
+    font-size: 21px;
+  }
+  .music-status {
+    padding: 8px 10px;
+    gap: 7px;
+    font-size: 8px;
+  }
 }

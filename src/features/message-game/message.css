@@ -1,0 +1,106 @@
+.message-screen {
+  text-align: center;
+  padding-top: 40px;
+}
+.message-paper {
+  max-width: 650px;
+  margin: 32px auto 24px;
+  padding: 35px;
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  box-shadow: 0 12px 30px #67504f08;
+  rotate: -0.7deg;
+}
+.message-address {
+  display: block;
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-align: left;
+}
+.message-slots {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  margin: 30px 0;
+  min-height: 100px;
+}
+.message-slot {
+  display: grid;
+  place-items: center;
+  min-width: 65px;
+  height: 48px;
+  border-bottom: 1px dashed #ceb7be;
+  color: #c5a9b2;
+  font: italic 24px var(--serif);
+}
+.message-word {
+  border: 1px solid #d8c5c9;
+  border-radius: 6px;
+  background: #f8efef;
+  color: var(--rose);
+  min-height: 48px;
+  padding: 8px 14px;
+  font: 500 25px var(--serif);
+  transition:
+    transform 0.2s,
+    background 0.2s;
+}
+.message-word:hover:enabled {
+  transform: translateY(-3px);
+  background: #f0dce2;
+}
+.message-word.selected {
+  background: transparent;
+  border-color: transparent;
+  border-bottom-color: #ead5dc;
+  border-radius: 0;
+}
+.message-word.selected:disabled {
+  opacity: 1;
+}
+.message-signature {
+  display: block;
+  text-align: right;
+  color: var(--rose);
+  font: italic 24px var(--serif);
+}
+.word-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  max-width: 600px;
+  margin: 0 auto 12px;
+}
+.word-bank button:disabled {
+  opacity: 0.2;
+}
+.message-hint {
+  font: italic 25px var(--serif);
+  color: var(--rose);
+}
+.message-hint span {
+  display: block;
+  margin-top: 10px;
+  font: 10px/1.8 var(--sans);
+  color: var(--muted);
+}
+.message-complete {
+  border-color: #c5ccb5;
+  background: #fafcf5;
+}
+@media (max-width: 600px) {
+  .message-paper {
+    padding: 25px 18px;
+  }
+  .message-word {
+    font-size: 24px;
+    padding: 8px 11px;
+  }
+  .message-slots {
+    gap: 5px;
+  }
+}

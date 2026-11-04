@@ -26,14 +26,14 @@ export function Album({ onContinue }: AlbumProps) {
 
   return (
     <>
-      <div className="step">ГЛАВА 02 · МАЛЕНЬКИЙ МИР</div>
+      <div className="step">НАШ МАЛЕНЬКИЙ МИР · АЛЬБОМ ДЛЯ ХОЗЯЙКИ</div>
       <h2 id="album-title" tabIndex={-1}>
         У нежности
         <br />
         <em>много маленьких историй.</em>
       </h2>
       <p className="section-description">
-        Собрал их здесь, специально для тебя.
+        Хозяйка, я собрал их здесь, специально для тебя.
         <br />
         Нажми на любую картинку — её можно рассмотреть поближе.
       </p>

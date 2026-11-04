@@ -25,11 +25,17 @@ export function Welcome({ onStart }: WelcomeProps) {
             <br />И потому что тебе сегодня восемнадцать.
           </p>
           <button className="primary" onClick={onStart}>
-            Открыть маленькое чудо <span>↗</span>
+            Открыть нашу историю <span>↗</span>
           </button>
-          <p className="footnote">пара минут, два котика и одно письмо</p>
+          <p className="footnote">
+            Тишка, Иксик и одно приключение для любимой хозяйки
+          </p>
         </div>
-        <div className="scene" role="img" aria-label="Два котика под звёздами">
+        <div
+          className="scene"
+          role="img"
+          aria-label="Серый Тишка и белый Иксик ждут свою хозяйку под звёздами"
+        >
           <span className="scene-star star-one">✧</span>
           <span className="scene-star star-two">✦</span>
           <span className="scene-star star-three">✧</span>
@@ -37,7 +43,7 @@ export function Welcome({ onStart }: WelcomeProps) {
           <div className="orbit orbit-one"></div>
           <div className="orbit orbit-two"></div>
           <div className="pink-planet"></div>
-          <div className="scene-character scene-character-alina">
+          <div className="scene-character scene-character-tishka">
             <CatCharacter character="dark" />
           </div>
           <div className="scene-character scene-character-white">
@@ -56,7 +62,7 @@ export function Welcome({ onStart }: WelcomeProps) {
 
       <div className="intro-bottom">
         <span>СОЗДАНО С ТЕПЛОМ, В ОДНОМ ЭКЗЕМПЛЯРЕ</span>
-        <span>01 / 04</span>
+        <span>01 / 08</span>
       </div>
     </>
   );

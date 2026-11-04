@@ -21,7 +21,7 @@ export function collectHeart(
   return [...collected, index];
 }
 
-/** Alina travels left to right; the white cat waits at the same endpoint. */
+/** Tishka guides his owner left to right; Iksik waits at the same endpoint. */
 export function getJourneyProgress(count: number) {
   const progress = Math.min(heartCount, Math.max(0, count)) / heartCount;
   return {

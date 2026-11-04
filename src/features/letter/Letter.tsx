@@ -43,7 +43,7 @@ export function Letter({ onRestart }: LetterProps) {
 
   return (
     <>
-      <div className="step">ГЛАВА 03 · СЛОВА ДЛЯ ТЕБЯ</div>
+      <div className="step">ОТ ИКСИКА · СЛОВА ДЛЯ ЛЮБИМОЙ ХОЗЯЙКИ</div>
       <div className="envelope" aria-hidden="true">
         ♡
       </div>

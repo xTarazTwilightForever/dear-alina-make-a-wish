@@ -8,8 +8,8 @@ interface CatCharacterProps {
 /** Shared vector characters stay sharp at both postcard and game sizes. */
 export function CatCharacter({ character, className = '' }: CatCharacterProps) {
   const white = character === 'white';
-  const fur = white ? '#fffaf5' : '#51515c';
-  const outline = white ? '#5c455b' : '#3d3a47';
+  const fur = white ? '#fffaf5' : '#777d80';
+  const outline = white ? '#5c455b' : '#53595d';
 
   return (
     <svg
@@ -149,8 +149,14 @@ export function CatCharacter({ character, className = '' }: CatCharacterProps) {
               stroke="none"
             />
             <path
-              d="M145 65L154 46L165 61L179 54L179 75L160 70Z"
-              fill="#c18a9c"
+              d="M80 172Q100 183 124 171L117 208L102 220L87 208Z"
+              fill="#f4f0e8"
+              stroke="none"
+            />
+            <path
+              d="M72 125L57 123M70 132L53 134M133 125L149 123M134 132L152 135"
+              stroke="#f4f0e8"
+              strokeWidth="1.5"
             />
           </>
         )}
