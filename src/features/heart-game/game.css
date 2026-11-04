@@ -1,0 +1,121 @@
+.game-board {
+  max-width: 700px;
+  height: 260px;
+  position: relative;
+  margin: 30px auto 10px;
+  border: 1px solid var(--line);
+  border-radius: 140px 140px 16px 16px;
+  background: linear-gradient(#efe7df88, #f4e5e199);
+  overflow: hidden;
+}
+.path {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 56%;
+  height: 80px;
+  border-top: 2px dashed #cbb5ad;
+  border-radius: 50%;
+  transform: rotate(-5deg);
+}
+.mini-cat {
+  position: absolute;
+  bottom: 36px;
+  font-size: 28px;
+  white-space: nowrap;
+  z-index: 2;
+  transition: left 0.65s ease;
+  letter-spacing: -4px;
+}
+.mini-cat.dark {
+  left: 4%;
+  color: #43444a;
+}
+.mini-cat.light {
+  right: 5%;
+  color: #ae846a;
+}
+.hearts {
+  position: absolute;
+  inset: 0;
+}
+.heart {
+  position: absolute;
+  background: none;
+  border: 0;
+  color: var(--rose);
+  font-size: 34px;
+  padding: 10px;
+  min-height: 52px;
+  min-width: 52px;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
+  animation: float 3s ease-in-out infinite;
+}
+.heart.collected {
+  opacity: 0.15;
+  transform: scale(0.6);
+  animation: none;
+  pointer-events: none;
+}
+.board-star {
+  position: absolute;
+  right: 14%;
+  top: 20px;
+  color: #b19b73;
+  font-size: 28px;
+}
+.board-ground {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  bottom: 32px;
+  border-bottom: 1px solid #cbb5ad;
+}
+.game-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  font-size: 10px;
+  color: var(--muted);
+}
+.progress {
+  width: 110px;
+  height: 4px;
+  border-radius: 4px;
+  background: #e6dcd2;
+}
+.progress div {
+  height: 100%;
+  width: 0;
+  background: var(--rose);
+  border-radius: 4px;
+  transition: width 0.4s;
+}
+.heart-message {
+  min-height: 36px;
+  font: italic 21px/1.4 var(--serif);
+  color: var(--rose);
+  margin: 25px 0 0;
+}
+@media (max-width: 760px) {
+  .game-board {
+    height: 260px;
+    margin: 25px -7px 20px;
+  }
+  .mini-cat {
+    font-size: 22px;
+  }
+  .heart {
+    font-size: 31px;
+  }
+  .heart-message {
+    font-size: 20px;
+    min-height: 58px;
+  }
+}
+.progress {
+  overflow: hidden;
+}

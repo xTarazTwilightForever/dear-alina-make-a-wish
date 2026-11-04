@@ -1,3 +1,4 @@
+import './welcome.css';
 interface WelcomeProps {
   onStart: () => void;
 }

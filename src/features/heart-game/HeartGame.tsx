@@ -1,5 +1,6 @@
+import './game.css';
 import { useEffect, useRef, useState } from 'react';
-import { birthdayContent } from '../content';
+import { birthdayContent } from '../../content/birthday';
 
 const positions = [
   [12, 32],

@@ -1,0 +1,81 @@
+.envelope {
+  font: 42px var(--serif);
+  color: var(--rose);
+  margin: -10px 0 18px;
+}
+.letter-paper {
+  position: relative;
+  max-width: 620px;
+  margin: 36px auto;
+  padding: 45px 50px;
+  text-align: left;
+  border: 1px solid #e1d7c9;
+  background: #fffdf8;
+  box-shadow: 0 12px 50px #70604a09;
+  transform: rotate(-0.7deg);
+}
+.letter-date {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+.letter-paper h3 {
+  font: italic 34px var(--serif);
+  margin: 24px 0;
+}
+.letter-paper p {
+  font-size: 12px;
+  line-height: 2;
+  color: #6e685f;
+  margin: 18px 0;
+}
+.letter-paper .signature {
+  font: italic 26px var(--serif);
+  color: var(--rose);
+  margin-top: 30px;
+}
+.letter-doodle {
+  position: absolute;
+  bottom: 27px;
+  right: 32px;
+  font: 42px var(--serif);
+  color: var(--rose);
+}
+.ending {
+  font: italic 26px var(--serif);
+}
+.wish-note {
+  font-size: 10px;
+  line-height: 1.8;
+  color: var(--muted);
+  min-height: 20px;
+}
+#confetti {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 20;
+}
+.confetti-piece {
+  position: absolute;
+  top: -30px;
+  animation: fall var(--duration) ease-in forwards;
+  color: var(--color);
+  font-size: var(--size);
+}
+@media (max-width: 760px) {
+  .letter-paper {
+    padding: 30px 25px;
+    margin: 30px 0;
+  }
+  .letter-paper h3 {
+    font-size: 31px;
+  }
+  .letter-paper p {
+    font-size: 12px;
+  }
+  .ending {
+    font-size: 23px;
+  }
+}

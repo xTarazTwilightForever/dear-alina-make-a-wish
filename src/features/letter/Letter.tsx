@@ -1,6 +1,7 @@
+import './letter.css';
 import { useState } from 'react';
 import type { CSSProperties } from 'react';
-import { birthdayContent } from '../content';
+import { birthdayContent } from '../../content/birthday';
 
 interface LetterProps {
   onRestart: () => void;

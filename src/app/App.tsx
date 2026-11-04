@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
-import { Welcome } from './components/Welcome';
-import { HeartGame } from './components/HeartGame';
-import { Letter } from './components/Letter';
-import { useMusic } from './hooks/useMusic';
+import { Welcome } from '../features/welcome/Welcome';
+import { HeartGame } from '../features/heart-game/HeartGame';
+import { Letter } from '../features/letter/Letter';
+import { useMusic } from '../features/music/useMusic';
 
 type Chapter = 'intro' | 'game' | 'letter';
 
