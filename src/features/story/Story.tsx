@@ -29,7 +29,9 @@ export function Story({ onContinue }: StoryProps) {
           </figcaption>
         </figure>
         <div className="story-copy">
-          <span className="speaker-label">ТИШКА · ТВОЙ СЕРЫЙ КОТИК</span>
+          <span className="speaker-label">
+            ТИШКА · ПЕРЕДАЁТ ПРИЗНАНИЯ ИКСИКА
+          </span>
           <h2 ref={heading} id="story-title" tabIndex={-1}>
             {current.title}
           </h2>
@@ -57,7 +59,7 @@ export function Story({ onContinue }: StoryProps) {
             }
           >
             {page === storyPages.length - 1
-              ? 'Пойдём к Иксику'
+              ? 'Открыть признания Иксика'
               : page === 0
                 ? 'Какое дело, Тишка?'
                 : 'Расскажи, куда идти'}{' '}

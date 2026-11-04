@@ -26,16 +26,16 @@ export function Album({ onContinue }: AlbumProps) {
 
   return (
     <>
-      <div className="step">НАШ МАЛЕНЬКИЙ МИР · АЛЬБОМ ДЛЯ ХОЗЯЙКИ</div>
+      <div className="step">ОТ ИКСИКА · МЕЧТЫ О ХОЗЯЙКЕ-ПАНТЕРКЕ</div>
       <h2 id="album-title" tabIndex={-1}>
-        У нежности
+        Мои мечты
         <br />
-        <em>много маленьких историй.</em>
+        <em>о нашей первой встрече.</em>
       </h2>
       <p className="section-description">
-        Хозяйка, я собрал их здесь, специально для тебя.
+        Хозяйка-Пантерка, я люблю тебя. Так я мечтаю однажды быть рядом.
         <br />
-        Нажми на любую картинку — её можно рассмотреть поближе.
+        Это мои мечты, а не наши общие фотографии. Твой Иксик ♡
       </p>
       <div className="album-grid">
         {albumIllustrations.map((illustration, index) => (
@@ -73,7 +73,9 @@ export function Album({ onContinue }: AlbumProps) {
           </button>
         ))}
       </div>
-      <p className="album-postscript">А самое важное я оставил в письме.</p>
+      <p className="album-postscript">
+        Хозяйка-Пантерка, моё большое признание — в письме. Иксик ♡
+      </p>
       <button className="primary" onClick={onContinue}>
         Открыть письмо <span>→</span>
       </button>
@@ -123,7 +125,7 @@ export function Album({ onContinue }: AlbumProps) {
             >
               ←
             </button>
-            <span>маленький мир для тебя ♡</span>
+            <span>С любовью, Иксик ♡</span>
             <button
               onClick={() => navigate(1)}
               aria-label="Следующая иллюстрация"

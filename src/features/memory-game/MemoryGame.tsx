@@ -14,7 +14,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
   const [matched, setMatched] = useState<readonly string[]>([]);
   const [moves, setMoves] = useState(0);
   const [message, setMessage] = useState(
-    '«Мама хозяйка, у каждой нежности здесь есть своя пара. Поможешь им встретиться?»',
+    '«Мама, открой две карточки. За каждой парой Иксик оставил признание». — Тишка',
   );
   const continueButton = useRef<HTMLButtonElement>(null);
   const complete = matched.length === lovePairs.length;
@@ -33,10 +33,10 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
               ? current
               : [...current, first.pairId],
           );
-          setMessage(`«${first.note}» — Тишка`);
+          setMessage(`«${first.note}» — Иксик`);
         } else
           setMessage(
-            '«Ничего, мама хозяйка. Любовь не требует угадать с первой попытки. Попробуем ещё?»',
+            '«Мама, эти карточки разные. Запомни их и открой следующую пару». — Тишка',
           );
         setOpened([]);
       },
@@ -75,7 +75,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
       <p className="section-description">
         Открывай по две карточки и находи одинаковые символы.
         <br />
-        Шесть пар — и мост к Иксику станет целым.
+        Шесть пар — шесть признаний Иксика в любви.
       </p>
       <div className="memory-grid" aria-label="Карточки моста нежности">
         {deck.map((card, index) => {
@@ -112,7 +112,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
       </div>
       <p className="game-quote" aria-live="polite">
         {complete
-          ? '«Мост готов, мама хозяйка! Слышишь? Это Иксик мурчит для тебя с другого берега». — Тишка'
+          ? '«Хозяйка-Пантерка, я люблю тебя. Жду тебя домой в Павлодар и мечтаю впервые обнять». — Иксик'
           : message}
       </p>
       <button
@@ -124,7 +124,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
         К признанию Иксика <span>→</span>
       </button>
       <p className="game-help">
-        Без таймера. Без проигрышей. В твоём темпе, хозяйка.
+        Тишка помогает открыть карточки. Все слова любви — от Иксика.
       </p>
     </>
   );

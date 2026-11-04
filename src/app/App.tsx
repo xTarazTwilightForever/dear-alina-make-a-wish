@@ -37,7 +37,7 @@ export function App() {
           onClick={() => setChapter('intro')}
           aria-label="Вернуться к началу"
         >
-          маленькое чудо<span> для хозяйки Алины</span>
+          маленькое чудо<span> для Хозяйки-Пантерки</span>
         </button>
         <div
           className={`music-status${music.status === 'playing' ? ' is-playing' : ''}`}
@@ -90,7 +90,7 @@ export function App() {
       </main>
       <footer>
         <span>8 / 11 / 2026</span>
-        <span>Тишка, Иксик и их любимая хозяйка ♡</span>
+        <span>Признание Иксика в любви к Алине ♡</span>
         <span>
           {String(chapters.indexOf(chapter) + 1).padStart(2, '0')} /{' '}
           {String(chapters.length).padStart(2, '0')}

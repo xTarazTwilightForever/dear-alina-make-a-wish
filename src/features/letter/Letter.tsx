@@ -43,38 +43,51 @@ export function Letter({ onRestart }: LetterProps) {
 
   return (
     <>
-      <div className="step">ОТ ИКСИКА · СЛОВА ДЛЯ ЛЮБИМОЙ ХОЗЯЙКИ</div>
+      <div className="step">ОТ ИКСИКА · МОЕЙ ХОЗЯЙКЕ-ПАНТЕРКЕ</div>
       <div className="envelope" aria-hidden="true">
         ♡
       </div>
       <h2 id="letter-title" tabIndex={-1}>
-        Тебе. <em>С теплом.</em>
+        Тебе. <em>С любовью.</em>
       </h2>
       <p className="section-description">
-        Некоторые вещи хочется сказать чуть тише.
-        <br />И сохранить чуть дольше.
+        Хозяйка-Пантерка, я люблю тебя.
+        <br />И хочу сказать тебе это своими словами.
       </p>
       <article className="letter-paper">
         <time className="letter-date" dateTime="2026-11-08">
           8 ноября 2026
         </time>
-        <h3>{birthdayContent.salutation}</h3>
+        <h3>
+          <strong>{birthdayContent.salutation}</strong>
+        </h3>
         {birthdayContent.paragraphs.map((paragraph, index) => (
           <p key={index}>{paragraph}</p>
         ))}
-        <p className="signature">{birthdayContent.signature}</p>
+        <p className="letter-closing">
+          <strong>{birthdayContent.closing}</strong>
+        </p>
+        <p className="signature">
+          {birthdayContent.signature}
+          <br />
+          {birthdayContent.signatureRole}
+          <br />
+          <strong>{birthdayContent.signatureName}</strong>
+        </p>
         <span className="letter-doodle" aria-hidden="true">
           ♡
         </span>
       </article>
-      <p className="ending">Пусть твоя новая глава будет очень твоей.</p>
+      <p className="ending">
+        «Я люблю тебя. И очень жду нашей первой встречи». — Иксик
+      </p>
       <button className="primary" onClick={celebrate}>
         Загадать желание <span>✧</span>
       </button>
       <p className="wish-note" aria-live="polite">
         {wished
-          ? 'Желание загадано. Пусть у него всё получится ♡'
-          : 'Можно не рассказывать. Пусть сбудется.'}
+          ? '«Пусть сбудется твоё желание, Хозяйка-Пантерка. А моё — впервые обнять тебя». — Иксик'
+          : '«Загадай желание, Хозяйка-Пантерка. Я так хочу, чтобы ты была счастлива». — Иксик'}
       </p>
       <button className="text-button" onClick={onRestart}>
         Пройти ещё раз ↺

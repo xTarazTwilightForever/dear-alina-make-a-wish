@@ -20,7 +20,7 @@ export function MessageGame({ onContinue }: MessageGameProps) {
   const [hint, setHint] = useState(false);
   const [complete, setComplete] = useState(false);
   const [message, setMessage] = useState(
-    '«Он так волновался, мама хозяйка, что перепутал все слова. Давай соберём их вместе?»',
+    '«Мама, слова Иксика перемешались. Собери его признание по порядку». — Тишка',
   );
   const continueButton = useRef<HTMLButtonElement>(null);
 
@@ -38,11 +38,11 @@ export function MessageGame({ onContinue }: MessageGameProps) {
     if (selected.every((id, index) => id === index)) {
       setComplete(true);
       setMessage(
-        '«Вот что он хотел сказать! Хозяйка, рядом с тобой и правда хочется быть дома. Пойдём, он совсем близко». — Тишка',
+        '«Хозяйка-Пантерка, я люблю тебя. Ты мой дом. И я так жду нашей первой встречи». — Иксик',
       );
     } else
       setMessage(
-        '«Почти, мама хозяйка. Нажми на слово в письме, чтобы вернуть его вниз, и попробуй другой порядок. Мы никуда не спешим». — Тишка',
+        '«Мама, нажми на слово в письме, чтобы вернуть его вниз, и попробуй другой порядок». — Тишка',
       );
   }
 
@@ -51,17 +51,17 @@ export function MessageGame({ onContinue }: MessageGameProps) {
       <JourneyMap stage={2} />
       <div className="step">ИСПЫТАНИЕ 03 · ПРИЗНАНИЕ ИКСИКА</div>
       <h2 id="message-title" tabIndex={-1}>
-        Шесть слов.
+        Семь слов.
         <br />
         <em>И всё — о тебе.</em>
       </h2>
       <p className="section-description">
         Собери из слов маленькое признание белого котика.
         <br />
-        Начни с «Моя», а закончи «дома.».
+        Начни с «Хозяйка-Пантерка,», а закончи «дом.».
       </p>
       <div className={`message-paper${complete ? ' message-complete' : ''}`}>
-        <span className="message-address">САМОЙ ЛЮБИМОЙ ХОЗЯЙКЕ</span>
+        <span className="message-address">МОЕЙ ХОЗЯЙКЕ-ПАНТЕРКЕ</span>
         <div className="message-slots" aria-label="Собранное признание">
           {selected.map((id, index) => (
             <button
@@ -82,7 +82,7 @@ export function MessageGame({ onContinue }: MessageGameProps) {
             { length: loveMessage.length - selected.length },
             (_, index) => (
               <span className="message-slot" key={index} aria-hidden="true">
-                {selected.length === 0 && index === 0 ? 'Моя…' : '·'}
+                {selected.length === 0 && index === 0 ? 'Хозяйка…' : '·'}
               </span>
             ),
           )}
@@ -121,7 +121,7 @@ export function MessageGame({ onContinue }: MessageGameProps) {
             <p className="message-hint">
               «{loveMessage.join(' ')}»<br />
               <span>
-                Тишка шепчет совсем тихо. Это наш секрет, мама хозяйка.
+                «Мама, вот слова Иксика в правильном порядке». — Тишка
               </span>
             </p>
           )}
@@ -132,7 +132,7 @@ export function MessageGame({ onContinue }: MessageGameProps) {
       </p>
       {complete && (
         <button ref={continueButton} className="primary" onClick={onContinue}>
-          Иксик, мы пришли <span>→</span>
+          Прочитать признание Иксика <span>→</span>
         </button>
       )}
     </>

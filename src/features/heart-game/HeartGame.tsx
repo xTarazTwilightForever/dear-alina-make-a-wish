@@ -2,7 +2,7 @@ import './game.css';
 import { CatCharacter } from '../../shared/characters/CatCharacter';
 import { collectHeart, getJourneyProgress, heartPositions } from './model';
 import { useEffect, useRef, useState } from 'react';
-import { trailWishes } from '../../content/story';
+import { trailConfessions } from '../../content/story';
 import { JourneyMap } from '../adventure/JourneyMap';
 
 interface HeartGameProps {
@@ -12,7 +12,7 @@ interface HeartGameProps {
 export function HeartGame({ onFinish }: HeartGameProps) {
   const [collected, setCollected] = useState<readonly number[]>([]);
   const [message, setMessage] = useState(
-    '«Мама хозяйка, зажги сердечки. Пусть Иксик видит, что мы идём». — Тишка',
+    '«Мама, открой пять сердечек. В каждом — признание Иксика». — Тишка',
   );
   const finishButton = useRef<HTMLButtonElement>(null);
   const { complete, progress, travelerPosition, companionPosition } =
@@ -26,11 +26,7 @@ export function HeartGame({ onFinish }: HeartGameProps) {
     const next = collectHeart(collected, index);
     if (next === collected) return;
     setCollected(next);
-    setMessage(
-      next.length === heartPositions.length
-        ? '«Тропа зажглась, мама хозяйка! Следом — мост нежности». — Тишка'
-        : trailWishes[index],
-    );
+    setMessage(trailConfessions[index]);
   }
 
   return (
@@ -43,16 +39,16 @@ export function HeartGame({ onFinish }: HeartGameProps) {
         <em>маленькие лапки.</em>
       </h2>
       <p className="section-description">
-        Мама хозяйка, Иксик ждёт нас впереди.
+        «Мама, здесь Иксик оставил свои послания». — Тишка
         <br />
-        Зажги пять сердечек. Тишка покажет тебе дорогу.
+        Открой пять сердечек и прочитай его признания в любви.
       </p>
       <div
         className={`game-board${complete ? ' game-board-complete' : ''}`}
         aria-label={
           complete
-            ? 'Тишка зажёг тропу к Иксику вместе с хозяйкой'
-            : 'Тишка сопровождает хозяйку к белому котику Иксику'
+            ? 'Тишка помог маме открыть признания Иксика'
+            : 'Тишка показывает маме тропу признаний белого Иксика'
         }
       >
         <div className="path" aria-hidden="true" />
@@ -120,7 +116,7 @@ export function HeartGame({ onFinish }: HeartGameProps) {
         {complete ? 'К мосту нежности' : 'Впереди кое-что ещё'} <span>→</span>
       </button>
       <p className="game-help">
-        Тишка идёт рядом, а белый Иксик ждёт хозяйку впереди.
+        Это путь по открытке. Ваша первая встреча с Иксиком ещё впереди.
       </p>
     </>
   );

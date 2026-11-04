@@ -79,3 +79,20 @@
     font-size: 23px;
   }
 }
+
+.letter-paper .letter-closing {
+  color: var(--rose);
+  margin-top: 28px;
+  font-size: 14px;
+}
+.letter-paper .signature {
+  line-height: 1.55;
+}
+.letter-paper .signature strong {
+  font-size: 22px;
+}
+.letter-screen .ending {
+  max-width: 660px;
+  margin: 28px auto;
+  line-height: 1.5;
+}
