@@ -14,7 +14,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
   const [matched, setMatched] = useState<readonly string[]>([]);
   const [moves, setMoves] = useState(0);
   const [message, setMessage] = useState(
-    '«Мама, открой две карточки. За каждой парой Иксик оставил признание». — Тишка',
+    '«Мама, мы пришли на Мост нежности. Найди пары карточек, чтобы прочитать слова Иксика». Тишка',
   );
   const continueButton = useRef<HTMLButtonElement>(null);
   const complete = matched.length === lovePairs.length;
@@ -33,10 +33,10 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
               ? current
               : [...current, first.pairId],
           );
-          setMessage(`«${first.note}» — Иксик`);
+          setMessage(`«${first.note}» Иксик`);
         } else
           setMessage(
-            '«Мама, эти карточки разные. Запомни их и открой следующую пару». — Тишка',
+            '«Мама, эти карточки разные. Запомни их и открой следующую пару». Тишка',
           );
         setOpened([]);
       },
@@ -66,7 +66,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
   return (
     <>
       <JourneyMap stage={1} />
-      <div className="step">ИСПЫТАНИЕ 02 · МОСТ НЕЖНОСТИ</div>
+      <div className="step">ЛОКАЦИЯ 02 · МОСТ НЕЖНОСТИ</div>
       <h2 id="memory-title" tabIndex={-1}>
         Всему тёплому
         <br />
@@ -75,7 +75,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
       <p className="section-description">
         Открывай по две карточки и находи одинаковые символы.
         <br />
-        Шесть пар — шесть признаний Иксика в любви.
+        Найди шесть пар и прочитай признания Иксика в любви.
       </p>
       <div className="memory-grid" aria-label="Карточки моста нежности">
         {deck.map((card, index) => {
@@ -112,7 +112,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
       </div>
       <p className="game-quote" aria-live="polite">
         {complete
-          ? '«Хозяйка-Пантерка, я люблю тебя. Жду тебя домой в Павлодар и мечтаю впервые обнять». — Иксик'
+          ? '«Моя Алина, каждое признание приближает меня к тебе хотя бы на одно слово. Я люблю тебя и очень жду нашей первой встречи». Иксик'
           : message}
       </p>
       <button
@@ -121,10 +121,10 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
         disabled={!complete}
         onClick={onContinue}
       >
-        К признанию Иксика <span>→</span>
+        К Признанию Иксика <span>→</span>
       </button>
       <p className="game-help">
-        Тишка помогает открыть карточки. Все слова любви — от Иксика.
+        Тишка поможет найти пары, а Иксик расскажет о своих чувствах.
       </p>
     </>
   );

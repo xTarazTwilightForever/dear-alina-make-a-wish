@@ -4,8 +4,7 @@ export const chapters = [
   'game',
   'memory',
   'message',
-  'reunion',
-  'album',
   'letter',
+  'album',
 ] as const;
 export type Chapter = (typeof chapters)[number];

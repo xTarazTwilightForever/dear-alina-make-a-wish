@@ -12,7 +12,7 @@ interface HeartGameProps {
 export function HeartGame({ onFinish }: HeartGameProps) {
   const [collected, setCollected] = useState<readonly number[]>([]);
   const [message, setMessage] = useState(
-    '«Мама, открой пять сердечек. В каждом — признание Иксика». — Тишка',
+    '«Мама, мы на Тропе сердечек. В каждом огоньке тебя ждёт признание Иксика». Тишка',
   );
   const finishButton = useRef<HTMLButtonElement>(null);
   const { complete, progress, travelerPosition, companionPosition } =
@@ -32,14 +32,14 @@ export function HeartGame({ onFinish }: HeartGameProps) {
   return (
     <>
       <JourneyMap stage={0} />
-      <div className="step">ИСПЫТАНИЕ 01 · ТРОПА СЕРДЕЧЕК</div>
+      <div className="step">ЛОКАЦИЯ 01 · ТРОПА СЕРДЕЧЕК</div>
       <h2 id="game-title" tabIndex={-1}>
         У счастья есть
         <br />
         <em>маленькие лапки.</em>
       </h2>
       <p className="section-description">
-        «Мама, здесь Иксик оставил свои послания». — Тишка
+        «Мама, вот и Тропа сердечек. Иксик оставил здесь свои послания». Тишка
         <br />
         Открой пять сердечек и прочитай его признания в любви.
       </p>
@@ -113,10 +113,11 @@ export function HeartGame({ onFinish }: HeartGameProps) {
         disabled={!complete}
         onClick={onFinish}
       >
-        {complete ? 'К мосту нежности' : 'Впереди кое-что ещё'} <span>→</span>
+        {complete ? 'На Мост нежности' : 'Впереди кое-что ещё'} <span>→</span>
       </button>
       <p className="game-help">
-        Это путь по открытке. Ваша первая встреча с Иксиком ещё впереди.
+        За Тропой сердечек начинается Мост нежности. Там ждут новые послания
+        Иксика.
       </p>
     </>
   );

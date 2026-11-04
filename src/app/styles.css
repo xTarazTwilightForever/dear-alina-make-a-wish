@@ -69,20 +69,6 @@ header {
   display: inline-block;
   margin-left: 14px;
 }
-.music-status {
-  border: 1px solid var(--line);
-  border-radius: 30px;
-  background: transparent;
-  padding: 9px 14px;
-  color: var(--muted);
-  font-size: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.music-status > span:first-child {
-  font-size: 18px;
-}
 .screen {
   max-width: 1120px;
   margin: auto;
@@ -250,26 +236,29 @@ h2 {
   outline: none;
 }
 
-.music-status.is-playing .music-notes {
-  color: var(--rose);
-  animation: float 3s ease-in-out infinite;
-}
-.music-status {
-  user-select: none;
-}
 .story-screen,
 .memory-screen,
-.message-screen,
-.reunion-screen {
+.message-screen {
   text-align: center;
 }
 @media (max-width: 400px) {
   .wordmark {
     font-size: 21px;
   }
-  .music-status {
-    padding: 8px 10px;
-    gap: 7px;
+}
+
+.header-date {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+header {
+  gap: 18px;
+}
+@media (max-width: 600px) {
+  .header-date {
     font-size: 8px;
+    letter-spacing: 0.4px;
   }
 }

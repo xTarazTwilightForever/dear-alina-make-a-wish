@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 import { birthdayContent } from '../../content/birthday';
 
 interface LetterProps {
+  onAlbum: () => void;
   onRestart: () => void;
 }
 interface ConfettiPiece {
@@ -27,7 +28,7 @@ function createConfetti(): ConfettiPiece[] {
   }));
 }
 
-export function Letter({ onRestart }: LetterProps) {
+export function Letter({ onAlbum, onRestart }: LetterProps) {
   const [wished, setWished] = useState(false);
   const [pieces, setPieces] = useState<ConfettiPiece[]>([]);
   const [celebration, setCelebration] = useState(0);
@@ -43,7 +44,7 @@ export function Letter({ onRestart }: LetterProps) {
 
   return (
     <>
-      <div className="step">ОТ ИКСИКА · МОЕЙ ХОЗЯЙКЕ-ПАНТЕРКЕ</div>
+      <div className="step">ОТ ИКСИКА · МОЕЙ АЛИНЕ</div>
       <div className="envelope" aria-hidden="true">
         ♡
       </div>
@@ -51,8 +52,8 @@ export function Letter({ onRestart }: LetterProps) {
         Тебе. <em>С любовью.</em>
       </h2>
       <p className="section-description">
-        Хозяйка-Пантерка, я люблю тебя.
-        <br />И хочу сказать тебе это своими словами.
+        Моя Алина, я люблю тебя.
+        <br />В этом письме всё, что я так хочу сказать тебе при встрече.
       </p>
       <article className="letter-paper">
         <time className="letter-date" dateTime="2026-11-08">
@@ -79,16 +80,20 @@ export function Letter({ onRestart }: LetterProps) {
         </span>
       </article>
       <p className="ending">
-        «Я люблю тебя. И очень жду нашей первой встречи». — Иксик
+        «Моя Алина, я люблю тебя. Как же я жду, когда смогу сказать это, глядя
+        тебе в глаза». Иксик
       </p>
       <button className="primary" onClick={celebrate}>
         Загадать желание <span>✧</span>
       </button>
       <p className="wish-note" aria-live="polite">
         {wished
-          ? '«Пусть сбудется твоё желание, Хозяйка-Пантерка. А моё — впервые обнять тебя». — Иксик'
-          : '«Загадай желание, Хозяйка-Пантерка. Я так хочу, чтобы ты была счастлива». — Иксик'}
+          ? '«Моя Алина, пусть твоё желание сбудется. А я буду беречь своё: впервые обнять тебя и почувствовать, что ты рядом». Иксик'
+          : '«Загадай желание, Пантерка. Мне так хочется видеть тебя счастливой». Иксик'}
       </p>
+      <button className="primary" onClick={onAlbum}>
+        Заглянуть в альбом Иксика <span>→</span>
+      </button>
       <button className="text-button" onClick={onRestart}>
         Пройти ещё раз ↺
       </button>

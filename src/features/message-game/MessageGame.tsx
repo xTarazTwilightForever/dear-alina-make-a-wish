@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { loveMessage } from '../../content/story';
 import { shuffle } from '../../shared/lib/shuffle';
 import { JourneyMap } from '../adventure/JourneyMap';
@@ -18,56 +18,53 @@ export function MessageGame({ onContinue }: MessageGameProps) {
   });
   const [selected, setSelected] = useState<readonly number[]>([]);
   const [hint, setHint] = useState(false);
-  const [complete, setComplete] = useState(false);
   const [message, setMessage] = useState(
-    '«Мама, слова Иксика перемешались. Собери его признание по порядку». — Тишка',
+    '«Мама, мы добрались до Признания Иксика. Собери слова по порядку, и откроется его письмо». Тишка',
   );
-  const continueButton = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (complete) continueButton.current?.focus({ preventScroll: true });
-  }, [complete]);
+  function isComplete(ids: readonly number[]) {
+    return (
+      ids.length === loveMessage.length &&
+      ids.every((id, index) => id === index)
+    );
+  }
 
   function select(id: number) {
-    if (complete || selected.includes(id)) return;
-    setSelected((current) => [...current, id]);
+    if (selected.includes(id)) return;
+    const next = [...selected, id];
+    setSelected(next);
+    if (isComplete(next)) onContinue();
   }
 
   function verify() {
-    if (selected.length !== loveMessage.length) return;
-    if (selected.every((id, index) => id === index)) {
-      setComplete(true);
+    if (isComplete(selected)) onContinue();
+    else
       setMessage(
-        '«Хозяйка-Пантерка, я люблю тебя. Ты мой дом. И я так жду нашей первой встречи». — Иксик',
-      );
-    } else
-      setMessage(
-        '«Мама, нажми на слово в письме, чтобы вернуть его вниз, и попробуй другой порядок». — Тишка',
+        '«Мама, кажется, слова немного перепутались. Нажми на слово в письме, чтобы вернуть его вниз. Если захочешь, я подскажу». Тишка',
       );
   }
 
   return (
     <>
       <JourneyMap stage={2} />
-      <div className="step">ИСПЫТАНИЕ 03 · ПРИЗНАНИЕ ИКСИКА</div>
+      <div className="step">ЛОКАЦИЯ 03 · ПРИЗНАНИЕ ИКСИКА</div>
       <h2 id="message-title" tabIndex={-1}>
-        Семь слов.
+        Несколько слов.
         <br />
-        <em>И всё — о тебе.</em>
+        <em>Вся моя любовь.</em>
       </h2>
       <p className="section-description">
-        Собери из слов маленькое признание белого котика.
+        Собери признание Иксика, чтобы открыть его письмо.
         <br />
-        Начни с «Хозяйка-Пантерка,», а закончи «дом.».
+        Начни с «Моя Алина,», а закончи «дом.».
       </p>
-      <div className={`message-paper${complete ? ' message-complete' : ''}`}>
-        <span className="message-address">МОЕЙ ХОЗЯЙКЕ-ПАНТЕРКЕ</span>
+      <div className="message-paper">
+        <span className="message-address">МОЕЙ АЛИНЕ, С ЛЮБОВЬЮ</span>
         <div className="message-slots" aria-label="Собранное признание">
           {selected.map((id, index) => (
             <button
               key={id}
               className="message-word selected"
-              disabled={complete}
               aria-label={`Убрать слово ${loveMessage[id]}`}
               onClick={() =>
                 setSelected((current) =>
@@ -82,59 +79,50 @@ export function MessageGame({ onContinue }: MessageGameProps) {
             { length: loveMessage.length - selected.length },
             (_, index) => (
               <span className="message-slot" key={index} aria-hidden="true">
-                {selected.length === 0 && index === 0 ? 'Хозяйка…' : '·'}
+                {selected.length === 0 && index === 0 ? 'Моя…' : '·'}
               </span>
             ),
           )}
         </div>
         <span className="message-signature">Твой Иксик ♡</span>
       </div>
-      {!complete && (
-        <>
-          <div className="word-bank" aria-label="Слова для признания">
-            {words.map(({ word, id }) => (
-              <button
-                key={id}
-                className="message-word"
-                onClick={() => select(id)}
-                disabled={selected.includes(id)}
-              >
-                {word}
-              </button>
-            ))}
-          </div>
+      <div className="word-bank" aria-label="Слова для признания">
+        {words.map(({ word, id }) => (
           <button
-            className="primary"
-            disabled={selected.length !== loveMessage.length}
-            onClick={verify}
+            key={id}
+            className="message-word"
+            onClick={() => select(id)}
+            disabled={selected.includes(id)}
           >
-            Прочитать признание <span>♡</span>
+            {word}
           </button>
-          <button
-            className="text-button"
-            onClick={() => setHint((value) => !value)}
-            aria-expanded={hint}
-          >
-            Попросить подсказку у Тишки
-          </button>
-          {hint && (
-            <p className="message-hint">
-              «{loveMessage.join(' ')}»<br />
-              <span>
-                «Мама, вот слова Иксика в правильном порядке». — Тишка
-              </span>
-            </p>
-          )}
-        </>
+        ))}
+      </div>
+      <button
+        className="primary"
+        disabled={selected.length !== loveMessage.length}
+        onClick={verify}
+      >
+        Открыть письмо Иксика <span>♡</span>
+      </button>
+      <button
+        className="text-button"
+        onClick={() => setHint((value) => !value)}
+        aria-expanded={hint}
+      >
+        Попросить подсказку у Тишки
+      </button>
+      {hint && (
+        <p className="message-hint">
+          «{loveMessage.join(' ')}»<br />
+          <span>
+            «Мама, вот как Никита хотел сказать… ой, Иксик, конечно». Тишка
+          </span>
+        </p>
       )}
       <p className="game-quote" aria-live="polite">
         {message}
       </p>
-      {complete && (
-        <button ref={continueButton} className="primary" onClick={onContinue}>
-          Прочитать признание Иксика <span>→</span>
-        </button>
-      )}
     </>
   );
 }

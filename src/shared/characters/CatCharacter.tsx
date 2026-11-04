@@ -128,6 +128,11 @@ export function CatCharacter({ character, className = '' }: CatCharacterProps) {
         ) : (
           <>
             <path
+              d="M71 130Q85 120 101 130Q116 120 133 130L143 145Q126 163 102 164Q77 163 61 145Z"
+              fill="#f4f0e8"
+              stroke="none"
+            />
+            <path
               d="M55 111Q66 101 77 111M124 111Q135 101 146 111"
               stroke="#fff2e2"
               strokeWidth="4"
@@ -163,7 +168,7 @@ export function CatCharacter({ character, className = '' }: CatCharacterProps) {
         <path d="M96 128L102 132L107 127" fill="#d7839e" stroke="none" />
         <path
           d="M88 140Q96 148 102 140Q109 148 116 139"
-          stroke={white ? '#5c455b' : '#fff2e2'}
+          stroke={white ? '#5c455b' : '#53595d'}
           strokeWidth="2.5"
         />
         {white && (

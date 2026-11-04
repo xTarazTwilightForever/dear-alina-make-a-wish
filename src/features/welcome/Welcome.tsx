@@ -12,7 +12,7 @@ export function Welcome({ onStart }: WelcomeProps) {
       </div>
       <div className="intro-layout">
         <div className="intro-copy">
-          <p className="eyebrow">признание Иксика для Хозяйки-Пантерки</p>
+          <p className="eyebrow">моей Алине, с любовью от Иксика</p>
           <h1 id="intro-title" tabIndex={-1}>
             Алина,
             <br />
@@ -21,20 +21,20 @@ export function Welcome({ onStart }: WelcomeProps) {
             чуть <em>нежнее.</em>
           </h1>
           <p className="lede">
-            Хозяйка-Пантерка, я люблю тебя.
+            Моя Алина, я люблю тебя.
             <br />С днём рождения. Твой Иксик ♡
           </p>
           <button className="primary" onClick={onStart}>
             Открыть нашу историю <span>↗</span>
           </button>
           <p className="footnote">
-            Тишка покажет путь. Все признания — от Иксика.
+            Тишка покажет дорогу к тому, что я так хочу тебе сказать.
           </p>
         </div>
         <div
           className="scene"
           role="img"
-          aria-label="Тишка ждёт маму, а Иксик — Хозяйку-Пантерку. Они ждут Алину домой в Павлодар."
+          aria-label="Тишка ждёт маму, а Иксик ждёт свою Пантерку. Они ждут Алину домой в Павлодар."
         >
           <span className="scene-star star-one">✧</span>
           <span className="scene-star star-two">✦</span>
@@ -52,7 +52,7 @@ export function Welcome({ onStart }: WelcomeProps) {
           <div className="floating-heart">♡</div>
           <div className="ground"></div>
           <p className="scene-note">
-            «мой дом — это ты»
+            «с тобой я дома»
             <br />
             Твой Иксик ♡
           </p>
@@ -62,7 +62,7 @@ export function Welcome({ onStart }: WelcomeProps) {
 
       <div className="intro-bottom">
         <span>СОЗДАНО С ТЕПЛОМ, В ОДНОМ ЭКЗЕМПЛЯРЕ</span>
-        <span>01 / 08</span>
+        <span>01 / 07</span>
       </div>
     </>
   );

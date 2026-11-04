@@ -4,7 +4,6 @@ import { Story } from '../features/story/Story';
 import { HeartGame } from '../features/heart-game/HeartGame';
 import { MemoryGame } from '../features/memory-game/MemoryGame';
 import { MessageGame } from '../features/message-game/MessageGame';
-import { Reunion } from '../features/reunion/Reunion';
 import { Album } from '../features/album/Album';
 import { Letter } from '../features/letter/Letter';
 import { useMusic } from '../features/music/useMusic';
@@ -15,7 +14,7 @@ export function App() {
   const [chapter, setChapter] = useState<Chapter>('intro');
   const section = useRef<HTMLElement>(null);
   const initialized = useRef(false);
-  const music = useMusic();
+  useMusic();
 
   useEffect(() => {
     if (!initialized.current) {
@@ -37,23 +36,11 @@ export function App() {
           onClick={() => setChapter('intro')}
           aria-label="Вернуться к началу"
         >
-          маленькое чудо<span> для Хозяйки-Пантерки</span>
+          Моя дорогая Алина
         </button>
-        <div
-          className={`music-status${music.status === 'playing' ? ' is-playing' : ''}`}
-          role="status"
-        >
-          <span className="music-notes" aria-hidden="true">
-            ♫
-          </span>
-          <span>
-            {music.status === 'playing'
-              ? 'наша мелодия'
-              : music.status === 'unavailable'
-                ? 'коснись открытки ♡'
-                : 'история с музыкой'}
-          </span>
-        </div>
+        <time className="header-date" dateTime="2026-11-08">
+          8 ноября 2026
+        </time>
       </header>
       <main>
         <section
@@ -75,16 +62,16 @@ export function App() {
             <MemoryGame onContinue={() => setChapter('message')} />
           )}
           {chapter === 'message' && (
-            <MessageGame onContinue={() => setChapter('reunion')} />
-          )}
-          {chapter === 'reunion' && (
-            <Reunion onContinue={() => setChapter('album')} />
+            <MessageGame onContinue={() => setChapter('letter')} />
           )}
           {chapter === 'album' && (
             <Album onContinue={() => setChapter('letter')} />
           )}
           {chapter === 'letter' && (
-            <Letter onRestart={() => setChapter('intro')} />
+            <Letter
+              onAlbum={() => setChapter('album')}
+              onRestart={() => setChapter('intro')}
+            />
           )}
         </section>
       </main>

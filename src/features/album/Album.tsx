@@ -33,9 +33,11 @@ export function Album({ onContinue }: AlbumProps) {
         <em>о нашей первой встрече.</em>
       </h2>
       <p className="section-description">
-        Хозяйка-Пантерка, я люблю тебя. Так я мечтаю однажды быть рядом.
+        Моя Алина, я мечтаю наполнить нашу жизнь такими тихими, счастливыми
+        мгновениями.
         <br />
-        Это мои мечты, а не наши общие фотографии. Твой Иксик ♡
+        Пока они живут в этих картинках. А я так жду нашей первой встречи. Твой
+        Иксик ♡
       </p>
       <div className="album-grid">
         {albumIllustrations.map((illustration, index) => (
@@ -74,10 +76,11 @@ export function Album({ onContinue }: AlbumProps) {
         ))}
       </div>
       <p className="album-postscript">
-        Хозяйка-Пантерка, моё большое признание — в письме. Иксик ♡
+        Моя Алина, я люблю тебя. И верю, что впереди у нас будет много настоящих
+        счастливых мгновений. Твой Иксик ♡
       </p>
       <button className="primary" onClick={onContinue}>
-        Открыть письмо <span>→</span>
+        Вернуться к письму <span>→</span>
       </button>
       <dialog
         className="art-dialog"
