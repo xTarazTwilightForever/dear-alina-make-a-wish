@@ -3,6 +3,7 @@ import { WishMoment } from '../wish/WishMoment';
 import './letter.css';
 import { useState } from 'react';
 import { birthdayContent } from '../../content/birthday';
+import { useDaysSinceMeeting } from './useDaysSinceMeeting';
 
 interface LetterProps {
   onAlbum: () => void;
@@ -10,6 +11,7 @@ interface LetterProps {
   onWishGranted: () => void;
 }
 export function Letter({ onAlbum, wishGranted, onWishGranted }: LetterProps) {
+  const daysSinceMeeting = useDaysSinceMeeting();
   const [wishOpen, setWishOpen] = useState(false);
   const [celebration, setCelebration] = useState(0);
   function celebrate() {
@@ -49,7 +51,9 @@ export function Letter({ onAlbum, wishGranted, onWishGranted }: LetterProps) {
         </h3>
         <div className="letter-body">
           {birthdayContent.paragraphs.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
+            <p key={index}>
+              {paragraph.replace('{daysSinceMeeting}', daysSinceMeeting)}
+            </p>
           ))}
         </div>
         <p className="letter-closing">
