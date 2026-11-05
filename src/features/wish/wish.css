@@ -245,7 +245,20 @@
     0 0 23px #ffd695aa,
     0 0 60px #f3b37466;
   transform-origin: 50% 100%;
-  animation: candle-flicker 2.7s ease-in-out infinite;
+  animation: candle-flicker 0.9s ease-in-out infinite alternate;
+}
+.candle-flame::after {
+  content: '';
+  position: absolute;
+  inset: 20px 8px 3px;
+  border-radius: 55% 45% 50% 50%;
+  background: #fff9dc;
+  box-shadow: 0 0 12px #fff4bf;
+}
+.wish-universe .candle-instruction {
+  color: #ffe4cc;
+  font-weight: 500;
+  margin: 18px auto 0;
 }
 .candle-halo {
   position: absolute;
@@ -298,11 +311,15 @@
   line-height: 1.8;
 }
 @keyframes candle-flicker {
+  0%,
+  100% {
+    transform: rotate(-3deg) scale(0.94, 1.06);
+  }
   35% {
-    transform: rotate(-4deg) scaleY(0.94);
+    transform: rotate(-7deg) scale(1.08, 0.9);
   }
   70% {
-    transform: rotate(4deg) scaleY(1.05);
+    transform: rotate(6deg) scale(0.93, 1.12);
   }
 }
 @keyframes candle-smoke {

@@ -7,6 +7,11 @@ interface ChapterTransitionProps {
 }
 
 const captions: Record<Chapter, { title: string; message: string }> = {
+  ending: {
+    title: 'Самое главное осталось с тобой',
+    message:
+      'Мама, вот и последняя страничка. Никита оставил здесь кое-что важное.',
+  },
   intro: {
     title: 'Начнём нашу историю снова',
     message: 'Мама, я покажу дорогу с самого начала.',

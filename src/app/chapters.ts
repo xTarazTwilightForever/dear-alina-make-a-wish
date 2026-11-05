@@ -6,5 +6,6 @@ export const chapters = [
   'message',
   'letter',
   'album',
+  'ending',
 ] as const;
 export type Chapter = (typeof chapters)[number];

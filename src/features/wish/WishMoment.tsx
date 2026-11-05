@@ -83,6 +83,13 @@ export function WishMoment({
               : 'загадай самое заветное.'}
           </em>
         </h2>
+        {!blown && (
+          <p className="candle-instruction">
+            Загадай желание и задуй горящую свечку.
+            <br />
+            Коснись пламени или нажми кнопку под свечой.
+          </p>
+        )}
         <button
           className={`birthday-candle${blown ? ' extinguished' : ''}`}
           disabled={blown}

@@ -743,3 +743,28 @@ button {
 .story-photo {
   animation: clear-page-arrive 0.45s ease backwards;
 }
+
+.story-ending {
+  max-width: 650px;
+  margin: 0 auto;
+}
+.ending-heart {
+  display: block;
+  color: #f3bfd6;
+  font: 80px/1.2 var(--serif);
+  margin: 20px 0;
+}
+.story-ending > p {
+  color: #f1dfe6;
+  font: 17px/1.75 var(--sans);
+  margin: 22px auto;
+}
+.story-ending .ending-signature {
+  color: #f4bfd6;
+  font: italic 25px/1.5 var(--serif);
+  margin: 32px 0;
+}
+.album-finish {
+  display: block;
+  margin: 25px auto 12px;
+}

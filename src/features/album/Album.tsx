@@ -9,9 +9,10 @@ import './album.css';
 
 interface AlbumProps {
   onContinue: () => void;
+  onFinish: () => void;
 }
 
-export function Album({ onContinue }: AlbumProps) {
+export function Album({ onContinue, onFinish }: AlbumProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const dialog = useRef<HTMLDialogElement>(null);
   const active = albumIllustrations[activeIndex];
@@ -112,7 +113,10 @@ export function Album({ onContinue }: AlbumProps) {
         Моя Алина, я люблю тебя. И верю, что впереди у нас будет много настоящих
         счастливых мгновений. Твой Никита ♡
       </p>
-      <button className="primary" onClick={onContinue}>
+      <button className="primary album-finish" onClick={onFinish}>
+        Конец <span>♡</span>
+      </button>
+      <button className="text-button" onClick={onContinue}>
         Вернуться к письму <span>→</span>
       </button>
       <dialog
@@ -164,12 +168,23 @@ export function Album({ onContinue }: AlbumProps) {
               ←
             </button>
             <span>С любовью, Никита ♡</span>
-            <button
-              onClick={() => navigate(1)}
-              aria-label="Следующая иллюстрация"
-            >
-              →
-            </button>
+            {activeIndex === albumIllustrations.length - 1 ? (
+              <button
+                onClick={() => {
+                  dialog.current?.close();
+                  onFinish();
+                }}
+              >
+                Конец ♡
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate(1)}
+                aria-label="Следующая иллюстрация"
+              >
+                →
+              </button>
+            )}
           </div>
         </div>
       </dialog>

@@ -68,10 +68,10 @@
 .letter-paper .letter-body p {
   color: #f1dfe6;
   font:
-    400 17px/1.95 Georgia,
+    400 17px/1.65 Georgia,
     serif;
-  margin: 0 0 23px;
-  text-indent: 1.3em;
+  margin: 0 0 15px;
+  text-indent: 0;
   letter-spacing: 0;
 }
 .letter-paper .letter-closing {
@@ -166,7 +166,7 @@
   }
   .letter-paper .letter-body p {
     font-size: 17px;
-    line-height: 1.9;
+    line-height: 1.65;
   }
   .letter-paper .signature-name {
     font-size: 16px;

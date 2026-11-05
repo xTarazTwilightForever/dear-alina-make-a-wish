@@ -18,21 +18,8 @@ export function App() {
   const [destination, setDestination] = useState<Chapter | null>(null);
   const turning = useRef(false);
   const [unlocked, setUnlocked] = useState(false);
-  const [wishGranted, setWishGranted] = useState(() => {
-    try {
-      return sessionStorage.getItem('alina-wish-made') === 'yes';
-    } catch {
-      return false;
-    }
-  });
-  const grantWish = useCallback(() => {
-    setWishGranted(true);
-    try {
-      sessionStorage.setItem('alina-wish-made', 'yes');
-    } catch {
-      /* Keep this visit usable without storage. */
-    }
-  }, []);
+  const [wishGranted, setWishGranted] = useState(false);
+  const grantWish = useCallback(() => setWishGranted(true), []);
   const unlock = useCallback(() => setUnlocked(true), []);
   const section = useRef<HTMLElement>(null);
   const initialized = useRef(false);
@@ -53,7 +40,10 @@ export function App() {
       '(prefers-reduced-motion: reduce)',
     ).matches;
     const covered = window.setTimeout(
-      () => setChapter(destination),
+      () => {
+        if (destination === 'album') setWishGranted(false);
+        setChapter(destination);
+      },
       reduced ? 0 : 420,
     );
     const finished = window.setTimeout(
@@ -129,7 +119,45 @@ export function App() {
             <MessageGame onContinue={() => navigate('letter')} />
           )}
           {chapter === 'album' && (
-            <Album onContinue={() => navigate('letter')} />
+            <Album
+              onContinue={() => navigate('letter')}
+              onFinish={() => navigate('ending')}
+            />
+          )}
+          {chapter === 'ending' && (
+            <div className="story-ending">
+              <div className="step">С ЛЮБОВЬЮ, ТВОЙ НИКИТА</div>
+              <span className="ending-heart" aria-hidden="true">
+                ♡
+              </span>
+              <h2 id="ending-title" tabIndex={-1}>
+                Я выбрал тебя.
+                <br />
+                <em>И выбираю каждый день.</em>
+              </h2>
+              <p>Моя любимая Хозяйка-Пантерка. Моя любимая Алина Гомер.</p>
+              <p>
+                Я так рад, что ты появилась в моей жизни. Я счастлив от мысли,
+                что смогу разделить её с тобой: встречать утро рядом, заботиться
+                о тебе и обнимать после долгого дня.
+              </p>
+              <p>
+                Среди всех девушек мира я выбрал тебя. Я мечтаю построить с
+                тобой семью, наполнить наш дом нежностью и прожить рядом целую
+                жизнь.
+              </p>
+              <p>
+                Я создал эту историю, чтобы ты почувствовала, как сильно я тебя
+                люблю. У неё есть последняя страница, а у моей любви к тебе
+                впереди ещё столько счастливых глав.
+              </p>
+              <p className="ending-signature">
+                Твой Никита. Твой Иксик. Всегда с любовью ♡
+              </p>
+              <button className="primary" onClick={() => navigate('album')}>
+                Вернуться в альбом <span>♡</span>
+              </button>
+            </div>
           )}
           {chapter === 'letter' && (
             <Letter
