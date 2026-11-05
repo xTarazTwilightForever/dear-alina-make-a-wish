@@ -19,8 +19,8 @@ export function PasswordGate({ onUnlock }: PasswordGateProps) {
 
   function unlock(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (password.normalize('NFC').trim().toLocaleLowerCase('ru') === 'иксик')
-      setUnlocking(true);
+    const normalized = password.normalize('NFC').trim().toLocaleLowerCase('ru');
+    if (normalized === 'иксик' || normalized === 'brcbr') setUnlocking(true);
     else setError(true);
   }
 
@@ -46,7 +46,7 @@ export function PasswordGate({ onUnlock }: PasswordGateProps) {
           <label htmlFor="postcard-password">Наш маленький пароль</label>
           <input
             id="postcard-password"
-            type="password"
+            type="text"
             disabled={unlocking}
             value={password}
             onChange={(event) => {
