@@ -16,6 +16,7 @@ export function HeartGame({ onFinish }: HeartGameProps) {
     'Мама, мы на Тропе сердечек. В каждом огоньке тебя ждёт признание Иксика. Тишка',
   );
   const [activeHeart, setActiveHeart] = useState<number | null>(null);
+  const messageBox = useRef<HTMLParagraphElement>(null);
   const finishButton = useRef<HTMLButtonElement>(null);
   const { complete, progress, travelerPosition, companionPosition } =
     getJourneyProgress(collected.length);
@@ -23,6 +24,19 @@ export function HeartGame({ onFinish }: HeartGameProps) {
   useEffect(() => {
     if (complete) finishButton.current?.focus({ preventScroll: true });
   }, [complete]);
+
+  useEffect(() => {
+    if (activeHeart === null) return;
+    const frame = window.requestAnimationFrame(() => {
+      messageBox.current?.scrollIntoView({
+        block: 'center',
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'instant'
+          : 'smooth',
+      });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [activeHeart]);
 
   function collect(index: number) {
     const next = collectHeart(collected, index);
@@ -111,6 +125,7 @@ export function HeartGame({ onFinish }: HeartGameProps) {
         </div>
       </div>
       <p
+        ref={messageBox}
         className="heart-message"
         aria-live="polite"
         style={

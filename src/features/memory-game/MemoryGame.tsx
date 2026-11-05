@@ -16,6 +16,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
   const [message, setMessage] = useState(
     'Мама, мы пришли на Мост нежности. Найди пары карточек, чтобы прочитать слова Иксика. Тишка',
   );
+  const messageBox = useRef<HTMLParagraphElement>(null);
   const continueButton = useRef<HTMLButtonElement>(null);
   const complete = matched.length === lovePairs.length;
 
@@ -49,6 +50,19 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
     if (complete) continueButton.current?.focus({ preventScroll: true });
   }, [complete]);
 
+  useEffect(() => {
+    if (matched.length === 0) return;
+    const frame = window.requestAnimationFrame(() => {
+      messageBox.current?.scrollIntoView({
+        block: 'center',
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'instant'
+          : 'smooth',
+      });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [matched.length]);
+
   function turn(id: string) {
     const card = deck.find((item) => item.id === id);
     if (
@@ -77,7 +91,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
         <br />
         Найди шесть пар и прочитай признания Иксика в любви.
       </p>
-      <p className="game-quote" aria-live="polite">
+      <p ref={messageBox} className="game-quote" aria-live="polite">
         {complete
           ? 'Моя Алина, каждое признание приближает меня к тебе хотя бы на одно слово. Я люблю тебя и очень жду нашей первой встречи. Иксик'
           : message}
