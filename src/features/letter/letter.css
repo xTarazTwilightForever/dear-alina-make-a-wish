@@ -179,3 +179,42 @@
     font-size: 23px;
   }
 }
+
+.meeting-clock {
+  margin: 0 0 26px;
+  padding: 20px 12px;
+  border-block: 1px solid #d49bb34d;
+  text-align: center;
+  background: radial-gradient(ellipse, #d18da81c, transparent 75%);
+}
+.letter-paper .meeting-clock-title {
+  color: #f2bfd4;
+  font: 400 14px/1.6 var(--sans);
+  margin: 0 0 15px;
+}
+.meeting-clock-values {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+.meeting-clock-values > span {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+.meeting-clock-values strong {
+  color: #ffe8ef;
+  font: 400 clamp(22px, 6vw, 36px)/1.2 var(--sans);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.meeting-clock-values small {
+  color: #d8bacb;
+  font: 11px/1.4 var(--sans);
+}
+.meeting-clock > time {
+  display: block;
+  margin-top: 16px;
+  color: #d0b4c4;
+  font: 10px/1.7 var(--sans);
+}

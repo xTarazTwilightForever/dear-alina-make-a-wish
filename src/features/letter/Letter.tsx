@@ -11,7 +11,7 @@ interface LetterProps {
   onWishGranted: () => void;
 }
 export function Letter({ onAlbum, wishGranted, onWishGranted }: LetterProps) {
-  const daysSinceMeeting = useDaysSinceMeeting();
+  const { elapsed, dayLabel } = useDaysSinceMeeting();
   const [wishOpen, setWishOpen] = useState(false);
   const [celebration, setCelebration] = useState(0);
   function celebrate() {
@@ -49,10 +49,33 @@ export function Letter({ onAlbum, wishGranted, onWishGranted }: LetterProps) {
           <strong>{birthdayContent.salutation.replace('❤️', '').trim()}</strong>
           <span aria-hidden="true">♡</span>
         </h3>
+        <div className="meeting-clock">
+          <p className="meeting-clock-title">
+            С того самого первого приветствия ♡
+          </p>
+          <div className="meeting-clock-values" role="timer" aria-live="off">
+            {(
+              [
+                ['days', 'дней'],
+                ['hours', 'часов'],
+                ['minutes', 'минут'],
+                ['seconds', 'секунд'],
+              ] as const
+            ).map(([unit, label]) => (
+              <span key={unit}>
+                <strong>{String(elapsed[unit]).padStart(2, '0')}</strong>
+                <small>{label}</small>
+              </span>
+            ))}
+          </div>
+          <time dateTime="2026-11-01T11:10:00+05:00">
+            1 ноября 2026 · 11:10 · Павлодар
+          </time>
+        </div>
         <div className="letter-body">
           {birthdayContent.paragraphs.map((paragraph, index) => (
             <p key={index}>
-              {paragraph.replace('{daysSinceMeeting}', daysSinceMeeting)}
+              {paragraph.replace('{daysSinceMeeting}', dayLabel)}
             </p>
           ))}
         </div>

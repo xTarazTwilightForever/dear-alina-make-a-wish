@@ -1,33 +1,32 @@
 import { useEffect, useState } from 'react';
 
-const firstMeeting = Date.UTC(2026, 10, 1);
-const dayLength = 86_400_000;
-const calendar = new Intl.DateTimeFormat('en-US', {
-  timeZone: 'Asia/Almaty',
-  year: 'numeric',
-  month: 'numeric',
-  day: 'numeric',
-});
+// November 1, 2026 at 11:10 in Pavlodar (UTC+05:00).
+const firstMeeting = Date.parse('2026-11-01T11:10:00+05:00');
 const plurals = new Intl.PluralRules('ru');
 
-function countDays() {
-  const parts = calendar.formatToParts(new Date());
-  const value = (type: Intl.DateTimeFormatPartTypes) =>
-    Number(parts.find((part) => part.type === type)?.value);
-  const today = Date.UTC(value('year'), value('month') - 1, value('day'));
-  return Math.max(0, Math.floor((today - firstMeeting) / dayLength));
+function elapsedTime() {
+  const totalSeconds = Math.max(
+    0,
+    Math.floor((Date.now() - firstMeeting) / 1000),
+  );
+  return {
+    days: Math.floor(totalSeconds / 86_400),
+    hours: Math.floor((totalSeconds % 86_400) / 3600),
+    minutes: Math.floor((totalSeconds % 3600) / 60),
+    seconds: totalSeconds % 60,
+  };
 }
 
 export function useDaysSinceMeeting() {
-  const [days, setDays] = useState(countDays);
+  const [elapsed, setElapsed] = useState(elapsedTime);
 
   useEffect(() => {
-    const update = () => setDays(countDays());
+    const update = () => setElapsed(elapsedTime());
     const onVisible = () => {
       if (document.visibilityState === 'visible') update();
     };
     update();
-    const interval = window.setInterval(update, 30_000);
+    const interval = window.setInterval(update, 1000);
     window.addEventListener('focus', update);
     document.addEventListener('visibilitychange', onVisible);
     return () => {
@@ -37,7 +36,10 @@ export function useDaysSinceMeeting() {
     };
   }, []);
 
-  const form = plurals.select(days);
+  const form = plurals.select(elapsed.days);
   const word = form === 'one' ? 'день' : form === 'few' ? 'дня' : 'дней';
-  return `${days} ${word}`;
+  return {
+    elapsed,
+    dayLabel: `${elapsed.days} ${word}`,
+  };
 }
