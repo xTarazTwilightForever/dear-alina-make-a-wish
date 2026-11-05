@@ -76,3 +76,24 @@
   color: var(--rose);
   margin-top: 28px;
 }
+
+.access-unlocking .access-kitten {
+  filter: drop-shadow(0 0 22px #dc9ab9);
+  animation: access-heartbeat 0.6s ease both;
+}
+.access-unlocking .primary:disabled {
+  opacity: 1;
+  background: #976779;
+  border-color: #976779;
+}
+@keyframes access-heartbeat {
+  40% {
+    scale: 1.12;
+  }
+  75% {
+    scale: 0.98;
+  }
+  100% {
+    scale: 1.04;
+  }
+}

@@ -1,6 +1,10 @@
 import { CatDialogue } from '../../shared/dialogue/CatDialogue';
-import { useRef, useState } from 'react';
-import { albumIllustrations } from '../../content/album';
+import { Fragment, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
+import {
+  albumIllustrations,
+  priorityIllustrationCount,
+} from '../../content/album';
 import './album.css';
 
 interface AlbumProps {
@@ -40,41 +44,62 @@ export function Album({ onContinue }: AlbumProps) {
         Пока они живут в этих картинках. А я так жду нашей первой встречи. Твой
         Никита, твой Иксик ♡
       </p>
+      <div className="album-summary">
+        <span>{albumIllustrations.length} страниц о нас</span>
+        <span>♡</span>
+        <span>{priorityIllustrationCount} новых мечтаний</span>
+      </div>
       <div className="album-grid">
         {albumIllustrations.map((illustration, index) => (
-          <button
-            className="album-card"
-            key={illustration.id}
-            onClick={() => open(index)}
-            aria-label={`Рассмотреть: ${illustration.title}`}
-          >
-            <figure>
-              <div className="album-image">
-                <img
-                  src={illustration.src}
-                  alt={illustration.alt}
-                  width={illustration.width}
-                  height={illustration.height}
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span className="album-expand" aria-hidden="true">
-                  ↗
-                </span>
-              </div>
-              <figcaption>
-                <span className="album-number">0{index + 1}</span>
-                <span>
-                  <strong>{illustration.title}</strong>
-                  <small>{illustration.note}</small>
-                </span>
-                <span className="album-heart" aria-hidden="true">
-                  ♡
-                </span>
-              </figcaption>
-              <CatDialogue text={illustration.dialogue} />
-            </figure>
-          </button>
+          <Fragment key={illustration.id}>
+            {index === priorityIllustrationCount && (
+              <p className="album-chapter-label">
+                Ещё немного наших любимых мечтаний ♡
+              </p>
+            )}
+            <button
+              className={`album-card${illustration.priority ? ' album-card-priority' : ''}`}
+              style={
+                {
+                  '--reveal-delay': `${Math.min(index, 8) * 0.045}s`,
+                } as CSSProperties
+              }
+              onClick={() => open(index)}
+              aria-label={`Рассмотреть: ${illustration.title}`}
+            >
+              <figure>
+                <div className="album-image">
+                  {illustration.priority && (
+                    <span className="album-new">Новая страничка ♡</span>
+                  )}
+                  <img
+                    src={illustration.src}
+                    alt={illustration.alt}
+                    width={illustration.width}
+                    height={illustration.height}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="album-expand" aria-hidden="true">
+                    ↗
+                  </span>
+                </div>
+                <figcaption>
+                  <span className="album-number">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  <span>
+                    <strong>{illustration.title}</strong>
+                    <small>{illustration.note}</small>
+                  </span>
+                  <span className="album-heart" aria-hidden="true">
+                    ♡
+                  </span>
+                </figcaption>
+                <CatDialogue text={illustration.dialogue} />
+              </figure>
+            </button>
+          </Fragment>
         ))}
       </div>
       <p className="album-postscript">
@@ -112,6 +137,7 @@ export function Album({ onContinue }: AlbumProps) {
             ×
           </button>
           <img
+            key={active.id}
             src={active.src}
             alt={active.alt}
             width={active.width}

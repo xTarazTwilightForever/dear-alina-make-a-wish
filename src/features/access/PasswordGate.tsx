@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
 import { CatCharacter } from '../../shared/characters/CatCharacter';
 import './access.css';
@@ -10,18 +10,24 @@ interface PasswordGateProps {
 export function PasswordGate({ onUnlock }: PasswordGateProps) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [unlocking, setUnlocking] = useState(false);
+  useEffect(() => {
+    if (!unlocking) return;
+    const timer = window.setTimeout(onUnlock, 650);
+    return () => window.clearTimeout(timer);
+  }, [unlocking, onUnlock]);
 
   function unlock(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (password.normalize('NFC').trim().toLocaleLowerCase('ru') === 'иксик')
-      onUnlock();
+      setUnlocking(true);
     else setError(true);
   }
 
   return (
     <main className="access-screen">
       <time dateTime="2026-11-08">8 ноября 2026</time>
-      <div className="access-card">
+      <div className={`access-card${unlocking ? ' access-unlocking' : ''}`}>
         <div className="access-kitten">
           <CatCharacter character="white" />
         </div>
@@ -41,6 +47,7 @@ export function PasswordGate({ onUnlock }: PasswordGateProps) {
           <input
             id="postcard-password"
             type="password"
+            disabled={unlocking}
             value={password}
             onChange={(event) => {
               setPassword(event.target.value);
@@ -59,8 +66,9 @@ export function PasswordGate({ onUnlock }: PasswordGateProps) {
               ? 'Попробуй ещё раз, Пантерка. Как ты зовёшь своего белого котика?'
               : ''}
           </p>
-          <button className="primary" type="submit">
-            Открыть нашу историю <span>♡</span>
+          <button className="primary" type="submit" disabled={unlocking}>
+            {unlocking ? 'Узнал тебя, моя Алина' : 'Открыть нашу историю'}{' '}
+            <span>♡</span>
           </button>
         </form>
         <p className="access-signature">С любовью, Никита. Твой Иксик.</p>

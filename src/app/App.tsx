@@ -1,5 +1,6 @@
+import { RomanceEffects } from '../features/effects/RomanceEffects';
 import { PasswordGate } from '../features/access/PasswordGate';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Welcome } from '../features/welcome/Welcome';
 import { Story } from '../features/story/Story';
 import { HeartGame } from '../features/heart-game/HeartGame';
@@ -14,6 +15,7 @@ import type { Chapter } from './chapters';
 export function App() {
   const [chapter, setChapter] = useState<Chapter>('intro');
   const [unlocked, setUnlocked] = useState(false);
+  const unlock = useCallback(() => setUnlocked(true), []);
   const section = useRef<HTMLElement>(null);
   const initialized = useRef(false);
   useMusic();
@@ -29,10 +31,17 @@ export function App() {
       ?.focus({ preventScroll: true });
   }, [chapter, unlocked]);
 
-  if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
+  if (!unlocked)
+    return (
+      <>
+        <RomanceEffects />
+        <PasswordGate onUnlock={unlock} />
+      </>
+    );
 
   return (
     <>
+      <RomanceEffects />
       <div className="paper-grain" aria-hidden="true" />
       <header>
         <button

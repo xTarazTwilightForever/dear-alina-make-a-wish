@@ -1,0 +1,68 @@
+.romance-effects {
+  position: fixed;
+  inset: 0;
+  z-index: 12;
+  pointer-events: none;
+  overflow: hidden;
+}
+.romance-ambient {
+  position: absolute;
+  inset: 0;
+  opacity: 0.45;
+}
+.romance-ambient > span {
+  position: absolute;
+  top: 105%;
+  color: #bd8d9d;
+  text-shadow: 0 0 12px #e8bac699;
+  font-size: var(--flight-size);
+  animation: romance-drift var(--flight-duration) var(--flight-delay) linear
+    infinite;
+}
+.romance-burst {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+}
+.romance-burst i {
+  position: absolute;
+  color: #b66f8d;
+  font: normal 17px var(--serif);
+  animation: romance-burst 1.25s ease-out both;
+}
+.romance-burst i:nth-child(even) {
+  color: #b3935c;
+}
+@keyframes romance-drift {
+  0% {
+    translate: 0 0;
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.5;
+  }
+  100% {
+    translate: 16px -115vh;
+    rotate: 80deg;
+    opacity: 0;
+  }
+}
+@keyframes romance-burst {
+  from {
+    opacity: 0.85;
+    transform: translate(-50%, -50%) scale(0.35);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--burst-x), var(--burst-y))
+      rotate(var(--burst-angle)) scale(1.1);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .romance-effects {
+    display: none;
+  }
+}
