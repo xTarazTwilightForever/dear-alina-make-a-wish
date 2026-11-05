@@ -28,11 +28,12 @@ header {
   padding-top: max(24px, env(safe-area-inset-top));
 }
 main {
-  perspective: 1400px;
+  perspective: none;
 }
 .screen {
-  transform-origin: 10% 25%;
-  animation: romantic-page-in 0.75s cubic-bezier(0.2, 0.7, 0.25, 1) both;
+  transform: none;
+  transform-origin: center;
+  animation: clear-page-arrive 0.45s ease backwards;
 }
 .wordmark:disabled {
   opacity: 1;
@@ -305,12 +306,12 @@ button {
   font-size: 12px;
 }
 .letter-paper {
-  color: #4b3c46;
-  --muted: #8c727f;
-  --rose: #a95676;
-  --line: #ead6df;
-  background: #fff8ef;
-  box-shadow: 0 12px 50px #09051355;
+  color: #f9e9ed;
+  --muted: #cfb5c3;
+  --rose: #eeb5cd;
+  --line: #805b76;
+  background: linear-gradient(145deg, #3b2840, #291e35);
+  box-shadow: 0 14px 45px #09051355;
 }
 .letter-paper p {
   font-size: 15px;
@@ -644,7 +645,8 @@ button {
 }
 
 .story-layout {
-  animation: romantic-page-in 0.7s cubic-bezier(0.2, 0.7, 0.25, 1) both;
+  transform: none;
+  animation: clear-page-arrive 0.45s ease backwards;
 }
 .wish-fulfilled .wish-stars {
   animation: wish-sky-bloom 1.7s ease-out both;
@@ -661,4 +663,83 @@ button {
     opacity: 1;
     scale: 1.03;
   }
+}
+
+@keyframes clear-page-arrive {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.screen,
+.story-layout,
+.letter-paper,
+.letter-paper * {
+  text-shadow: none;
+  filter: none;
+}
+.screen {
+  -webkit-font-smoothing: antialiased;
+}
+.wish-dialog .birthday-candle,
+.wish-dialog .birthday-candle:focus,
+.wish-dialog .birthday-candle:focus-visible {
+  outline: none;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.wish-dialog .birthday-candle:focus-visible .candle-wax {
+  box-shadow:
+    inset -9px 0 20px #9d4f7d44,
+    0 0 25px #ffe4b677;
+}
+.memory-white-paw {
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  fill: #fff;
+  vertical-align: middle;
+}
+.tishka-guide {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 580px;
+  margin: 0 auto 22px;
+  text-align: left;
+  padding: 12px 16px;
+  background: #33223b;
+  border: 1px solid #74556b;
+  border-radius: 18px;
+}
+.tishka-guide-avatar {
+  display: block;
+  flex: 0 0 54px;
+  width: 54px;
+  height: 65px;
+}
+.tishka-guide strong {
+  display: block;
+  color: #f0bdd0;
+  font: 600 12px var(--sans);
+  margin-bottom: 6px;
+}
+.tishka-guide > span:last-child > span {
+  display: block;
+  color: #e7d1dc;
+  font: 13px/1.7 var(--sans);
+}
+
+.letter-paper .signature-ink img {
+  filter: invert(1);
+}
+.story-photo,
+.message-paper {
+  rotate: 0deg;
+}
+.story-photo {
+  animation: clear-page-arrive 0.45s ease backwards;
 }

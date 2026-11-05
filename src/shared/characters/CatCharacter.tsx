@@ -41,7 +41,7 @@ export function CatCharacter({ character, className = '' }: CatCharacterProps) {
         />
         <path
           d="M59 204Q39 224 63 230H82Q94 216 83 205M120 205Q106 223 124 230H144Q163 221 144 205"
-          fill={fur}
+          fill={white ? fur : '#f4f0e8'}
         />
         <path
           d="M43 87C24 71 19 37 24 16L76 47M126 48L175 10C185 37 177 71 159 88"

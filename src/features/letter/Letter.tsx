@@ -1,3 +1,4 @@
+import signatureImage from '../../assets/personal/nikita-signature.png';
 import { WishMoment } from '../wish/WishMoment';
 import './letter.css';
 import { useState } from 'react';
@@ -30,29 +31,49 @@ export function Letter({ onAlbum, wishGranted, onWishGranted }: LetterProps) {
         Моя Алина, я люблю тебя.
         <br />В этом письме всё, что я так хочу сказать тебе при встрече.
       </p>
-      <article className="letter-paper">
-        <time className="letter-date" dateTime="2026-11-08">
-          8 ноября 2026
-        </time>
-        <h3>
-          <strong>{birthdayContent.salutation}</strong>
+      <article className="letter-paper" aria-label="Личное письмо Никиты Алине">
+        <div className="letter-stationery-head">
+          <span className="letter-sender">
+            ЛИЧНОЕ ПИСЬМО
+            <br />
+            <strong>От Никиты, для Алины</strong>
+          </span>
+          <time className="letter-date" dateTime="2026-11-08">
+            8 ноября 2026
+          </time>
+        </div>
+        <div className="letter-rule" aria-hidden="true" />
+        <h3 className="letter-salutation">
+          <strong>{birthdayContent.salutation.replace('❤️', '').trim()}</strong>
+          <span aria-hidden="true">♡</span>
         </h3>
-        {birthdayContent.paragraphs.map((paragraph, index) => (
-          <p key={index}>{paragraph}</p>
-        ))}
+        <div className="letter-body">
+          {birthdayContent.paragraphs.map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
+        </div>
         <p className="letter-closing">
           <strong>{birthdayContent.closing}</strong>
         </p>
-        <p className="signature">
-          {birthdayContent.signature}
-          <br />
-          {birthdayContent.signatureRole}
-          <br />
-          <strong>{birthdayContent.signatureName}</strong>
+        <div className="letter-signoff">
+          <p className="signature-intro">
+            {birthdayContent.signature}
+            <br />
+            {birthdayContent.signatureRole}
+          </p>
+          <p className="signature-name">{birthdayContent.signatureName}</p>
+          <div className="signature-ink">
+            <img
+              src={signatureImage}
+              width="3440"
+              height="1440"
+              alt="Личная подпись Никиты"
+            />
+          </div>
+        </div>
+        <p className="letter-postscript">
+          P. S. Моя Алина, я очень жду нашей первой встречи.
         </p>
-        <span className="letter-doodle" aria-hidden="true">
-          ♡
-        </span>
       </article>
       <p className="ending">
         Моя Алина, я люблю тебя. Как же я жду, когда смогу сказать это, глядя

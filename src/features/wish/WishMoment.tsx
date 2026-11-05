@@ -52,6 +52,7 @@ export function WishMoment({
   }
   function close() {
     microphone.stop();
+    if (dialog.current?.open) dialog.current.close();
     onClose();
   }
 
@@ -146,7 +147,14 @@ export function WishMoment({
           </>
         )}
         {blown && (
-          <button className="wish-keep" autoFocus onClick={onAlbum}>
+          <button
+            className="wish-keep"
+            autoFocus
+            onClick={() => {
+              close();
+              onAlbum();
+            }}
+          >
             Открыть альбом Иксика <span>→</span>
           </button>
         )}

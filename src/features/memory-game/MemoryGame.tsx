@@ -105,7 +105,41 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
                   <span className="memory-label">для тебя</span>
                 </span>
                 <span className="memory-card-face memory-card-front">
-                  <span className="memory-symbol">{card.symbol}</span>
+                  <span className="memory-symbol">
+                    {card.pairId === 'paws' ? (
+                      <svg
+                        className="memory-white-paw"
+                        viewBox="0 0 48 48"
+                        aria-hidden="true"
+                      >
+                        <ellipse
+                          cx="11"
+                          cy="14"
+                          rx="5"
+                          ry="7"
+                          transform="rotate(-25 11 14)"
+                        />
+                        <ellipse cx="22" cy="9" rx="5" ry="7" />
+                        <ellipse
+                          cx="34"
+                          cy="13"
+                          rx="5"
+                          ry="7"
+                          transform="rotate(22 34 13)"
+                        />
+                        <ellipse
+                          cx="41"
+                          cy="24"
+                          rx="4"
+                          ry="6"
+                          transform="rotate(35 41 24)"
+                        />
+                        <path d="M12 32c0-6 7-14 13-14s14 9 14 15c0 8-8 7-13 5-6-2-14 4-14-6Z" />
+                      </svg>
+                    ) : (
+                      card.symbol
+                    )}
+                  </span>
                   <span className="memory-label">{card.name}</span>
                   <span className="memory-found">
                     {found ? 'пара найдена ♡' : ''}

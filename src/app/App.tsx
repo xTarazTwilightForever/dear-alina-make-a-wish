@@ -1,3 +1,4 @@
+import { ChapterTransition } from '../features/transitions/ChapterTransition';
 import { RomanceEffects } from '../features/effects/RomanceEffects';
 import { PasswordGate } from '../features/access/PasswordGate';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -14,6 +15,8 @@ import type { Chapter } from './chapters';
 
 export function App() {
   const [chapter, setChapter] = useState<Chapter>('intro');
+  const [destination, setDestination] = useState<Chapter | null>(null);
+  const turning = useRef(false);
   const [unlocked, setUnlocked] = useState(false);
   const [wishGranted, setWishGranted] = useState(() => {
     try {
@@ -35,16 +38,48 @@ export function App() {
   const initialized = useRef(false);
   useMusic();
 
+  const navigate = useCallback(
+    (next: Chapter) => {
+      if (turning.current || next === chapter) return;
+      turning.current = true;
+      setDestination(next);
+    },
+    [chapter],
+  );
+
+  useEffect(() => {
+    if (!destination) return;
+    const reduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    ).matches;
+    const covered = window.setTimeout(
+      () => setChapter(destination),
+      reduced ? 0 : 420,
+    );
+    const finished = window.setTimeout(
+      () => {
+        turning.current = false;
+        setDestination(null);
+      },
+      reduced ? 120 : 1800,
+    );
+    return () => {
+      window.clearTimeout(covered);
+      window.clearTimeout(finished);
+    };
+  }, [destination]);
+
   useEffect(() => {
     if (!initialized.current) {
       initialized.current = true;
       return;
     }
+    if (destination) return;
     window.scrollTo({ top: 0, behavior: 'instant' });
     section.current
       ?.querySelector<HTMLElement>('h1,h2')
       ?.focus({ preventScroll: true });
-  }, [chapter, unlocked]);
+  }, [chapter, unlocked, destination]);
 
   if (!unlocked)
     return (
@@ -58,11 +93,12 @@ export function App() {
     <>
       <RomanceEffects />
       <div className="paper-grain" aria-hidden="true" />
-      <header>
+      {destination && <ChapterTransition destination={destination} />}
+      <header inert={destination !== null}>
         <button
           className="wordmark"
           disabled={chapter === 'letter' && wishGranted}
-          onClick={() => setChapter('intro')}
+          onClick={() => navigate('intro')}
           aria-label="Вернуться к началу"
         >
           Моя дорогая Алина
@@ -71,7 +107,7 @@ export function App() {
           8 ноября 2026
         </time>
       </header>
-      <main>
+      <main inert={destination !== null}>
         <section
           ref={section}
           key={chapter}
@@ -81,27 +117,23 @@ export function App() {
           <div className="page-turn-hearts" aria-hidden="true">
             ✧ ♡ ✧
           </div>
-          {chapter === 'intro' && (
-            <Welcome onStart={() => setChapter('story')} />
-          )}
-          {chapter === 'story' && (
-            <Story onContinue={() => setChapter('game')} />
-          )}
+          {chapter === 'intro' && <Welcome onStart={() => navigate('story')} />}
+          {chapter === 'story' && <Story onContinue={() => navigate('game')} />}
           {chapter === 'game' && (
-            <HeartGame onFinish={() => setChapter('memory')} />
+            <HeartGame onFinish={() => navigate('memory')} />
           )}
           {chapter === 'memory' && (
-            <MemoryGame onContinue={() => setChapter('message')} />
+            <MemoryGame onContinue={() => navigate('message')} />
           )}
           {chapter === 'message' && (
-            <MessageGame onContinue={() => setChapter('letter')} />
+            <MessageGame onContinue={() => navigate('letter')} />
           )}
           {chapter === 'album' && (
-            <Album onContinue={() => setChapter('letter')} />
+            <Album onContinue={() => navigate('letter')} />
           )}
           {chapter === 'letter' && (
             <Letter
-              onAlbum={() => setChapter('album')}
+              onAlbum={() => navigate('album')}
               wishGranted={wishGranted}
               onWishGranted={grantWish}
             />
