@@ -50,20 +50,6 @@
   color: var(--muted);
   min-height: 20px;
 }
-#confetti {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-  z-index: 20;
-}
-.confetti-piece {
-  position: absolute;
-  top: -30px;
-  animation: fall var(--duration) ease-in forwards;
-  color: var(--color);
-  font-size: var(--size);
-}
 @media (max-width: 760px) {
   .letter-paper {
     padding: 30px 25px;
@@ -95,4 +81,10 @@
   max-width: 660px;
   margin: 28px auto;
   line-height: 1.5;
+}
+
+.wish-trigger {
+  background: linear-gradient(125deg, #614357, #9c607b);
+  border-color: #9c607b;
+  box-shadow: 0 0 25px #b366761a;
 }

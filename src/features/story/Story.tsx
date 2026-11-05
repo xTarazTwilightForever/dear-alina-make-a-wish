@@ -1,3 +1,4 @@
+import { CatDialogue } from '../../shared/dialogue/CatDialogue';
 import { useEffect, useRef, useState } from 'react';
 import { storyPages } from '../../content/story';
 import './story.css';
@@ -26,6 +27,7 @@ export function Story({ onContinue }: StoryProps) {
           <img src={current.photo} alt={current.alt} decoding="async" />
           <figcaption>
             {current.caption} <span aria-hidden="true">♡</span>
+            <CatDialogue text={current.dialogue} />
           </figcaption>
         </figure>
         <div className="story-copy">

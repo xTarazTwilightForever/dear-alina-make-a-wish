@@ -1,3 +1,4 @@
+import { CatDialogue } from '../../shared/dialogue/CatDialogue';
 import { useRef, useState } from 'react';
 import { albumIllustrations } from '../../content/album';
 import './album.css';
@@ -37,7 +38,7 @@ export function Album({ onContinue }: AlbumProps) {
         мгновениями.
         <br />
         Пока они живут в этих картинках. А я так жду нашей первой встречи. Твой
-        Иксик ♡
+        Никита, твой Иксик ♡
       </p>
       <div className="album-grid">
         {albumIllustrations.map((illustration, index) => (
@@ -71,13 +72,14 @@ export function Album({ onContinue }: AlbumProps) {
                   ♡
                 </span>
               </figcaption>
+              <CatDialogue text={illustration.dialogue} />
             </figure>
           </button>
         ))}
       </div>
       <p className="album-postscript">
         Моя Алина, я люблю тебя. И верю, что впереди у нас будет много настоящих
-        счастливых мгновений. Твой Иксик ♡
+        счастливых мгновений. Твой Никита ♡
       </p>
       <button className="primary" onClick={onContinue}>
         Вернуться к письму <span>→</span>
@@ -121,6 +123,7 @@ export function Album({ onContinue }: AlbumProps) {
               {activeIndex + 1} / {albumIllustrations.length}
             </span>
           </div>
+          <CatDialogue text={active.dialogue} />
           <div className="art-controls">
             <button
               onClick={() => navigate(-1)}
@@ -128,7 +131,7 @@ export function Album({ onContinue }: AlbumProps) {
             >
               ←
             </button>
-            <span>С любовью, Иксик ♡</span>
+            <span>С любовью, Никита ♡</span>
             <button
               onClick={() => navigate(1)}
               aria-label="Следующая иллюстрация"

@@ -1,3 +1,4 @@
+import { PasswordGate } from '../features/access/PasswordGate';
 import { useEffect, useRef, useState } from 'react';
 import { Welcome } from '../features/welcome/Welcome';
 import { Story } from '../features/story/Story';
@@ -12,6 +13,7 @@ import type { Chapter } from './chapters';
 
 export function App() {
   const [chapter, setChapter] = useState<Chapter>('intro');
+  const [unlocked, setUnlocked] = useState(false);
   const section = useRef<HTMLElement>(null);
   const initialized = useRef(false);
   useMusic();
@@ -25,7 +27,9 @@ export function App() {
     section.current
       ?.querySelector<HTMLElement>('h1,h2')
       ?.focus({ preventScroll: true });
-  }, [chapter]);
+  }, [chapter, unlocked]);
+
+  if (!unlocked) return <PasswordGate onUnlock={() => setUnlocked(true)} />;
 
   return (
     <>

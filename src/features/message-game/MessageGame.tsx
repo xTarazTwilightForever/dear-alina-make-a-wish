@@ -19,7 +19,7 @@ export function MessageGame({ onContinue }: MessageGameProps) {
   const [selected, setSelected] = useState<readonly number[]>([]);
   const [hint, setHint] = useState(false);
   const [message, setMessage] = useState(
-    '«Мама, мы добрались до Признания Иксика. Собери слова по порядку, и откроется его письмо». Тишка',
+    'Мама, мы добрались до Признания Иксика. Собери слова по порядку, и откроется его письмо. Тишка',
   );
 
   function isComplete(ids: readonly number[]) {
@@ -40,7 +40,7 @@ export function MessageGame({ onContinue }: MessageGameProps) {
     if (isComplete(selected)) onContinue();
     else
       setMessage(
-        '«Мама, кажется, слова немного перепутались. Нажми на слово в письме, чтобы вернуть его вниз. Если захочешь, я подскажу». Тишка',
+        'Мама, кажется, слова немного перепутались. Нажми на слово в письме, чтобы вернуть его вниз. Если захочешь, я подскажу. Тишка',
       );
   }
 
@@ -56,7 +56,7 @@ export function MessageGame({ onContinue }: MessageGameProps) {
       <p className="section-description">
         Собери признание Иксика, чтобы открыть его письмо.
         <br />
-        Начни с «Моя Алина,», а закончи «дом.».
+        Начни с Моя Алина,, а закончи дом..
       </p>
       <div className="message-paper">
         <span className="message-address">МОЕЙ АЛИНЕ, С ЛЮБОВЬЮ</span>
@@ -114,9 +114,10 @@ export function MessageGame({ onContinue }: MessageGameProps) {
       </button>
       {hint && (
         <p className="message-hint">
-          «{loveMessage.join(' ')}»<br />
+          {loveMessage.join(' ')}
+          <br />
           <span>
-            «Мама, вот как Никита хотел сказать… ой, Иксик, конечно». Тишка
+            Мама, вот как Никита хотел сказать… ой, Иксик, конечно. Тишка
           </span>
         </p>
       )}

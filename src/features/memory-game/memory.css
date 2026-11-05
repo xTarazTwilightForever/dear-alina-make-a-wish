@@ -8,17 +8,50 @@
   gap: 12px;
   max-width: 540px;
   margin: 30px auto 20px;
+  perspective: 1100px;
 }
 .memory-card {
   position: relative;
+  display: block;
+  width: 100%;
+  min-height: 122px;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  perspective: 800px;
+  transition: transform 0.3s ease;
+  transform: rotate(0deg);
+}
+.memory-card:disabled {
+  opacity: 1;
+}
+.memory-card-inner {
+  position: absolute;
+  inset: 0;
+  display: block;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.2, 0.7, 0.3, 1);
+  border-radius: inherit;
+}
+.memory-card.revealed .memory-card-inner {
+  transform: rotateY(180deg);
+}
+.memory-card-face {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 122px;
-  aspect-ratio: 1;
+  border-radius: inherit;
   border: 1px solid #dfcdd0;
-  border-radius: 12px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 4px 12px #68544408;
+}
+.memory-card-back {
   color: #bf94a0;
   background: repeating-linear-gradient(
     45deg,
@@ -27,29 +60,17 @@
     #f3e4e4 8px,
     #f3e4e4 9px
   );
-  box-shadow: 0 4px 12px #68544406;
-  transition:
-    background 0.3s,
-    transform 0.25s,
-    border-color 0.3s;
+  transform: rotateY(0deg);
 }
-.memory-card:hover:enabled {
-  transform: translateY(-3px);
-  border-color: var(--rose);
-}
-.memory-card:disabled {
-  opacity: 1;
-}
-.memory-card.revealed {
+.memory-card-front {
   background: #fffdf8;
   color: var(--rose);
-  transform: rotate(-2deg);
+  transform: rotateY(180deg);
 }
-.memory-card.matched {
+.memory-card.matched .memory-card-front {
   background: #edf0e7;
   border-color: #bcc4aa;
   color: #798360;
-  transform: none;
 }
 .memory-symbol {
   font: 40px/1.2 var(--serif);
@@ -59,12 +80,25 @@
   letter-spacing: 0.5px;
   margin-top: 8px;
 }
+.memory-found {
+  min-height: 12px;
+  font-size: 7px;
+  margin-top: 6px;
+}
 .memory-progress {
   display: flex;
   justify-content: center;
   gap: 25px;
   color: var(--muted);
   font-size: 10px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .memory-card:hover:enabled {
+    transform: translateY(-4px) rotate(-4deg);
+  }
+  .memory-card:nth-child(even):hover:enabled {
+    transform: translateY(-4px) rotate(4deg);
+  }
 }
 @media (max-width: 600px) {
   .memory-grid {

@@ -52,7 +52,7 @@ export function Welcome({ onStart }: WelcomeProps) {
           <div className="floating-heart">♡</div>
           <div className="ground"></div>
           <p className="scene-note">
-            «с тобой я дома»
+            с тобой я дома
             <br />
             Твой Иксик ♡
           </p>

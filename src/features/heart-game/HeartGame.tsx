@@ -2,7 +2,8 @@ import './game.css';
 import { CatCharacter } from '../../shared/characters/CatCharacter';
 import { collectHeart, getJourneyProgress, heartPositions } from './model';
 import { useEffect, useRef, useState } from 'react';
-import { trailConfessions } from '../../content/story';
+import type { CSSProperties } from 'react';
+import { trailConfessions, heartPalette } from '../../content/story';
 import { JourneyMap } from '../adventure/JourneyMap';
 
 interface HeartGameProps {
@@ -12,8 +13,9 @@ interface HeartGameProps {
 export function HeartGame({ onFinish }: HeartGameProps) {
   const [collected, setCollected] = useState<readonly number[]>([]);
   const [message, setMessage] = useState(
-    '«Мама, мы на Тропе сердечек. В каждом огоньке тебя ждёт признание Иксика». Тишка',
+    'Мама, мы на Тропе сердечек. В каждом огоньке тебя ждёт признание Иксика. Тишка',
   );
+  const [activeHeart, setActiveHeart] = useState<number | null>(null);
   const finishButton = useRef<HTMLButtonElement>(null);
   const { complete, progress, travelerPosition, companionPosition } =
     getJourneyProgress(collected.length);
@@ -26,6 +28,7 @@ export function HeartGame({ onFinish }: HeartGameProps) {
     const next = collectHeart(collected, index);
     if (next === collected) return;
     setCollected(next);
+    setActiveHeart(index);
     setMessage(trailConfessions[index]);
   }
 
@@ -39,7 +42,7 @@ export function HeartGame({ onFinish }: HeartGameProps) {
         <em>маленькие лапки.</em>
       </h2>
       <p className="section-description">
-        «Мама, вот и Тропа сердечек. Иксик оставил здесь свои послания». Тишка
+        Мама, вот и Тропа сердечек. Иксик оставил здесь свои послания. Тишка
         <br />
         Открой пять сердечек и прочитай его признания в любви.
       </p>
@@ -71,12 +74,15 @@ export function HeartGame({ onFinish }: HeartGameProps) {
             <button
               key={index}
               className={`heart${collected.includes(index) ? ' collected' : ''}`}
-              style={{
-                left: `${left}%`,
-                top: `${top}%`,
-                animationDelay: `-${index * 0.5}s`,
-              }}
-              aria-label={`Собрать сердечко ${index + 1}`}
+              style={
+                {
+                  left: `${left}%`,
+                  top: `${top}%`,
+                  animationDelay: `-${index * 0.5}s`,
+                  '--heart-color': heartPalette[index].color,
+                } as CSSProperties
+              }
+              aria-label={`Собрать ${heartPalette[index].name} сердечко ${index + 1}`}
               disabled={collected.includes(index)}
               onClick={() => collect(index)}
             >
@@ -104,7 +110,15 @@ export function HeartGame({ onFinish }: HeartGameProps) {
           <div style={{ width: `${progress * 100}%` }} />
         </div>
       </div>
-      <p className="heart-message" aria-live="polite">
+      <p
+        className="heart-message"
+        aria-live="polite"
+        style={
+          activeHeart === null
+            ? undefined
+            : { color: heartPalette[activeHeart].color }
+        }
+      >
         {message}
       </p>
       <button

@@ -1,0 +1,177 @@
+.wish-dialog {
+  padding: 0;
+  border: 1px solid #b395b34d;
+  border-radius: 20px;
+  width: min(760px, calc(100% - 28px));
+  max-height: calc(100dvh - 28px);
+  color: #fff2e2;
+  background: #1c122b;
+  overflow: auto;
+}
+.wish-dialog::backdrop {
+  background: #120b20d9;
+  backdrop-filter: blur(10px);
+  animation: wish-backdrop 0.7s ease both;
+}
+.wish-universe {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 190px 30px 45px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 18%, #75416d88, transparent 60%),
+    linear-gradient(160deg, #20132e, #312037 65%, #20162e);
+}
+.wish-stars {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.wish-stars span {
+  position: absolute;
+  width: var(--star-size);
+  height: var(--star-size);
+  border-radius: 50%;
+  background: #ffe5b9;
+  box-shadow: 0 0 9px #ffdab6;
+  opacity: 0.5;
+  animation: wish-twinkle var(--duration) var(--delay) ease-in-out infinite
+    alternate;
+}
+.wish-orbits {
+  position: absolute;
+  left: 50%;
+  top: 95px;
+  width: 130px;
+  height: 130px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+}
+.wish-orbits b {
+  font: 85px/1 var(--serif);
+  color: #ffd5dd;
+  text-shadow:
+    0 0 30px #ed96bc,
+    0 0 75px #e17bb3;
+  font-weight: 400;
+  animation: wish-heart 2.4s ease-in-out infinite;
+}
+.wish-orbits > span {
+  position: absolute;
+  inset: -5px;
+  border: 1px solid #edc3a9aa;
+  border-radius: 50%;
+  animation: wish-ripple 3.8s ease-out infinite;
+}
+.wish-orbits > span:nth-child(2) {
+  animation-delay: 1.2s;
+}
+.wish-orbits > span:nth-child(3) {
+  animation-delay: 2.4s;
+}
+.wish-from {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #d4b2be;
+}
+.wish-universe h2 {
+  font-size: clamp(34px, 6vw, 58px);
+  line-height: 1.15;
+  margin-top: 20px;
+}
+.wish-universe h2 em {
+  color: #f0bdcd;
+}
+.wish-universe > p:not(.wish-from) {
+  font-size: 12px;
+  line-height: 2;
+  color: #d8c4ca;
+}
+.wish-keep {
+  margin-top: 22px;
+  border: 1px solid #efd2c373;
+  background: #fce3d40d;
+  color: #fce6dd;
+  padding: 16px 22px;
+  border-radius: 30px;
+  font-size: 11px;
+  min-height: 50px;
+}
+.wish-keep span {
+  margin-left: 14px;
+}
+.wish-autograph {
+  display: block;
+  font: italic 25px var(--serif);
+  color: #e4afc2;
+  margin-top: 25px;
+}
+.wish-shooting-star {
+  position: absolute;
+  top: 20px;
+  right: -80px;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffedc4);
+  transform: rotate(-35deg);
+  animation: wish-shoot 5s 1s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes wish-twinkle {
+  from {
+    opacity: 0.25;
+    scale: 0.6;
+  }
+  to {
+    opacity: 0.9;
+    scale: 1.2;
+  }
+}
+@keyframes wish-heart {
+  50% {
+    scale: 1.08;
+  }
+}
+@keyframes wish-ripple {
+  from {
+    scale: 0.65;
+    opacity: 0.9;
+  }
+  to {
+    scale: 2;
+    opacity: 0;
+  }
+}
+@keyframes wish-shoot {
+  0% {
+    translate: 0 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  30%,
+  100% {
+    translate: -800px 500px;
+    opacity: 0;
+  }
+}
+@keyframes wish-backdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 600px) {
+  .wish-universe {
+    padding: 175px 22px 30px;
+  }
+  .wish-universe h2 {
+    font-size: 36px;
+  }
+}

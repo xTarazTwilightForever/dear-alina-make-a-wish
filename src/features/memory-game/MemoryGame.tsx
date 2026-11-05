@@ -14,7 +14,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
   const [matched, setMatched] = useState<readonly string[]>([]);
   const [moves, setMoves] = useState(0);
   const [message, setMessage] = useState(
-    '«Мама, мы пришли на Мост нежности. Найди пары карточек, чтобы прочитать слова Иксика». Тишка',
+    'Мама, мы пришли на Мост нежности. Найди пары карточек, чтобы прочитать слова Иксика. Тишка',
   );
   const continueButton = useRef<HTMLButtonElement>(null);
   const complete = matched.length === lovePairs.length;
@@ -33,10 +33,10 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
               ? current
               : [...current, first.pairId],
           );
-          setMessage(`«${first.note}» Иксик`);
+          setMessage(`${first.note} Никита, твой Иксик.`);
         } else
           setMessage(
-            '«Мама, эти карточки разные. Запомни их и открой следующую пару». Тишка',
+            'Мама, эти карточки разные. Запомни их и открой следующую пару. Тишка',
           );
         setOpened([]);
       },
@@ -94,11 +94,18 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
               }
               aria-pressed={revealed}
             >
-              <span className="memory-symbol" aria-hidden="true">
-                {revealed ? card.symbol : '♡'}
-              </span>
-              <span className="memory-label" aria-hidden="true">
-                {revealed ? card.name : 'для тебя'}
+              <span className="memory-card-inner" aria-hidden="true">
+                <span className="memory-card-face memory-card-back">
+                  <span className="memory-symbol">♡</span>
+                  <span className="memory-label">для тебя</span>
+                </span>
+                <span className="memory-card-face memory-card-front">
+                  <span className="memory-symbol">{card.symbol}</span>
+                  <span className="memory-label">{card.name}</span>
+                  <span className="memory-found">
+                    {found ? 'пара найдена ♡' : ''}
+                  </span>
+                </span>
               </span>
             </button>
           );
@@ -112,7 +119,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
       </div>
       <p className="game-quote" aria-live="polite">
         {complete
-          ? '«Моя Алина, каждое признание приближает меня к тебе хотя бы на одно слово. Я люблю тебя и очень жду нашей первой встречи». Иксик'
+          ? 'Моя Алина, каждое признание приближает меня к тебе хотя бы на одно слово. Я люблю тебя и очень жду нашей первой встречи. Иксик'
           : message}
       </p>
       <button
