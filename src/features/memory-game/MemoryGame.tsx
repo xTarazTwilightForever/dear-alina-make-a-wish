@@ -77,6 +77,11 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
         <br />
         Найди шесть пар и прочитай признания Иксика в любви.
       </p>
+      <p className="game-quote" aria-live="polite">
+        {complete
+          ? 'Моя Алина, каждое признание приближает меня к тебе хотя бы на одно слово. Я люблю тебя и очень жду нашей первой встречи. Иксик'
+          : message}
+      </p>
       <div className="memory-grid" aria-label="Карточки моста нежности">
         {deck.map((card, index) => {
           const found = matched.includes(card.pairId);
@@ -117,11 +122,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
         </span>
         <span>Попыток: {moves}</span>
       </div>
-      <p className="game-quote" aria-live="polite">
-        {complete
-          ? 'Моя Алина, каждое признание приближает меня к тебе хотя бы на одно слово. Я люблю тебя и очень жду нашей первой встречи. Иксик'
-          : message}
-      </p>
+
       <button
         ref={continueButton}
         className="primary"

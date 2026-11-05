@@ -58,7 +58,7 @@ export function Album({ onContinue }: AlbumProps) {
               </p>
             )}
             <button
-              className={`album-card${illustration.priority ? ' album-card-priority' : ''}`}
+              className={`album-card${illustration.priority ? ' album-card-priority' : ''}${illustration.main ? ' album-card-main' : ''}`}
               style={
                 {
                   '--reveal-delay': `${Math.min(index, 8) * 0.045}s`,
@@ -69,6 +69,9 @@ export function Album({ onContinue }: AlbumProps) {
             >
               <figure>
                 <div className="album-image">
+                  {illustration.main && (
+                    <span className="album-main-label">Самое главное ♡</span>
+                  )}
                   {illustration.priority && (
                     <span className="album-new">Новая страничка ♡</span>
                   )}
@@ -80,6 +83,9 @@ export function Album({ onContinue }: AlbumProps) {
                     loading="lazy"
                     decoding="async"
                   />
+                  <span className="album-message-cue">
+                    Послание Никиты ниже ♡
+                  </span>
                   <span className="album-expand" aria-hidden="true">
                     ↗
                   </span>

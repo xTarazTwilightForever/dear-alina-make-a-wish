@@ -42,9 +42,30 @@ export function RomanceEffects() {
       }, 1400);
       timers.add(timer);
     }
+    let lastHover = 0;
+    function hover(event: PointerEvent) {
+      if (
+        !window.matchMedia('(hover: hover) and (pointer: fine)').matches ||
+        !(event.target instanceof Element)
+      )
+        return;
+      const button = event.target.closest('button');
+      if (
+        !button ||
+        (event.relatedTarget instanceof Node &&
+          button.contains(event.relatedTarget))
+      )
+        return;
+      const now = performance.now();
+      if (now - lastHover < 250) return;
+      lastHover = now;
+      emit(event);
+    }
     document.addEventListener('click', emit);
+    document.addEventListener('pointerover', hover);
     return () => {
       document.removeEventListener('click', emit);
+      document.removeEventListener('pointerover', hover);
       timers.forEach((timer) => window.clearTimeout(timer));
     };
   }, []);

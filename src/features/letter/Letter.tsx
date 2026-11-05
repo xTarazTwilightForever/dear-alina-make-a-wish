@@ -5,14 +5,14 @@ import { birthdayContent } from '../../content/birthday';
 
 interface LetterProps {
   onAlbum: () => void;
-  onRestart: () => void;
+  wishGranted: boolean;
+  onWishGranted: () => void;
 }
-export function Letter({ onAlbum, onRestart }: LetterProps) {
-  const [wished, setWished] = useState(false);
+export function Letter({ onAlbum, wishGranted, onWishGranted }: LetterProps) {
   const [wishOpen, setWishOpen] = useState(false);
   const [celebration, setCelebration] = useState(0);
   function celebrate() {
-    setWished(true);
+    if (wishGranted) return;
     setCelebration((value) => value + 1);
     setWishOpen(true);
   }
@@ -62,24 +62,33 @@ export function Letter({ onAlbum, onRestart }: LetterProps) {
         className="primary wish-trigger"
         aria-haspopup="dialog"
         onClick={celebrate}
+        disabled={wishGranted}
       >
-        Загадать желание <span>✧</span>
+        {wishGranted ? 'Желание загадано' : 'Загадать желание'} <span>✧</span>
       </button>
       <p className="wish-note" aria-live="polite">
-        {wished
+        {wishGranted
           ? 'Моя Алина, твоё желание обязательно сбудется. А Никита будет беречь своё: впервые обнять тебя и почувствовать, что ты рядом. Твой Иксик.'
           : 'Загадай желание, Пантерка. Мне так хочется видеть тебя счастливой. Иксик'}
       </p>
-      <button className="primary" onClick={onAlbum}>
+      <button
+        className="primary album-continue"
+        disabled={!wishGranted}
+        onClick={onAlbum}
+      >
         Заглянуть в альбом Иксика <span>→</span>
       </button>
-      <button className="text-button" onClick={onRestart}>
-        Пройти ещё раз ↺
-      </button>
+      {!wishGranted && (
+        <p className="game-help">
+          Загадай желание и задуй свечку, чтобы открыть альбом.
+        </p>
+      )}
       <WishMoment
         key={celebration}
         open={wishOpen}
         onClose={() => setWishOpen(false)}
+        onComplete={onWishGranted}
+        onAlbum={onAlbum}
       />
     </>
   );

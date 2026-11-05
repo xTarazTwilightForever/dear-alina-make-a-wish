@@ -15,6 +15,21 @@ import type { Chapter } from './chapters';
 export function App() {
   const [chapter, setChapter] = useState<Chapter>('intro');
   const [unlocked, setUnlocked] = useState(false);
+  const [wishGranted, setWishGranted] = useState(() => {
+    try {
+      return sessionStorage.getItem('alina-wish-made') === 'yes';
+    } catch {
+      return false;
+    }
+  });
+  const grantWish = useCallback(() => {
+    setWishGranted(true);
+    try {
+      sessionStorage.setItem('alina-wish-made', 'yes');
+    } catch {
+      /* Keep this visit usable without storage. */
+    }
+  }, []);
   const unlock = useCallback(() => setUnlocked(true), []);
   const section = useRef<HTMLElement>(null);
   const initialized = useRef(false);
@@ -46,6 +61,7 @@ export function App() {
       <header>
         <button
           className="wordmark"
+          disabled={chapter === 'letter' && wishGranted}
           onClick={() => setChapter('intro')}
           aria-label="Вернуться к началу"
         >
@@ -62,6 +78,9 @@ export function App() {
           className={`screen ${chapter === 'intro' ? 'intro' : `${chapter}-screen`}`}
           aria-labelledby={`${chapter}-title`}
         >
+          <div className="page-turn-hearts" aria-hidden="true">
+            ✧ ♡ ✧
+          </div>
           {chapter === 'intro' && (
             <Welcome onStart={() => setChapter('story')} />
           )}
@@ -83,7 +102,8 @@ export function App() {
           {chapter === 'letter' && (
             <Letter
               onAlbum={() => setChapter('album')}
-              onRestart={() => setChapter('intro')}
+              wishGranted={wishGranted}
+              onWishGranted={grantWish}
             />
           )}
         </section>

@@ -22,7 +22,7 @@ export function Story({ onContinue }: StoryProps) {
   return (
     <>
       <div className="step">ПРОЛОГ · ТИШКА ЗНАЕТ СЕКРЕТ</div>
-      <div className="story-layout">
+      <div className="story-layout" key={page}>
         <figure className="story-photo" key={current.photo}>
           <img src={current.photo} alt={current.alt} decoding="async" />
           <figcaption>
