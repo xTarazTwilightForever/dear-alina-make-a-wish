@@ -9,6 +9,7 @@ import { MemoryGame } from '../features/memory-game/MemoryGame';
 import { MessageGame } from '../features/message-game/MessageGame';
 import { Album } from '../features/album/Album';
 import { Letter } from '../features/letter/Letter';
+import { VoiceMessage } from '../features/voice-message/VoiceMessage';
 import { useMusic } from '../features/music/useMusic';
 import { chapters } from './chapters';
 import type { Chapter } from './chapters';
@@ -23,7 +24,8 @@ export function App() {
   const unlock = useCallback(() => setUnlocked(true), []);
   const section = useRef<HTMLElement>(null);
   const initialized = useRef(false);
-  useMusic();
+  const [voicePlaying, setVoicePlaying] = useState(false);
+  useMusic(voicePlaying);
 
   const navigate = useCallback(
     (next: Chapter) => {
@@ -154,6 +156,7 @@ export function App() {
               <p className="ending-signature">
                 Твой Никита. Твой Иксик. Всегда с любовью ♡
               </p>
+              <VoiceMessage onPlaybackChange={setVoicePlaying} />
               <button className="primary" onClick={() => navigate('album')}>
                 Вернуться в альбом <span>♡</span>
               </button>

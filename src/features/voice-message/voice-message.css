@@ -1,0 +1,57 @@
+.voice-message {
+  margin: 32px 0;
+  padding: 26px 22px;
+  border: 1px solid #c692ad66;
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at top, #a86c8a22, transparent 75%), #302137;
+  color: #f6e0ea;
+}
+.voice-message-heart {
+  color: #edbad2;
+  font: 40px/1 var(--serif);
+}
+.voice-message h3 {
+  font: 400 clamp(25px, 6vw, 32px)/1.25 var(--serif);
+  margin: 16px 0;
+}
+.voice-message p {
+  font: 14px/1.75 var(--sans);
+  color: #e1c5d5;
+  margin: 0 auto 20px;
+  max-width: 460px;
+}
+.voice-message audio {
+  display: block;
+  width: 100%;
+  max-width: 460px;
+  margin: 0 auto;
+  color-scheme: dark;
+}
+.voice-message-placeholder {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  color: #d4adbf;
+  font: 12px/1.6 var(--sans);
+}
+.voice-message-wave {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 32px;
+}
+.voice-message-wave i {
+  display: block;
+  width: 4px;
+  height: 14px;
+  border-radius: 4px;
+  background: #d69cb9;
+}
+.voice-message-wave i:nth-child(2n) {
+  height: 24px;
+}
+.voice-message-wave i:nth-child(4) {
+  height: 32px;
+}

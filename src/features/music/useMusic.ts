@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const melody = [
   523.25, 659.25, 783.99, 659.25, 587.33, 698.46, 880, 698.46, 523.25, 659.25,
@@ -7,8 +7,19 @@ const melody = [
 type MusicStatus = 'waiting' | 'playing' | 'unavailable';
 
 /** One soundtrack for the whole adventure, unlocked by the first user gesture. */
-export function useMusic() {
+export function useMusic(voicePlaying = false) {
   const [status, setStatus] = useState<MusicStatus>('waiting');
+  const soundtrackVolume = useRef<GainNode | null>(null);
+
+  useEffect(() => {
+    const volume = soundtrackVolume.current;
+    if (!volume) return;
+    volume.gain.setTargetAtTime(
+      voicePlaying ? 0.02 : 0.27,
+      volume.context.currentTime,
+      0.15,
+    );
+  }, [voicePlaying]);
 
   useEffect(() => {
     let audio: AudioContext | null = null;
@@ -69,6 +80,7 @@ export function useMusic() {
         if (!audio) {
           audio = new AudioContext();
           volume = audio.createGain();
+          soundtrackVolume.current = volume;
           volume.gain.value = 0.27;
           volume.connect(audio.destination);
           audio.addEventListener('statechange', syncPlayback);
@@ -103,6 +115,7 @@ export function useMusic() {
     document.addEventListener('visibilitychange', onVisibility);
     return () => {
       disposed = true;
+      soundtrackVolume.current = null;
       stopScheduler();
       document.removeEventListener('click', onInteraction, true);
       document.removeEventListener('keydown', onInteraction, true);
