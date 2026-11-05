@@ -1,0 +1,353 @@
+.wish-dialog {
+  padding: 0;
+  border: 1px solid #b395b34d;
+  border-radius: 20px;
+  width: min(760px, calc(100% - 28px));
+  max-height: calc(100dvh - 28px);
+  color: #fff2e2;
+  background: #1c122b;
+  overflow: auto;
+}
+.wish-dialog::backdrop {
+  background: #120b20d9;
+  backdrop-filter: blur(10px);
+  animation: wish-backdrop 0.7s ease both;
+}
+.wish-universe {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 190px 30px 45px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 18%, #75416d88, transparent 60%),
+    linear-gradient(160deg, #20132e, #312037 65%, #20162e);
+}
+.wish-stars {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.wish-stars span {
+  position: absolute;
+  width: var(--star-size);
+  height: var(--star-size);
+  border-radius: 50%;
+  background: #ffe5b9;
+  box-shadow: 0 0 9px #ffdab6;
+  opacity: 0.5;
+  animation: wish-twinkle var(--duration) var(--delay) ease-in-out infinite
+    alternate;
+}
+.wish-orbits {
+  position: absolute;
+  left: 50%;
+  top: 95px;
+  width: 130px;
+  height: 130px;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+}
+.wish-orbits b {
+  font: 85px/1 var(--serif);
+  color: #ffd5dd;
+  text-shadow:
+    0 0 30px #ed96bc,
+    0 0 75px #e17bb3;
+  font-weight: 400;
+  animation: wish-heart 2.4s ease-in-out infinite;
+}
+.wish-orbits > span {
+  position: absolute;
+  inset: -5px;
+  border: 1px solid #edc3a9aa;
+  border-radius: 50%;
+  animation: wish-ripple 3.8s ease-out infinite;
+}
+.wish-orbits > span:nth-child(2) {
+  animation-delay: 1.2s;
+}
+.wish-orbits > span:nth-child(3) {
+  animation-delay: 2.4s;
+}
+.wish-from {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #d4b2be;
+}
+.wish-universe h2 {
+  font-size: clamp(34px, 6vw, 58px);
+  line-height: 1.15;
+  margin-top: 20px;
+}
+.wish-universe h2 em {
+  color: #f0bdcd;
+}
+.wish-universe > p:not(.wish-from) {
+  font-size: 12px;
+  line-height: 2;
+  color: #d8c4ca;
+}
+.wish-keep {
+  margin-top: 22px;
+  border: 1px solid #efd2c373;
+  background: #fce3d40d;
+  color: #fce6dd;
+  padding: 16px 22px;
+  border-radius: 30px;
+  font-size: 11px;
+  min-height: 50px;
+}
+.wish-keep span {
+  margin-left: 14px;
+}
+.wish-autograph {
+  display: block;
+  font: italic 25px var(--serif);
+  color: #e4afc2;
+  margin-top: 25px;
+}
+.wish-shooting-star {
+  position: absolute;
+  top: 20px;
+  right: -80px;
+  width: 100px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffedc4);
+  transform: rotate(-35deg);
+  animation: wish-shoot 5s 1s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes wish-twinkle {
+  from {
+    opacity: 0.25;
+    scale: 0.6;
+  }
+  to {
+    opacity: 0.9;
+    scale: 1.2;
+  }
+}
+@keyframes wish-heart {
+  50% {
+    scale: 1.08;
+  }
+}
+@keyframes wish-ripple {
+  from {
+    scale: 0.65;
+    opacity: 0.9;
+  }
+  to {
+    scale: 2;
+    opacity: 0;
+  }
+}
+@keyframes wish-shoot {
+  0% {
+    translate: 0 0;
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  30%,
+  100% {
+    translate: -800px 500px;
+    opacity: 0;
+  }
+}
+@keyframes wish-backdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 600px) {
+  .wish-universe {
+    padding: 175px 22px 30px;
+  }
+  .wish-universe h2 {
+    font-size: 36px;
+  }
+}
+
+.wish-candle-universe {
+  padding-top: 35px;
+}
+.wish-candle-universe h2 {
+  font-size: clamp(34px, 6vw, 48px);
+}
+.birthday-candle {
+  position: relative;
+  display: block;
+  width: 160px;
+  height: 210px;
+  margin: 25px auto 8px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+.birthday-candle:disabled {
+  opacity: 1;
+}
+.candle-wax {
+  position: absolute;
+  width: 66px;
+  height: 112px;
+  left: 47px;
+  bottom: 18px;
+  border-radius: 12px 12px 7px 7px;
+  background: repeating-linear-gradient(
+    135deg,
+    #e6a2bb 0,
+    #e6a2bb 12px,
+    #f4c7d5 12px,
+    #f4c7d5 23px
+  );
+  box-shadow:
+    inset -9px 0 20px #9d4f7d44,
+    0 0 35px #efadc72b;
+}
+.candle-wax span {
+  display: block;
+  margin-top: 30px;
+  font: 35px var(--serif);
+  color: #61354f;
+}
+.candle-wick {
+  position: absolute;
+  left: 78px;
+  bottom: 125px;
+  width: 4px;
+  height: 15px;
+  border-radius: 3px;
+  background: #4e3341;
+}
+.candle-flame {
+  position: absolute;
+  left: 66px;
+  bottom: 139px;
+  width: 28px;
+  height: 48px;
+  background: radial-gradient(
+    ellipse at 50% 80%,
+    #fff8d5 10%,
+    #ffd27e 45%,
+    #f29453 80%
+  );
+  border-radius: 60% 40% 50% 50%;
+  box-shadow:
+    0 0 23px #ffd695aa,
+    0 0 60px #f3b37466;
+  transform-origin: 50% 100%;
+  animation: candle-flicker 0.9s ease-in-out infinite alternate;
+}
+.candle-flame::after {
+  content: '';
+  position: absolute;
+  inset: 20px 8px 3px;
+  border-radius: 55% 45% 50% 50%;
+  background: #fff9dc;
+  box-shadow: 0 0 12px #fff4bf;
+}
+.wish-universe .candle-instruction {
+  color: #ffe4cc;
+  font-weight: 500;
+  margin: 18px auto 0;
+}
+.candle-halo {
+  position: absolute;
+  left: -15px;
+  top: -20px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: radial-gradient(#ffd28f22, transparent 70%);
+}
+.candle-saucer {
+  position: absolute;
+  left: 18px;
+  bottom: 8px;
+  width: 124px;
+  height: 16px;
+  border-radius: 50%;
+  background: #d5abb7;
+  box-shadow: 0 8px 20px #10081966;
+}
+.candle-smoke {
+  position: absolute;
+  left: 72px;
+  bottom: 140px;
+  width: 20px;
+  height: 50px;
+  opacity: 0;
+  border-left: 3px solid #e4cad466;
+  border-radius: 50%;
+}
+.extinguished .candle-flame,
+.extinguished .candle-halo {
+  opacity: 0;
+  animation: none;
+  transition: opacity 0.5s;
+}
+.extinguished .candle-smoke {
+  animation: candle-smoke 2.8s ease-out both;
+}
+.wish-fulfilled .wish-stars span {
+  box-shadow: 0 0 17px #ffdbb4;
+}
+.candle-microphone {
+  color: #efd1df;
+  font-size: 12px;
+  margin-bottom: 0;
+}
+.candle-hint {
+  font-size: 11px !important;
+  line-height: 1.8;
+}
+@keyframes candle-flicker {
+  0%,
+  100% {
+    transform: rotate(-3deg) scale(0.94, 1.06);
+  }
+  35% {
+    transform: rotate(-7deg) scale(1.08, 0.9);
+  }
+  70% {
+    transform: rotate(6deg) scale(0.93, 1.12);
+  }
+}
+@keyframes candle-smoke {
+  15% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    translate: 10px -65px;
+    scale: 1.6;
+  }
+}
+@media (max-width: 600px) {
+  .wish-candle-universe {
+    padding: 24px 22px 30px;
+  }
+  .wish-candle-universe h2 {
+    font-size: 35px;
+  }
+  .wish-candle-universe > p:not(.wish-from) {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .birthday-candle {
+    height: 190px;
+    margin-top: 14px;
+  }
+  .wish-keep {
+    font-size: 14px;
+  }
+}

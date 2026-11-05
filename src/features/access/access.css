@@ -1,0 +1,99 @@
+.access-screen {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 22px;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 40%, #f2dfe466, transparent 65%);
+}
+.access-screen > time {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 2px;
+  margin-bottom: 28px;
+}
+.access-card {
+  max-width: 520px;
+  width: 100%;
+}
+.access-kitten {
+  height: 130px;
+  width: 110px;
+  margin: 0 auto 18px;
+  animation: breathe 4s ease-in-out infinite;
+}
+.access-card h1 {
+  font-size: clamp(52px, 9vw, 73px);
+  line-height: 1.05;
+  margin-bottom: 22px;
+}
+.access-message {
+  color: #81766d;
+  font-size: 12px;
+  line-height: 1.9;
+}
+.access-card form {
+  max-width: 310px;
+  margin: 30px auto 0;
+}
+.access-card label {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  color: var(--muted);
+}
+.access-card input {
+  border: 1px solid #d9c3ca;
+  background: #fffdf8;
+  color: var(--ink);
+  border-radius: 8px;
+  min-height: 52px;
+  padding: 14px 18px;
+  font: 16px var(--sans);
+  width: 100%;
+  text-align: center;
+  outline-color: var(--rose);
+}
+.access-card input[aria-invalid='true'] {
+  border-color: #b95472;
+}
+.access-error {
+  min-height: 36px;
+  margin: 8px 0 0;
+  color: var(--rose);
+  font-size: 10px;
+  line-height: 1.7;
+}
+.access-card .primary {
+  margin-top: 6px;
+  width: 100%;
+}
+.access-signature {
+  font: italic 22px var(--serif);
+  color: var(--rose);
+  margin-top: 28px;
+}
+
+.access-unlocking .access-kitten {
+  filter: drop-shadow(0 0 22px #dc9ab9);
+  animation: access-heartbeat 0.6s ease both;
+}
+.access-unlocking .primary:disabled {
+  opacity: 1;
+  background: #976779;
+  border-color: #976779;
+}
+@keyframes access-heartbeat {
+  40% {
+    scale: 1.12;
+  }
+  75% {
+    scale: 0.98;
+  }
+  100% {
+    scale: 1.04;
+  }
+}

@@ -1,0 +1,181 @@
+.envelope {
+  font: 42px var(--serif);
+  color: var(--rose);
+  margin: -10px 0 18px;
+}
+.letter-paper {
+  position: relative;
+  max-width: 700px;
+  margin: 36px auto;
+  padding: 38px 44px 32px;
+  text-align: left;
+  border: 1px solid #805b76;
+  border-radius: 5px 5px 18px 18px;
+  transform: none;
+  background: #302137;
+  color: #f9e9ed;
+}
+.letter-stationery-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+}
+.letter-sender {
+  color: #cdb1c1;
+  font: 10px/1.9 var(--sans);
+  letter-spacing: 1.5px;
+}
+.letter-sender strong {
+  display: block;
+  color: #f7d9e4;
+  font: 500 13px/1.7 var(--sans);
+  letter-spacing: 0;
+  margin-top: 4px;
+}
+.letter-date {
+  font: 11px/1.8 var(--sans);
+  color: #d0b4c4;
+  white-space: nowrap;
+  letter-spacing: 0.4px;
+}
+.letter-rule {
+  height: 1px;
+  background: linear-gradient(90deg, #c88da588, #c88da511);
+  margin: 24px 0 28px;
+}
+.letter-paper .letter-salutation {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+  margin: 0 0 27px;
+  color: #ffe8ef;
+  font:
+    400 29px/1.35 Georgia,
+    serif;
+  letter-spacing: 0;
+}
+.letter-salutation strong {
+  font-weight: 400;
+}
+.letter-salutation > span {
+  font:
+    30px/1.2 Georgia,
+    serif;
+  color: #efbad0;
+}
+.letter-paper .letter-body p {
+  color: #f1dfe6;
+  font:
+    400 17px/1.65 Georgia,
+    serif;
+  margin: 0 0 15px;
+  text-indent: 0;
+  letter-spacing: 0;
+}
+.letter-paper .letter-closing {
+  color: #f9c4da;
+  font:
+    400 20px/1.55 Georgia,
+    serif;
+  margin: 30px 0;
+}
+.letter-closing strong {
+  font-weight: 400;
+}
+.letter-signoff {
+  margin-top: 32px;
+  padding-top: 22px;
+  border-top: 1px solid #c58da334;
+}
+.letter-paper .signature-intro {
+  color: #e8cbd9;
+  font: 400 15px/1.8 var(--sans);
+  margin: 0 0 12px;
+}
+.letter-paper .signature-name {
+  color: #ffe7ef;
+  font: 500 17px/1.65 var(--sans);
+  letter-spacing: 0;
+  margin: 0;
+  overflow-wrap: normal;
+}
+.signature-ink {
+  position: relative;
+  width: min(100%, 300px);
+  aspect-ratio: 3.43;
+  overflow: hidden;
+  margin: 15px 0 12px;
+}
+.signature-ink img {
+  position: absolute;
+  max-width: none;
+  width: 190.7%;
+  height: auto;
+  left: -50.7%;
+  top: -83.5%;
+  filter: invert(1);
+}
+.letter-paper .letter-postscript {
+  font: 400 13px/1.8 var(--sans);
+  color: #cfb0c0;
+  margin: 22px 0 0;
+}
+.ending {
+  font: italic 26px var(--serif);
+}
+.wish-note {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+  min-height: 20px;
+}
+.letter-screen .ending {
+  max-width: 660px;
+  margin: 28px auto;
+  line-height: 1.5;
+}
+.wish-trigger {
+  background: linear-gradient(125deg, #614357, #9c607b);
+  border-color: #9c607b;
+  box-shadow: 0 0 25px #b366761a;
+}
+@media (max-width: 760px) {
+  .letter-paper {
+    padding: 27px 23px 28px;
+    margin: 28px 0;
+  }
+  .letter-stationery-head {
+    gap: 12px;
+  }
+  .letter-sender {
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+  .letter-sender strong {
+    font-size: 12px;
+  }
+  .letter-date {
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+  .letter-paper .letter-salutation {
+    font-size: 26px;
+    gap: 10px;
+  }
+  .letter-paper .letter-body p {
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  .letter-paper .signature-name {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .letter-paper .letter-closing {
+    font-size: 19px;
+  }
+  .ending {
+    font-size: 23px;
+  }
+}

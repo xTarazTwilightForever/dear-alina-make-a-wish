@@ -1,0 +1,271 @@
+.date-label {
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  color: var(--muted);
+}
+.date-label span {
+  width: 36px;
+  height: 1px;
+  background: var(--line);
+}
+.intro-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  min-height: 570px;
+  gap: 30px;
+}
+.eyebrow {
+  color: var(--rose);
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin-bottom: 22px;
+}
+.lede {
+  font-size: 13px;
+  line-height: 1.9;
+  color: #77736b;
+}
+.footnote {
+  font-size: 9px;
+  color: #999286;
+  margin-top: 14px;
+}
+.scene {
+  height: 460px;
+  position: relative;
+  isolation: isolate;
+}
+.pink-planet {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle at 40% 30%, #f0d9d6, #e7c4c6);
+  border-radius: 50%;
+  left: 50%;
+  top: 53%;
+  transform: translate(-50%, -50%);
+  z-index: -2;
+}
+.orbit {
+  position: absolute;
+  border: 1px solid #dcd0c3;
+  border-radius: 50%;
+  width: 410px;
+  height: 340px;
+  top: 53%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-28deg);
+  z-index: -1;
+}
+.orbit-two {
+  width: 360px;
+  height: 415px;
+  transform: translate(-50%, -50%) rotate(-28deg);
+  opacity: 0.55;
+}
+.moon {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #d8bb7b;
+  top: 27px;
+  right: 103px;
+  box-shadow: 10px -5px 0 0 var(--paper) inset;
+  transform: rotate(-15deg);
+}
+.scene-star {
+  position: absolute;
+  color: #9c8064;
+}
+.star-one {
+  left: 38px;
+  top: 100px;
+  font-size: 39px;
+}
+.star-two {
+  right: 25px;
+  top: 210px;
+  font-size: 22px;
+}
+.star-three {
+  left: 90px;
+  top: 30px;
+  font-size: 19px;
+}
+.floating-heart {
+  position: absolute;
+  left: 48%;
+  top: 123px;
+  color: #a65d70;
+  font-size: 43px;
+  animation: float 3s ease-in-out infinite;
+}
+.ground {
+  position: absolute;
+  bottom: 99px;
+  left: 45px;
+  right: 35px;
+  border-bottom: 1px solid #9e8e7e;
+  transform: rotate(-3deg);
+  z-index: -1;
+}
+.scene-note {
+  position: absolute;
+  bottom: 0;
+  left: 124px;
+  font: italic 22px/1.2 var(--serif);
+  color: #8c7b6e;
+  transform: rotate(-7deg);
+}
+.hand-arrow {
+  position: absolute;
+  right: 49px;
+  bottom: 35px;
+  transform: rotate(-35deg);
+  font: 60px var(--serif);
+  color: #a48e74;
+}
+.intro-bottom {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding-top: 23px;
+  font-size: 8px;
+  letter-spacing: 1.4px;
+  color: var(--muted);
+}
+@media (min-width: 1400px) {
+  .intro-layout {
+    min-height: 650px;
+  }
+}
+@media (max-width: 760px) {
+  .date-label {
+    font-size: 8px;
+    letter-spacing: 2px;
+  }
+  .intro-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    min-height: 0;
+    text-align: center;
+  }
+  .intro-copy {
+    padding-top: 40px;
+  }
+  .eyebrow {
+    font-size: 10px;
+    margin: 0 0 20px;
+  }
+  .lede {
+    font-size: 12px;
+  }
+  .scene {
+    width: 360px;
+    max-width: 100%;
+    height: 330px;
+    margin: 20px auto 18px;
+  }
+  .pink-planet {
+    height: 230px;
+    width: 230px;
+    top: 45%;
+  }
+  .orbit {
+    width: 300px;
+    height: 235px;
+    top: 45%;
+  }
+  .orbit-two {
+    width: 250px;
+    height: 285px;
+  }
+  .ground {
+    bottom: 72px;
+    left: 29px;
+    right: 25px;
+  }
+  .floating-heart {
+    top: 82px;
+    font-size: 34px;
+  }
+  .scene-note {
+    bottom: 0;
+    left: 86px;
+    font-size: 20px;
+  }
+  .hand-arrow {
+    bottom: 18px;
+    right: 24px;
+    font-size: 45px;
+  }
+  .moon {
+    width: 30px;
+    height: 30px;
+    top: 0;
+    right: 70px;
+  }
+  .star-one {
+    left: 18px;
+    top: 70px;
+  }
+  .star-two {
+    right: 6px;
+    top: 130px;
+  }
+  .star-three {
+    left: 64px;
+    top: 5px;
+  }
+  .intro-bottom {
+    font-size: 7px;
+    letter-spacing: 0.8px;
+  }
+}
+.intro-layout > * {
+  min-width: 0;
+}
+
+.scene {
+  overflow: clip;
+}
+.scene-character {
+  position: absolute;
+  width: 166px;
+  height: 200px;
+  bottom: 96px;
+  animation: breathe 4s ease-in-out infinite;
+}
+.scene-character-tishka {
+  left: 44px;
+  transform: rotate(-5deg);
+}
+.scene-character-white {
+  right: 35px;
+  width: 178px;
+  height: 214px;
+  animation-delay: -2s;
+  transform: rotate(5deg);
+}
+@media (max-width: 760px) {
+  .scene-character {
+    width: 128px;
+    height: 154px;
+    bottom: 65px;
+  }
+  .scene-character-tishka {
+    left: calc(50% - 130px);
+  }
+  .scene-character-white {
+    right: calc(50% - 132px);
+    width: 139px;
+    height: 167px;
+  }
+}

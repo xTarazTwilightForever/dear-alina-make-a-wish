@@ -1,0 +1,770 @@
+:root {
+  color-scheme: dark;
+  --paper: #1d1429;
+  --ink: #fff0e3;
+  --muted: #d2bbc7;
+  --rose: #efb2ca;
+  --pink: #e6b1c6;
+  --line: #6a4c65;
+  --card: #302137;
+}
+html {
+  min-width: 320px;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 18px;
+}
+body {
+  min-height: 100svh;
+  background:
+    radial-gradient(ellipse at 20% 10%, #62314a55, transparent 46%),
+    radial-gradient(ellipse at 85% 50%, #4a315a44, transparent 50%),
+    linear-gradient(160deg, #1d1429, #2d1d34 65%, #21172e);
+  background-attachment: fixed;
+}
+#root {
+  isolation: isolate;
+}
+header {
+  padding-top: max(24px, env(safe-area-inset-top));
+}
+main {
+  perspective: none;
+}
+.screen {
+  transform: none;
+  transform-origin: center;
+  animation: clear-page-arrive 0.45s ease backwards;
+}
+.wordmark:disabled {
+  opacity: 1;
+}
+.header-date,
+footer {
+  color: #d8b9ca;
+}
+footer {
+  padding-bottom: max(28px, env(safe-area-inset-bottom));
+}
+.primary {
+  color: #fff2e8;
+  background: linear-gradient(130deg, #895471, #5d3b68);
+  border-color: #bd8fa67d;
+  border-radius: 30px;
+  box-shadow:
+    0 8px 28px #0c071a40,
+    inset 0 1px #ffe7f21c;
+  min-height: 50px;
+  font-size: 13px;
+}
+.primary:hover:enabled {
+  background: linear-gradient(130deg, #aa6585, #75507e);
+  box-shadow: 0 8px 32px #d493b633;
+}
+button {
+  touch-action: manipulation;
+}
+.primary,
+.text-button,
+.wish-keep,
+.art-controls button,
+.art-close {
+  position: relative;
+}
+.primary::after,
+.text-button::after,
+.art-controls button::after {
+  content: '♡';
+  position: absolute;
+  right: 9px;
+  top: -17px;
+  opacity: 0;
+  font: 22px var(--serif);
+  color: #ffd6e5;
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .primary:hover:enabled::after,
+  .text-button:hover:enabled::after,
+  .art-controls button:hover::after {
+    animation: button-love 1.4s ease-out infinite;
+  }
+  html,
+  body,
+  button:enabled,
+  a,
+  [role='button'] {
+    cursor:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M16 27C-1 16 3 3 11 5c3 0 5 4 5 4s2-4 5-4c8-2 12 11-5 22Z' fill='%23ed9dbd' stroke='%23fff2e6' stroke-width='1.5'/%3E%3C/svg%3E")
+        16 14,
+      pointer;
+  }
+  input {
+    cursor: text;
+  }
+}
+.section-description,
+.lede,
+.story-copy > p,
+.access-message,
+.footnote,
+.game-help {
+  color: #dbc5d0;
+}
+.section-description {
+  font-size: 14px;
+}
+.step,
+.speaker-label {
+  font-size: 11px;
+  line-height: 1.7;
+}
+.story-photo,
+.album-card,
+.message-paper {
+  background: linear-gradient(140deg, #39243d, #2b2035);
+  border-color: #7b536d;
+  box-shadow: 0 12px 32px #100a2340;
+}
+.story-photo figcaption {
+  color: #e5c1cb;
+}
+.story-photo figcaption .cat-dialogue-text {
+  color: #fff1e9;
+}
+.story-copy > p {
+  font-size: 14px;
+}
+.cat-dialogue-bubble {
+  background: #452d46;
+  border-color: #92647e;
+}
+.cat-dialogue-speaker {
+  color: #f2c0d3;
+  font-size: 11px;
+}
+.cat-dialogue-text {
+  color: #fff1e9;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.album-card small,
+.album-number {
+  color: #e3c6d5;
+  font-size: 12px;
+}
+.album-card strong {
+  color: #fff0e5;
+}
+.album-expand {
+  background: #302037ec;
+  color: #ffe2ee;
+  border: 1px solid #93657c;
+}
+.album-new,
+.album-main-label {
+  background: #4a2c48ed;
+  color: #ffdeea;
+  border-color: #ac7893;
+  font-size: 10px;
+}
+.album-main-label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 1;
+  padding: 8px 12px;
+  border: 1px solid #ba8a9b;
+  border-radius: 30px;
+}
+.album-card-main {
+  grid-column: 1 / -1;
+  border-color: #d9a7bb;
+  box-shadow: 0 0 45px #e5a4c01a;
+  padding: 20px;
+}
+.album-card-main .album-image img {
+  max-height: 480px;
+  object-fit: contain;
+}
+.album-card-main figcaption strong {
+  font-size: 35px;
+}
+.album-card-main .cat-dialogue-text {
+  font-size: 17px;
+}
+.album-card-main .cat-dialogue-bubble {
+  padding: 22px;
+}
+.art-dialog {
+  background: #24192f;
+  border-color: #9f718c;
+  color: #fff0e5;
+}
+.art-viewer > img {
+  background: #1a1225;
+  height: min(48dvh, 600px);
+}
+.art-close,
+.art-controls button {
+  background: #37243e;
+  color: #ffe2ed;
+  border-color: #b6839b;
+}
+.art-controls {
+  position: sticky;
+  bottom: -12px;
+  background: #24192ff5;
+  padding-bottom: 8px;
+  z-index: 2;
+}
+.art-controls > span,
+.art-caption > span {
+  color: #e1c3d0;
+  font-size: 12px;
+}
+.art-caption p {
+  color: #ffe8f0;
+}
+.art-viewer .cat-dialogue-text {
+  font-size: 16px;
+}
+.game-board {
+  background:
+    radial-gradient(ellipse at 50% 80%, #64415c88, transparent), #2a1b35;
+  border-color: #8b607a;
+}
+.game-board-complete {
+  background:
+    radial-gradient(ellipse at 70% 70%, #9a597b66, transparent), #302039;
+}
+.path,
+.board-ground {
+  border-color: #bc91a8;
+}
+.progress {
+  background: #543b57;
+}
+.heart-message,
+.game-quote {
+  background: #302039;
+  border: 1px solid #79516d;
+  border-radius: 16px;
+  padding: 17px;
+  font-size: 24px;
+}
+.memory-card-face {
+  border-color: #a0708b;
+}
+.memory-card-back {
+  color: #f0c1d6;
+  background: repeating-linear-gradient(
+    45deg,
+    #402741,
+    #402741 8px,
+    #492c47 8px,
+    #492c47 9px
+  );
+}
+.memory-card-front {
+  background: #37233c;
+  color: #ffe4eb;
+}
+.memory-card.matched .memory-card-front {
+  background: #304137;
+  color: #daedd3;
+  border-color: #a1b994;
+}
+.memory-label {
+  font-size: 12px;
+}
+.memory-found {
+  font-size: 10px;
+}
+.message-word {
+  color: #ffe3ee;
+  background: #4b2c47;
+  border-color: #aa7691;
+}
+.message-word:hover:enabled {
+  background: #67405c;
+}
+.message-slot {
+  color: #e4bed0;
+}
+.access-screen {
+  background: radial-gradient(ellipse at 50% 40%, #7b456657, transparent 65%);
+}
+.access-card input {
+  color: #fff0e5;
+  background: #34213b;
+  border-color: #b1819c;
+}
+.access-card input::placeholder {
+  color: #cbb0c4;
+}
+.access-error {
+  font-size: 12px;
+}
+.letter-paper {
+  color: #f9e9ed;
+  --muted: #cfb5c3;
+  --rose: #eeb5cd;
+  --line: #805b76;
+  background: linear-gradient(145deg, #3b2840, #291e35);
+  box-shadow: 0 14px 45px #09051355;
+}
+.letter-paper p {
+  font-size: 15px;
+}
+.letter-paper .letter-closing {
+  font-size: 17px;
+}
+.letter-screen .ending {
+  color: #f4c6d9;
+}
+.wish-note {
+  font-size: 14px;
+}
+.pink-planet {
+  background: radial-gradient(circle at 40% 30%, #9a6c89, #50344f);
+  box-shadow: 0 0 55px #c37eac26;
+}
+.orbit {
+  border-color: #aa7f9b6e;
+}
+.scene-note,
+.scene-star,
+.hand-arrow {
+  color: #e0b1c9;
+}
+.ground {
+  border-color: #cba4b7;
+}
+.floating-heart {
+  color: #ffd4e5;
+  text-shadow: 0 0 20px #ef9cbe55;
+}
+.page-turn-hearts {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  color: #edb4ce;
+  font-size: 17px;
+  letter-spacing: 8px;
+  margin: 0 0 26px;
+  pointer-events: none;
+  animation: page-love 0.9s ease both;
+}
+@keyframes romantic-page-in {
+  from {
+    opacity: 0;
+    transform: perspective(1400px) rotateY(-6deg) translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1400px) rotateY(0deg) translateY(0);
+  }
+}
+@keyframes page-love {
+  from {
+    opacity: 0;
+    translate: 0 9px;
+  }
+  60% {
+    opacity: 0.8;
+  }
+  to {
+    opacity: 0.5;
+    translate: 0 0;
+  }
+}
+@keyframes button-love {
+  from {
+    opacity: 0.9;
+    translate: 0 0;
+    scale: 0.7;
+  }
+  to {
+    opacity: 0;
+    translate: 8px -22px;
+    scale: 1.2;
+  }
+}
+@media (max-width: 760px) {
+  body {
+    background-attachment: scroll;
+  }
+  header {
+    padding: max(20px, env(safe-area-inset-top))
+      max(18px, env(safe-area-inset-right)) 18px
+      max(18px, env(safe-area-inset-left));
+    gap: 10px;
+  }
+  .wordmark {
+    font-size: clamp(21px, 5.8vw, 25px);
+  }
+  .header-date {
+    font-size: 11px;
+    letter-spacing: 0;
+  }
+  .screen {
+    padding: 24px max(18px, env(safe-area-inset-right)) 22px
+      max(18px, env(safe-area-inset-left));
+  }
+  .primary {
+    display: flex;
+    width: 100%;
+    max-width: 440px;
+    margin-inline: auto;
+    font-size: 14px;
+    padding: 17px 22px;
+    gap: 16px;
+    min-height: 54px;
+  }
+  .section-description,
+  .game-help {
+    font-size: 14px;
+    line-height: 1.8;
+  }
+  .footnote {
+    font-size: 12px;
+    line-height: 1.8;
+  }
+  .step {
+    font-size: 10px;
+    letter-spacing: 1.4px;
+  }
+  h2 {
+    font-size: clamp(36px, 10vw, 46px);
+    text-wrap: balance;
+  }
+  .intro-copy {
+    padding-top: 22px;
+  }
+  .lede {
+    font-size: 15px;
+  }
+  .story-photo {
+    width: 100%;
+    rotate: 0deg;
+  }
+  .story-photo img {
+    aspect-ratio: 1;
+  }
+  .story-copy > p {
+    font-size: 15px;
+  }
+  .album-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+    max-width: 470px;
+  }
+  .album-card {
+    padding: 12px 12px 18px;
+  }
+  .album-card figcaption {
+    padding: 17px 3px 8px;
+    gap: 12px;
+  }
+  .album-card strong {
+    font-size: 29px;
+    line-height: 1.15;
+  }
+  .album-card small {
+    font-size: 13px;
+    margin-top: 10px;
+    color: #e4cbd8;
+  }
+  .album-card .cat-dialogue {
+    gap: 9px;
+    margin-top: 10px;
+  }
+  .album-card .cat-dialogue-avatar {
+    width: 34px;
+    height: 43px;
+    flex-basis: 34px;
+  }
+  .album-card .cat-dialogue-bubble {
+    padding: 15px;
+  }
+  .album-card .cat-dialogue-speaker {
+    font-size: 11px;
+  }
+  .album-card .cat-dialogue-text {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .album-card-main .cat-dialogue-text {
+    font-size: 16px;
+  }
+  .album-new {
+    font-size: 11px;
+  }
+  .album-summary {
+    flex-wrap: wrap;
+    font-size: 12px;
+  }
+  .art-dialog {
+    width: calc(100% - 20px);
+    max-height: calc(
+      100dvh - 20px - env(safe-area-inset-top) - env(safe-area-inset-bottom)
+    );
+    padding: 10px;
+  }
+  .art-viewer > img {
+    height: 40dvh;
+  }
+  .art-caption p {
+    font-size: 27px;
+  }
+  .art-close {
+    position: sticky;
+    top: 0;
+    margin-left: auto;
+    display: block;
+    margin-bottom: 6px;
+  }
+  .art-controls {
+    bottom: -10px;
+  }
+  .art-controls button {
+    min-width: 48px;
+    min-height: 48px;
+  }
+  .memory-screen .game-quote {
+    position: sticky;
+    top: max(10px, env(safe-area-inset-top));
+    z-index: 3;
+    box-shadow: 0 8px 28px #10081d66;
+    margin: 20px auto;
+    padding: 14px;
+    font-size: 21px;
+  }
+  .memory-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .memory-card {
+    min-height: 98px;
+  }
+  .memory-symbol {
+    font-size: 35px;
+  }
+  .memory-label {
+    font-size: 12px;
+  }
+  .memory-found {
+    font-size: 10px;
+  }
+  .memory-progress {
+    font-size: 13px;
+  }
+  .letter-paper {
+    padding: 28px 23px;
+    transform: none;
+  }
+  .letter-paper p {
+    font-size: 16px;
+    line-height: 1.95;
+  }
+  .letter-paper h3 {
+    font-size: 32px;
+  }
+  .wish-note {
+    font-size: 15px;
+    line-height: 1.8;
+  }
+  .wish-trigger:disabled {
+    opacity: 0.65;
+  }
+  .access-message {
+    font-size: 15px;
+  }
+  .access-card label {
+    font-size: 13px;
+  }
+  .access-card input {
+    font-size: 18px;
+  }
+  footer {
+    font-size: 11px;
+    line-height: 1.7;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+  .page-turn-hearts {
+    margin-bottom: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.album-message-cue {
+  position: absolute;
+  bottom: 12px;
+  left: 10px;
+  max-width: calc(100% - 62px);
+  padding: 7px 10px;
+  border: 1px solid #d49cb372;
+  border-radius: 20px;
+  background: #281a32e8;
+  color: #ffe4ef;
+  font-size: 11px;
+  pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) {
+  .wish-keep::after,
+  .art-close::after {
+    content: '♡';
+    position: absolute;
+    top: -15px;
+    right: 8px;
+    opacity: 0;
+    color: #ffd6e5;
+    pointer-events: none;
+  }
+  .wish-keep:hover::after,
+  .art-close:hover::after {
+    animation: button-love 1.4s ease-out infinite;
+  }
+}
+@media (max-width: 760px) {
+  .letter-screen .wish-note {
+    color: #f1d5e0;
+  }
+  .art-controls > span {
+    font-size: 11px;
+  }
+}
+
+.story-layout {
+  transform: none;
+  animation: clear-page-arrive 0.45s ease backwards;
+}
+.wish-fulfilled .wish-stars {
+  animation: wish-sky-bloom 1.7s ease-out both;
+}
+@keyframes wish-sky-bloom {
+  from {
+    opacity: 0.4;
+    scale: 0.95;
+  }
+  50% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    scale: 1.03;
+  }
+}
+
+@keyframes clear-page-arrive {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.screen,
+.story-layout,
+.letter-paper,
+.letter-paper * {
+  text-shadow: none;
+  filter: none;
+}
+.screen {
+  -webkit-font-smoothing: antialiased;
+}
+.wish-dialog .birthday-candle,
+.wish-dialog .birthday-candle:focus,
+.wish-dialog .birthday-candle:focus-visible {
+  outline: none;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.wish-dialog .birthday-candle:focus-visible .candle-wax {
+  box-shadow:
+    inset -9px 0 20px #9d4f7d44,
+    0 0 25px #ffe4b677;
+}
+.memory-white-paw {
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  fill: #fff;
+  vertical-align: middle;
+}
+.tishka-guide {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 580px;
+  margin: 0 auto 22px;
+  text-align: left;
+  padding: 12px 16px;
+  background: #33223b;
+  border: 1px solid #74556b;
+  border-radius: 18px;
+}
+.tishka-guide-avatar {
+  display: block;
+  flex: 0 0 54px;
+  width: 54px;
+  height: 65px;
+}
+.tishka-guide strong {
+  display: block;
+  color: #f0bdd0;
+  font: 600 12px var(--sans);
+  margin-bottom: 6px;
+}
+.tishka-guide > span:last-child > span {
+  display: block;
+  color: #e7d1dc;
+  font: 13px/1.7 var(--sans);
+}
+
+.letter-paper .signature-ink img {
+  filter: invert(1);
+}
+.story-photo,
+.message-paper {
+  rotate: 0deg;
+}
+.story-photo {
+  animation: clear-page-arrive 0.45s ease backwards;
+}
+
+.story-ending {
+  max-width: 650px;
+  margin: 0 auto;
+}
+.ending-heart {
+  display: block;
+  color: #f3bfd6;
+  font: 80px/1.2 var(--serif);
+  margin: 20px 0;
+}
+.story-ending > p {
+  color: #f1dfe6;
+  font: 17px/1.75 var(--sans);
+  margin: 22px auto;
+}
+.story-ending .ending-signature {
+  color: #f4bfd6;
+  font: italic 25px/1.5 var(--serif);
+  margin: 32px 0;
+}
+.album-finish {
+  display: block;
+  margin: 25px auto 12px;
+}

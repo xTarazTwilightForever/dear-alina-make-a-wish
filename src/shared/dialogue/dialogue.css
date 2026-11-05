@@ -1,0 +1,58 @@
+.cat-dialogue {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: left;
+  margin-top: 12px;
+}
+.cat-dialogue-avatar {
+  flex: 0 0 29px;
+  width: 29px;
+  height: 37px;
+  margin-top: 9px;
+}
+.cat-dialogue-bubble {
+  position: relative;
+  display: block;
+  flex: 1;
+  min-width: 0;
+  background: #f9edf0;
+  border: 1px solid #ead5dc;
+  border-radius: 12px 12px 12px 3px;
+  padding: 11px 12px;
+}
+.cat-dialogue-speaker {
+  display: block;
+  color: var(--rose);
+  font: 600 8px/1.4 var(--sans);
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+.cat-dialogue-text {
+  display: block;
+  color: #78656d;
+  font: 400 11px/1.8 var(--sans);
+}
+.art-viewer .cat-dialogue {
+  max-width: 600px;
+  margin: 12px auto 18px;
+}
+@media (max-width: 600px) {
+  .album-card .cat-dialogue {
+    gap: 5px;
+  }
+  .album-card .cat-dialogue-avatar {
+    flex-basis: 20px;
+    width: 20px;
+    height: 27px;
+  }
+  .album-card .cat-dialogue-bubble {
+    padding: 9px 8px;
+  }
+  .album-card .cat-dialogue-text {
+    font-size: 9px;
+  }
+  .album-card .cat-dialogue-speaker {
+    font-size: 7px;
+  }
+}
