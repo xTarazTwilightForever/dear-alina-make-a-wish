@@ -18,6 +18,27 @@ import warmEmbrace from '../assets/illustrations/alina-and-iksik-five-more-minut
 import sunlitAfternoon from '../assets/illustrations/alina-and-iksik-sunny-day.png';
 import whiteKitten from '../assets/illustrations/iksik-portrait-for-alina.png';
 import littleShelter from '../assets/illustrations/alina-and-iksik-little-shelter.png';
+import crackedCooktop from '../assets/illustrations/alina-potatoes-and-cracked-cooktop.png';
+import sistersPhone from '../assets/illustrations/alina-sisters-broken-phone.png';
+
+export const diaryYear = 2026;
+export const futureDiaryPages = [
+  {
+    year: '2027',
+    title: 'Наши новые воспоминания',
+    text: 'Моя Алина, совсем скоро мы создадим новые воспоминания. Мне так хочется беречь здесь наши встречи, маленькие приключения и счастливые дни рядом с тобой. Твой Никита.',
+  },
+  {
+    year: '2028',
+    title: 'Ещё один год нашей истории',
+    text: 'Пусть на этих страницах однажды появятся твои улыбки, наши любимые места и простые мгновения, которые захочется сохранить навсегда. Я оставляю здесь место для нас, моя Алина.',
+  },
+  {
+    year: '2029 и дальше',
+    title: 'Для всего, что у нас впереди',
+    text: 'Моя любимая Alluka, я мечтаю, чтобы у этого дневника становилось всё больше страниц. Мы ещё не знаем всех наших будущих историй, и мне так хочется узнавать их вместе с тобой. Твой Иксик.',
+  },
+] as const;
 
 export interface AlbumIllustration {
   id: string;
@@ -33,6 +54,30 @@ export interface AlbumIllustration {
 }
 
 export const albumIllustrations: readonly AlbumIllustration[] = [
+  {
+    src: crackedCooktop,
+    id: 'alina-potatoes-and-cracked-cooktop',
+    title: 'Алина, картошка и неожиданная трещина',
+    note: 'История, которую Алина рассказала Иксику',
+    dialogue:
+      'Моя Алина, я запомнил, как ты рассказала: поставила картошку вариться, а потом посмотрела и увидела, что плита разбита. На этой картинке Иксик удивляется вместе с тобой. Мне дорого, что ты делишься со мной такими историями из своего дня. Я хочу слушать тебя и беречь всё, из чего складывается твоя жизнь. Твой Никита.',
+    alt: 'Алина и призрачный котик Иксик удивлённо смотрят на потрескавшуюся варочную панель, на которой варится картошка',
+    width: 1254,
+    height: 1254,
+    priority: true,
+  },
+  {
+    src: sistersPhone,
+    id: 'alina-tells-iksik-about-sisters-phone',
+    title: 'Алина рассказывает Иксику о телефоне',
+    note: 'Сестра Алины случайно разбила свой телефон',
+    dialogue:
+      'Пантерка, эту страничку я сохранил про твою историю о сестре: она случайно разбила свой телефон. Представляю, как Иксик заглядывает на треснувший экран и внимательно слушает тебя. Мне нравится узнавать твой мир через такие маленькие рассказы. Даже обычный разговор становится дорогим воспоминанием, когда это разговор с тобой. Твой Никита.',
+    alt: 'Алина показывает разбитый телефон из истории о сестре, а призрачный Иксик с нимбом заглядывает на повреждённый экран',
+    width: 1254,
+    height: 1254,
+    priority: true,
+  },
   {
     src: birthdaySurprise,
     id: 'iksik-creates-alinas-surprise',

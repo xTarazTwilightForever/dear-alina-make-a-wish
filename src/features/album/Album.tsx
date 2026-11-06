@@ -4,6 +4,8 @@ import type { CSSProperties } from 'react';
 import {
   albumIllustrations,
   priorityIllustrationCount,
+  diaryYear,
+  futureDiaryPages,
 } from '../../content/album';
 import './album.css';
 
@@ -84,27 +86,50 @@ export function Album({ onFinish }: AlbumProps) {
 
   return (
     <>
-      <div className="step">ОТ ИКСИКА · МЕЧТЫ О ХОЗЯЙКЕ-ПАНТЕРКЕ</div>
+      <div className="step">ОТ ИКСИКА · НАША МАЛЕНЬКАЯ ИСТОРИЯ</div>
       <h2 id="album-title" tabIndex={-1}>
-        Мои мечты
+        Дневник Иксика.
         <br />
-        <em>о нашей первой встрече.</em>
+        <em>Наш {diaryYear} год.</em>
       </h2>
       <p className="section-description">
-        Моя Алина, я мечтаю наполнить нашу жизнь такими тихими, счастливыми
-        мгновениями.
+        Моя Алина, здесь твои истории, которые я бережно запомнил, и мои мечты о
+        нас.
         <br />
-        Пока они живут в этих картинках. А я так жду нашей первой встречи. Твой
-        Никита, твой Иксик ♡
+        Это первые страницы нашего {diaryYear} года. А впереди столько
+        воспоминаний, которые мы ещё создадим вместе. Твой Никита, твой Иксик ♡
       </p>
       <div className="album-summary">
+        <span>{diaryYear} год</span>
         <span>{albumIllustrations.length} страниц о нас</span>
-        <span>♡</span>
-        <span>{priorityIllustrationCount} новых мечтаний</span>
+        <span className="album-summary-heart">♡</span>
+        <span>{priorityIllustrationCount} новых страничек</span>
       </div>
       <div className="album-grid">
         {albumIllustrations.map((_, index) => renderCard(index))}
       </div>
+      <section className="diary-future" aria-labelledby="diary-future-title">
+        <h3 id="diary-future-title">
+          А дальше <em>будем мы.</em>
+        </h3>
+        <p className="diary-future-intro">
+          Моя Алина, совсем скоро мы создадим новые воспоминания. Я оставил для
+          них место, чтобы наша история продолжалась год за годом.
+        </p>
+        <div className="diary-future-years">
+          {futureDiaryPages.map((page) => (
+            <article key={page.year} className="diary-future-page">
+              <span className="diary-future-year">{page.year}</span>
+              <span aria-hidden="true" className="diary-future-heart">
+                ♡
+              </span>
+              <h4>{page.title}</h4>
+              <p>{page.text}</p>
+              <small>Место для наших будущих воспоминаний</small>
+            </article>
+          ))}
+        </div>
+      </section>
       <p className="album-postscript">
         Моя Алина, я люблю тебя. И верю, что впереди у нас будет много настоящих
         счастливых мгновений. Твой Никита ♡
