@@ -26,49 +26,74 @@
 .talking-cat:active .cat-character {
   scale: 0.96;
 }
-.cat-dialog {
-  width: min(440px, calc(100% - 28px));
-  max-height: calc(100dvh - 32px);
-  overflow: auto;
+.cat-speech {
+  position: fixed;
+  z-index: 40;
+  width: min(320px, calc(100vw - 24px));
+  padding: 17px 18px 9px;
   border: 1px solid #b783a1;
-  border-radius: 24px;
-  padding: 28px 24px;
-  background:
-    radial-gradient(ellipse at top, #76506c55, transparent 70%), #2c1d35;
+  border-radius: 20px;
+  background: #38243e;
   color: #f8e5ed;
-  text-align: center;
+  text-align: left;
+  box-shadow: 0 10px 32px #10081855;
+  animation: cat-speech-appear 0.2s ease backwards;
 }
-.cat-dialog::backdrop {
-  background: #160d23dd;
-}
-.cat-dialog-close {
+.cat-speech::after {
+  content: '';
   position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 44px;
-  height: 44px;
-  background: transparent;
-  border: 0;
-  color: #f2ccde;
-  font-size: 28px;
+  left: var(--tail-left, 50%);
+  bottom: -7px;
+  width: 12px;
+  height: 12px;
+  background: #38243e;
+  border-right: 1px solid #b783a1;
+  border-bottom: 1px solid #b783a1;
+  transform: translateX(-50%) rotate(45deg);
 }
-.cat-dialog-portrait {
-  width: 80px;
-  height: 96px;
-  margin: 0 auto 15px;
-}
-.cat-dialog h2 {
-  font: 30px/1.2 var(--serif);
-  margin: 0 0 18px;
-}
-.cat-dialog p {
-  font: 15px/1.8 var(--sans);
-  margin: 0 0 12px;
-  color: #f1dae5;
-}
-.cat-dialog .primary {
+.cat-speech-name {
   display: block;
-  margin: 16px auto 0;
-  font-size: 12px;
-  padding-inline: 18px;
+  color: #f1bbd2;
+  font: 600 12px/1.5 var(--sans);
+  margin: 0 0 7px;
+}
+.cat-speech p {
+  font: 14px/1.7 var(--sans);
+  color: #f5deea;
+  margin: 0;
+  max-height: var(--speech-available-height, calc(100dvh - 160px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.cat-speech-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.cat-speech-actions button {
+  background: transparent;
+  color: #edbfd5;
+  border: 0;
+  border-radius: 12px;
+  padding: 8px;
+  min-height: 44px;
+  min-width: 44px;
+  font: 12px/1.5 var(--sans);
+}
+.cat-speech-actions button:last-child {
+  font-size: 24px;
+}
+@keyframes cat-speech-appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cat-speech {
+    animation: none;
+  }
 }
