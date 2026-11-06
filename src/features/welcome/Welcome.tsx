@@ -12,7 +12,7 @@ export function Welcome({ onStart }: WelcomeProps) {
       </div>
       <div className="intro-layout">
         <div className="intro-copy">
-          <p className="eyebrow">моей Алине, с любовью от Иксика</p>
+          <p className="eyebrow">моей Алине · Alluka, с любовью от Иксика</p>
           <h1 id="intro-title" tabIndex={-1}>
             Алина,
             <br />

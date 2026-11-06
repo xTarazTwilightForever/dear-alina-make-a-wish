@@ -301,3 +301,38 @@
     font-size: 7px;
   }
 }
+
+/* Separate flowing columns keep variable-height pages close together. */
+.album-screen .album-grid {
+  display: block;
+}
+.album-columns {
+  column-count: 3;
+  column-gap: 22px;
+}
+.album-columns > .album-card {
+  display: inline-block;
+  vertical-align: top;
+  break-inside: avoid;
+  margin: 0 0 22px;
+}
+.album-grid > .album-card-main {
+  display: block;
+  margin-top: 22px;
+}
+.album-grid > .album-chapter-label {
+  margin: 20px 0 30px;
+}
+@media (max-width: 1000px) and (min-width: 761px) {
+  .album-columns {
+    column-count: 2;
+  }
+}
+@media (max-width: 760px) {
+  .album-columns {
+    column-count: 1;
+  }
+  .album-columns > .album-card {
+    margin-bottom: 28px;
+  }
+}

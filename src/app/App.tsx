@@ -10,6 +10,7 @@ import { MessageGame } from '../features/message-game/MessageGame';
 import { Album } from '../features/album/Album';
 import { Letter } from '../features/letter/Letter';
 import { VoiceMessage } from '../features/voice-message/VoiceMessage';
+import { Constellation } from '../features/constellation/Constellation';
 import {
   ChapterBookmarks,
   useOpenedChapters,
@@ -185,6 +186,7 @@ export function App() {
               <p className="ending-signature">
                 Твой Никита. Твой Иксик. Всегда с любовью ♡
               </p>
+              <Constellation />
               <VoiceMessage onPlaybackChange={setVoicePlaying} />
               <p className="ending-reply">
                 Теперь напиши мне, моя Алина. Хочу узнать, на какой страничке ты

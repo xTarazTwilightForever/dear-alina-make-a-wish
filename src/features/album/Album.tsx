@@ -1,5 +1,5 @@
 import { CatDialogue } from '../../shared/dialogue/CatDialogue';
-import { Fragment, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   albumIllustrations,
@@ -30,6 +30,59 @@ export function Album({ onContinue, onFinish }: AlbumProps) {
     );
   }
 
+  function renderCard(index: number) {
+    const illustration = albumIllustrations[index];
+    return (
+      <button
+        key={illustration.id}
+        className={`album-card${illustration.priority ? ' album-card-priority' : ''}${illustration.main ? ' album-card-main' : ''}`}
+        style={
+          {
+            '--reveal-delay': `${Math.min(index, 8) * 0.045}s`,
+          } as CSSProperties
+        }
+        onClick={() => open(index)}
+        aria-label={`Рассмотреть: ${illustration.title}`}
+      >
+        <figure>
+          <div className="album-image">
+            {illustration.main && (
+              <span className="album-main-label">Самое главное ♡</span>
+            )}
+            {illustration.priority && (
+              <span className="album-new">Новая страничка ♡</span>
+            )}
+            <img
+              src={illustration.src}
+              alt={illustration.alt}
+              width={illustration.width}
+              height={illustration.height}
+              loading="lazy"
+              decoding="async"
+            />
+            <span className="album-message-cue">Послание Никиты ниже ♡</span>
+            <span className="album-expand" aria-hidden="true">
+              ↗
+            </span>
+          </div>
+          <figcaption>
+            <span className="album-number">
+              {String(index + 1).padStart(2, '0')}
+            </span>
+            <span>
+              <strong>{illustration.title}</strong>
+              <small>{illustration.note}</small>
+            </span>
+            <span className="album-heart" aria-hidden="true">
+              ♡
+            </span>
+          </figcaption>
+          <CatDialogue text={illustration.dialogue} />
+        </figure>
+      </button>
+    );
+  }
+
   return (
     <>
       <div className="step">ОТ ИКСИКА · МЕЧТЫ О ХОЗЯЙКЕ-ПАНТЕРКЕ</div>
@@ -51,63 +104,22 @@ export function Album({ onContinue, onFinish }: AlbumProps) {
         <span>{priorityIllustrationCount} новых мечтаний</span>
       </div>
       <div className="album-grid">
-        {albumIllustrations.map((illustration, index) => (
-          <Fragment key={illustration.id}>
-            {index === priorityIllustrationCount && (
-              <p className="album-chapter-label">
-                Ещё немного наших любимых мечтаний ♡
-              </p>
-            )}
-            <button
-              className={`album-card${illustration.priority ? ' album-card-priority' : ''}${illustration.main ? ' album-card-main' : ''}`}
-              style={
-                {
-                  '--reveal-delay': `${Math.min(index, 8) * 0.045}s`,
-                } as CSSProperties
-              }
-              onClick={() => open(index)}
-              aria-label={`Рассмотреть: ${illustration.title}`}
-            >
-              <figure>
-                <div className="album-image">
-                  {illustration.main && (
-                    <span className="album-main-label">Самое главное ♡</span>
-                  )}
-                  {illustration.priority && (
-                    <span className="album-new">Новая страничка ♡</span>
-                  )}
-                  <img
-                    src={illustration.src}
-                    alt={illustration.alt}
-                    width={illustration.width}
-                    height={illustration.height}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span className="album-message-cue">
-                    Послание Никиты ниже ♡
-                  </span>
-                  <span className="album-expand" aria-hidden="true">
-                    ↗
-                  </span>
-                </div>
-                <figcaption>
-                  <span className="album-number">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <span>
-                    <strong>{illustration.title}</strong>
-                    <small>{illustration.note}</small>
-                  </span>
-                  <span className="album-heart" aria-hidden="true">
-                    ♡
-                  </span>
-                </figcaption>
-                <CatDialogue text={illustration.dialogue} />
-              </figure>
-            </button>
-          </Fragment>
-        ))}
+        <div className="album-columns">
+          {albumIllustrations.map((item, index) =>
+            item.priority && !item.main ? renderCard(index) : null,
+          )}
+        </div>
+        <p className="album-chapter-label">
+          Ещё немного наших любимых мечтаний ♡
+        </p>
+        <div className="album-columns">
+          {albumIllustrations.map((item, index) =>
+            !item.priority && !item.main ? renderCard(index) : null,
+          )}
+        </div>
+        {albumIllustrations.map((item, index) =>
+          item.main ? renderCard(index) : null,
+        )}
       </div>
       <p className="album-postscript">
         Моя Алина, я люблю тебя. И верю, что впереди у нас будет много настоящих
