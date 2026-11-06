@@ -1,5 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import { alinaStars } from '../../content/constellation';
+import type { CSSProperties } from 'react';
+import { alinaStars, constellationLinks } from '../../content/constellation';
 import { CatDialogue } from '../../shared/dialogue/CatDialogue';
 import './constellation.css';
 
@@ -9,6 +10,22 @@ export function Constellation() {
   const noteId = useId();
   const titleId = useId();
   const note = useRef<HTMLDivElement>(null);
+  const sky = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(false);
+  useEffect(() => {
+    if (!sky.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(sky.current);
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     if (selected === null) return;
     const frame = window.requestAnimationFrame(() => {
@@ -27,34 +44,40 @@ export function Constellation() {
       <h3 id={titleId}>
         Созвездие <em>Alluka</em>
       </h3>
+      <p className="constellation-zodiac">
+        <span aria-hidden="true">♏</span> 8 ноября · Моя любимая
+        девочка-Скорпион
+      </p>
       <p className="constellation-intro">
-        Моя Алина, эти звёздочки о том, что я люблю в тебе. Коснись каждой, я
-        оставил там несколько слов только для тебя.
+        Моя Алина, эти звёзды сложились в букву А, первую букву твоего имени и
+        ника Alluka. Коснись каждой, я оставил там несколько слов только для
+        тебя.
       </p>
       <div
-        className="constellation-sky"
+        ref={sky}
+        className={`constellation-sky${revealed ? ' is-visible' : ''}`}
         role="group"
-        aria-label="Шесть звёзд Алины"
+        aria-label="Шесть звёзд в форме буквы А, первой буквы имени Алины"
       >
         <svg
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
           aria-hidden="true"
         >
-          {alinaStars.map((star, index) => {
-            const next = alinaStars[(index + 1) % alinaStars.length];
+          {constellationLinks.map(([from, to], index) => {
+            const star = alinaStars[from];
+            const next = alinaStars[to];
             return (
               <line
-                key={star.title}
+                key={`${from}-${to}`}
+                pathLength={1}
+                style={{ animationDelay: `${index * 0.18}s` }}
                 x1={star.x}
                 y1={star.y}
                 x2={next.x}
                 y2={next.y}
                 className={
-                  opened.includes(index) &&
-                  opened.includes((index + 1) % alinaStars.length)
-                    ? 'lit'
-                    : ''
+                  opened.includes(from) && opened.includes(to) ? 'lit' : ''
                 }
               />
             );
@@ -64,7 +87,13 @@ export function Constellation() {
           <button
             key={star.title}
             className={`constellation-star${opened.includes(index) ? ' opened' : ''}`}
-            style={{ left: `${star.x}%`, top: `${star.y}%` }}
+            style={
+              {
+                left: `${star.x}%`,
+                top: `${star.y}%`,
+                '--twinkle-delay': `${index * -0.6}s`,
+              } as CSSProperties
+            }
             aria-label={`Звёздочка: ${star.title}`}
             aria-pressed={selected === index}
             aria-controls={noteId}
@@ -76,7 +105,9 @@ export function Constellation() {
             }}
           >
             <span aria-hidden="true">✦</span>
-            <small>{star.title}</small>
+            <small aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </small>
           </button>
         ))}
       </div>
@@ -90,7 +121,12 @@ export function Constellation() {
         {selected === null ? (
           <p>Выбери звёздочку, моя Алина ♡</p>
         ) : (
-          <CatDialogue text={alinaStars[selected].message} />
+          <>
+            <strong className="constellation-note-title">
+              {alinaStars[selected].title}
+            </strong>
+            <CatDialogue text={alinaStars[selected].message} />
+          </>
         )}
       </div>
       <p className="constellation-progress">
