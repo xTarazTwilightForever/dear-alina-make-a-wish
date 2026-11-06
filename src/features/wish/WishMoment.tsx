@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { useCandleBlow } from './useCandleBlow';
+import { birthdayGuitarVideo } from '../../content/birthdayGuitar';
+import { pauseOtherPersonalMedia } from '../../shared/lib/pauseOtherPersonalMedia';
 import './wish.css';
 
 interface WishMomentProps {
@@ -8,6 +10,7 @@ interface WishMomentProps {
   onClose: () => void;
   onComplete: () => void;
   onAlbum: () => void;
+  onMelodyPlaybackChange: (playing: boolean) => void;
 }
 
 export function WishMoment({
@@ -15,10 +18,15 @@ export function WishMoment({
   onClose,
   onComplete,
   onAlbum,
+  onMelodyPlaybackChange,
 }: WishMomentProps) {
   const dialog = useRef<HTMLDialogElement>(null);
   const completed = useRef(false);
   const [blown, setBlown] = useState(false);
+  const melody = useRef<HTMLAudioElement>(null);
+  const [melodyPlaying, setMelodyPlaying] = useState(false);
+  const [needsTap, setNeedsTap] = useState(false);
+  const [melodyError, setMelodyError] = useState(false);
   const [stars] = useState(() =>
     Array.from({ length: 55 }, (_, id) => ({
       id,
@@ -32,19 +40,39 @@ export function WishMoment({
     })),
   );
 
+  const playMelody = useCallback(() => {
+    const player = melody.current;
+    if (!player || !birthdayGuitarVideo) return;
+    setNeedsTap(false);
+    if (player.readyState > 0) player.currentTime = 0;
+    void player.play().catch(() => {
+      if (dialog.current?.open) setNeedsTap(true);
+    });
+  }, []);
+
   const blow = useCallback(() => {
     if (completed.current) return;
     completed.current = true;
     setBlown(true);
     onComplete();
-  }, [onComplete]);
+    playMelody();
+  }, [onComplete, playMelody]);
   const microphone = useCandleBlow(blow);
 
   useEffect(() => {
     if (open && !dialog.current?.open) dialog.current?.showModal();
     else if (!open && dialog.current?.open) dialog.current.close();
     if (!open) microphone.stop();
+    if (!open) melody.current?.pause();
   }, [open, microphone.stop]);
+
+  useEffect(() => {
+    const player = melody.current;
+    return () => {
+      player?.pause();
+      onMelodyPlaybackChange(false);
+    };
+  }, [onMelodyPlaybackChange]);
 
   function extinguish() {
     microphone.stop();
@@ -52,6 +80,7 @@ export function WishMoment({
   }
   function close() {
     microphone.stop();
+    melody.current?.pause();
     if (dialog.current?.open) dialog.current.close();
     onClose();
   }
@@ -64,6 +93,34 @@ export function WishMoment({
       aria-labelledby="wish-title"
       aria-describedby="wish-promise"
     >
+      {birthdayGuitarVideo && (
+        <audio
+          ref={melody}
+          src={birthdayGuitarVideo}
+          preload="metadata"
+          data-personal-message
+          aria-hidden="true"
+          onPlay={(event) => {
+            pauseOtherPersonalMedia(event.currentTarget);
+            setMelodyPlaying(true);
+            setNeedsTap(false);
+            onMelodyPlaybackChange(true);
+          }}
+          onPause={() => {
+            setMelodyPlaying(false);
+            onMelodyPlaybackChange(false);
+          }}
+          onEnded={() => {
+            setMelodyPlaying(false);
+            onMelodyPlaybackChange(false);
+          }}
+          onError={() => {
+            setMelodyError(true);
+            setMelodyPlaying(false);
+            onMelodyPlaybackChange(false);
+          }}
+        />
+      )}
       <div
         className={`wish-universe wish-candle-universe${blown ? ' wish-fulfilled' : ''}`}
       >
@@ -152,6 +209,33 @@ export function WishMoment({
                   : 'Нажатие работает и без микрофона.'}
             </p>
           </>
+        )}
+        {blown && birthdayGuitarVideo && (
+          <div className="wish-guitar">
+            <p role="status">
+              {melodyError
+                ? 'Запись не удалось включить. Моё видео ждёт тебя в конце истории.'
+                : melodyPlaying
+                  ? 'Моя Алина, эта мелодия на гитаре звучит для тебя. С днём рождения. Твой Никита ♡'
+                  : needsTap
+                    ? 'Моя Алина, коснись кнопки, я сыграю для тебя на гитаре ♡'
+                    : 'Маленькая гитарная мелодия для моей Алины ♡'}
+            </p>
+            {!melodyError && (
+              <button
+                className="text-button"
+                onClick={() => {
+                  if (melodyPlaying) melody.current?.pause();
+                  else playMelody();
+                }}
+              >
+                {melodyPlaying
+                  ? 'Приостановить мелодию'
+                  : 'Послушать мелодию Никиты'}{' '}
+                <span>♫</span>
+              </button>
+            )}
+          </div>
         )}
         {blown && (
           <button

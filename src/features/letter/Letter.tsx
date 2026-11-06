@@ -9,8 +9,14 @@ interface LetterProps {
   onAlbum: () => void;
   wishGranted: boolean;
   onWishGranted: () => void;
+  onMelodyPlaybackChange: (playing: boolean) => void;
 }
-export function Letter({ onAlbum, wishGranted, onWishGranted }: LetterProps) {
+export function Letter({
+  onAlbum,
+  wishGranted,
+  onWishGranted,
+  onMelodyPlaybackChange,
+}: LetterProps) {
   const { elapsed, dayLabel } = useDaysSinceMeeting();
   const [wishOpen, setWishOpen] = useState(false);
   const [celebration, setCelebration] = useState(0);
@@ -137,6 +143,7 @@ export function Letter({ onAlbum, wishGranted, onWishGranted }: LetterProps) {
         onClose={() => setWishOpen(false)}
         onComplete={onWishGranted}
         onAlbum={onAlbum}
+        onMelodyPlaybackChange={onMelodyPlaybackChange}
       />
     </>
   );

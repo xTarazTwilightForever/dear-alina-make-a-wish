@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import './voice-message.css';
+import { pauseOtherPersonalMedia } from '../../shared/lib/pauseOtherPersonalMedia';
 
 const recordings = import.meta.glob<string>(
   '../../assets/audio/nikita-message.{m4a,mp3,ogg,wav}',
@@ -32,7 +33,11 @@ export function VoiceMessage({ onPlaybackChange }: VoiceMessageProps) {
           preload="metadata"
           src={recording}
           aria-label="Голосовое поздравление Никиты для Алины"
-          onPlay={() => onPlaybackChange(true)}
+          data-personal-message
+          onPlay={(event) => {
+            pauseOtherPersonalMedia(event.currentTarget);
+            onPlaybackChange(true);
+          }}
           onPause={() => onPlaybackChange(false)}
           onEnded={() => onPlaybackChange(false)}
           onError={() => onPlaybackChange(false)}

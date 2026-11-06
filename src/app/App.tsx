@@ -10,6 +10,7 @@ import { MessageGame } from '../features/message-game/MessageGame';
 import { Album } from '../features/album/Album';
 import { Letter } from '../features/letter/Letter';
 import { VoiceMessage } from '../features/voice-message/VoiceMessage';
+import { GuitarVideo } from '../features/guitar-video/GuitarVideo';
 import { Constellation } from '../features/constellation/Constellation';
 import { useMusic } from '../features/music/useMusic';
 import { chapters } from './chapters';
@@ -26,7 +27,9 @@ export function App() {
   const section = useRef<HTMLElement>(null);
   const initialized = useRef(false);
   const [voicePlaying, setVoicePlaying] = useState(false);
-  useMusic(voicePlaying);
+  const [guitarPlaying, setGuitarPlaying] = useState(false);
+  const [wishMelodyPlaying, setWishMelodyPlaying] = useState(false);
+  useMusic(voicePlaying || guitarPlaying || wishMelodyPlaying);
 
   const navigate = useCallback(
     (next: Chapter) => {
@@ -154,6 +157,7 @@ export function App() {
                 Твой Никита. Твой Иксик. Всегда с любовью ♡
               </p>
               <Constellation />
+              <GuitarVideo onPlaybackChange={setGuitarPlaying} />
               <VoiceMessage onPlaybackChange={setVoicePlaying} />
               <p className="ending-reply">
                 Теперь напиши мне, моя Алина. Хочу узнать, на какой страничке ты
@@ -172,6 +176,7 @@ export function App() {
               onAlbum={() => navigate('album')}
               wishGranted={wishGranted}
               onWishGranted={grantWish}
+              onMelodyPlaybackChange={setWishMelodyPlaying}
             />
           )}
         </section>

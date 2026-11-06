@@ -1,0 +1,56 @@
+.guitar-video {
+  margin: 32px 0;
+  padding: 26px 22px;
+  border: 1px solid #c692ad66;
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at top, #ba8b5d22, transparent 75%), #302137;
+  color: #f6e0ea;
+  text-align: center;
+}
+.guitar-video-heart {
+  display: block;
+  color: #edbad2;
+  font: 40px/1 var(--serif);
+}
+.guitar-video h3 {
+  font: 400 clamp(25px, 6vw, 32px)/1.25 var(--serif);
+  margin: 16px 0;
+}
+.guitar-video p {
+  max-width: 460px;
+  margin: 0 auto 20px;
+  color: #e1c5d5;
+  font: 14px/1.75 var(--sans);
+}
+.guitar-video video {
+  display: block;
+  width: 100%;
+  max-height: 65dvh;
+  margin: 0 auto;
+  border-radius: 14px;
+  background: #1c1426;
+  object-fit: contain;
+}
+.guitar-video-placeholder {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  min-height: 190px;
+  padding: 22px 15px;
+  gap: 18px;
+  border: 1px dashed #bc91a966;
+  border-radius: 14px;
+  background: #211729;
+  color: #d4adbf;
+  font: 13px/1.8 var(--sans);
+}
+.guitar-video-placeholder > span:first-child {
+  font: 58px/1 var(--serif);
+  color: #eac4cb;
+}
+@media (max-width: 600px) {
+  .guitar-video {
+    padding: 24px 16px;
+  }
+}
