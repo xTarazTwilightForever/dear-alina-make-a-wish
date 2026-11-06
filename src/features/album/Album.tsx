@@ -8,11 +8,10 @@ import {
 import './album.css';
 
 interface AlbumProps {
-  onContinue: () => void;
   onFinish: () => void;
 }
 
-export function Album({ onContinue, onFinish }: AlbumProps) {
+export function Album({ onFinish }: AlbumProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const dialog = useRef<HTMLDialogElement>(null);
   const active = albumIllustrations[activeIndex];
@@ -104,22 +103,7 @@ export function Album({ onContinue, onFinish }: AlbumProps) {
         <span>{priorityIllustrationCount} новых мечтаний</span>
       </div>
       <div className="album-grid">
-        <div className="album-columns">
-          {albumIllustrations.map((item, index) =>
-            item.priority && !item.main ? renderCard(index) : null,
-          )}
-        </div>
-        <p className="album-chapter-label">
-          Ещё немного наших любимых мечтаний ♡
-        </p>
-        <div className="album-columns">
-          {albumIllustrations.map((item, index) =>
-            !item.priority && !item.main ? renderCard(index) : null,
-          )}
-        </div>
-        {albumIllustrations.map((item, index) =>
-          item.main ? renderCard(index) : null,
-        )}
+        {albumIllustrations.map((_, index) => renderCard(index))}
       </div>
       <p className="album-postscript">
         Моя Алина, я люблю тебя. И верю, что впереди у нас будет много настоящих
@@ -127,9 +111,6 @@ export function Album({ onContinue, onFinish }: AlbumProps) {
       </p>
       <button className="primary album-finish" onClick={onFinish}>
         Конец <span>♡</span>
-      </button>
-      <button className="text-button" onClick={onContinue}>
-        Вернуться к письму <span>→</span>
       </button>
       <dialog
         className="art-dialog"

@@ -6,8 +6,12 @@
   background:
     radial-gradient(ellipse at top, #a86c8a22, transparent 75%), #302137;
   color: #f6e0ea;
+  text-align: center;
 }
 .voice-message-heart {
+  display: block;
+  width: max-content;
+  margin: 0 auto;
   color: #edbad2;
   font: 40px/1 var(--serif);
 }

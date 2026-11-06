@@ -302,37 +302,91 @@
   }
 }
 
-/* Separate flowing columns keep variable-height pages close together. */
+/* Fixed row order: left to right, then the next row. */
 .album-screen .album-grid {
-  display: block;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+  align-items: stretch;
 }
-.album-columns {
-  column-count: 3;
-  column-gap: 22px;
+.album-grid > .album-card {
+  grid-column: auto;
+  align-self: stretch;
+  margin: 0;
+  padding: 12px 12px 18px;
+  min-width: 0;
+  transform: none;
+  translate: none;
+  rotate: none;
+  scale: 1;
 }
-.album-columns > .album-card {
-  display: inline-block;
-  vertical-align: top;
-  break-inside: avoid;
-  margin: 0 0 22px;
+.album-grid > .album-card:hover,
+.album-grid > .album-card:focus-visible {
+  transform: none;
+  translate: none;
+  rotate: none;
+  scale: 1;
 }
-.album-grid > .album-card-main {
-  display: block;
-  margin-top: 22px;
+.album-grid .album-card figure {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
-.album-grid > .album-chapter-label {
-  margin: 20px 0 30px;
+.album-grid .album-image {
+  aspect-ratio: 1;
+  flex-shrink: 0;
+  background: #24192f;
 }
-@media (max-width: 1000px) and (min-width: 761px) {
-  .album-columns {
-    column-count: 2;
-  }
+.album-grid .album-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  object-fit: contain;
+  transform: none;
+  transition: none;
+}
+.album-grid .album-card:hover img {
+  transform: none;
+}
+.album-grid .album-image::after {
+  display: none;
+}
+.album-grid .album-card figcaption {
+  align-items: flex-start;
+  padding-bottom: 14px;
+}
+.album-grid .album-card figcaption > span:nth-child(2) {
+  min-width: 0;
+}
+.album-grid .album-card .cat-dialogue {
+  flex: 1;
+}
+.album-grid .album-card .cat-dialogue-bubble {
+  align-self: stretch;
+}
+.album-grid .album-card-main figcaption strong {
+  font-size: 22px;
+}
+.album-grid .album-card-main .cat-dialogue-text {
+  font-size: 14px;
+}
+.album-grid .album-card-main .cat-dialogue-bubble {
+  padding: 11px 12px;
 }
 @media (max-width: 760px) {
-  .album-columns {
-    column-count: 1;
+  .album-screen .album-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
   }
-  .album-columns > .album-card {
-    margin-bottom: 28px;
+  .album-grid .album-card-main figcaption strong {
+    font-size: 29px;
+  }
+  .album-grid .album-card-main .cat-dialogue-text {
+    font-size: 15px;
+  }
+  .album-grid .album-card-main .cat-dialogue-bubble {
+    padding: 15px;
   }
 }
