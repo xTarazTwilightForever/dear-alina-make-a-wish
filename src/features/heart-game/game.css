@@ -106,7 +106,7 @@
   width: clamp(64px, 13vw, 100px);
   height: clamp(78px, 15.6vw, 120px);
   transform: translateX(-50%);
-  transition: left 800ms cubic-bezier(0.22, 0.68, 0.2, 1);
+  transition: none;
   pointer-events: none;
 }
 .journey-character-white {

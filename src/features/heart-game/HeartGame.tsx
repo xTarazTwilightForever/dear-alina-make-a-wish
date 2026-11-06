@@ -1,7 +1,7 @@
 import './game.css';
 import { TalkingCat } from '../../shared/characters/TalkingCat';
 import { collectHeart, getJourneyProgress, heartPositions } from './model';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { trailConfessions, heartPalette } from '../../content/story';
 import { JourneyMap } from '../adventure/JourneyMap';
@@ -20,6 +20,56 @@ export function HeartGame({ onFinish }: HeartGameProps) {
   const finishButton = useRef<HTMLButtonElement>(null);
   const { complete, progress, travelerPosition, companionPosition } =
     getJourneyProgress(collected.length);
+  const traveler = useRef<HTMLDivElement>(null);
+  const previousPosition = useRef(travelerPosition);
+  const hop = useRef<Animation | null>(null);
+
+  useLayoutEffect(() => {
+    const node = traveler.current;
+    const previous = previousPosition.current;
+    previousPosition.current = travelerPosition;
+    if (!node || previous === travelerPosition) return;
+    const boardWidth = node.parentElement?.clientWidth ?? 0;
+    const start =
+      hop.current && boardWidth > 0
+        ? (parseFloat(getComputedStyle(node).left) / boardWidth) * 100
+        : previous;
+    hop.current?.cancel();
+    hop.current = null;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const distance = travelerPosition - start;
+    const animation = node.animate(
+      [
+        {
+          left: `${start}%`,
+          transform: 'translateX(-50%) translateY(0) scale(1.04, .96)',
+          offset: 0,
+        },
+        {
+          left: `${start + distance * 0.5}%`,
+          transform: 'translateX(-50%) translateY(-38px) scale(.97, 1.03)',
+          offset: 0.5,
+        },
+        {
+          left: `${travelerPosition}%`,
+          transform: 'translateX(-50%) translateY(0) scale(1.04, .96)',
+          offset: 0.92,
+        },
+        {
+          left: `${travelerPosition}%`,
+          transform: 'translateX(-50%) translateY(0) scale(1)',
+          offset: 1,
+        },
+      ],
+      { duration: 850, easing: 'ease-in-out' },
+    );
+    hop.current = animation;
+    animation.onfinish = () => {
+      if (hop.current === animation) hop.current = null;
+    };
+  }, [travelerPosition]);
+
+  useEffect(() => () => hop.current?.cancel(), []);
 
   useEffect(() => {
     if (complete) finishButton.current?.focus({ preventScroll: true });
@@ -71,6 +121,7 @@ export function HeartGame({ onFinish }: HeartGameProps) {
         <div className="path" aria-hidden="true" />
         <div
           className="journey-character journey-character-tishka"
+          ref={traveler}
           style={{ left: `${travelerPosition}%` }}
         >
           <TalkingCat character="dark" />

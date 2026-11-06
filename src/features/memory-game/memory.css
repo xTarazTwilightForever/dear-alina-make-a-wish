@@ -112,3 +112,47 @@
     font-size: 33px;
   }
 }
+
+.memory-screen .memory-confession {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--pair-color, #ead4e2);
+  border-color: var(--pair-color, #79516d);
+  transition:
+    color 0.3s,
+    border-color 0.3s;
+}
+.memory-confession > span:not(.memory-confession-symbol) {
+  flex: 1;
+  min-width: 0;
+}
+.memory-confession-symbol {
+  flex: 0 0 28px;
+  text-align: center;
+  font: 26px/1.3 var(--serif);
+  color: var(--pair-color);
+}
+.memory-confession-paws {
+  filter: grayscale(1) brightness(0) invert(1);
+}
+.memory-grid .memory-card.matched .memory-card-front {
+  color: var(--matched-color);
+  border-color: var(--matched-color);
+  background: #34263d;
+}
+@media (max-width: 600px) {
+  .memory-screen .memory-confession {
+    gap: 8px;
+  }
+  .memory-confession-symbol {
+    flex-basis: 20px;
+    font-size: 21px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .memory-screen .memory-confession {
+    transition: none;
+  }
+}

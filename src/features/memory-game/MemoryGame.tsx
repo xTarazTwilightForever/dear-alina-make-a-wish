@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { lovePairs } from '../../content/story';
+import { lovePairs, lovePairAccents } from '../../content/story';
+import type { CSSProperties } from 'react';
 import { JourneyMap } from '../adventure/JourneyMap';
 import { createMemoryDeck } from './model';
 import './memory.css';
@@ -13,6 +14,7 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
   const [opened, setOpened] = useState<readonly string[]>([]);
   const [matched, setMatched] = useState<readonly string[]>([]);
   const [moves, setMoves] = useState(0);
+  const [activePair, setActivePair] = useState<string | null>(null);
   const [message, setMessage] = useState(
     'Мама, мы пришли на Мост нежности. Найди пары карточек, чтобы прочитать слова Иксика. Тишка',
   );
@@ -35,10 +37,13 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
               : [...current, first.pairId],
           );
           setMessage(`${first.note} Никита, твой Иксик.`);
-        } else
+          setActivePair(first.pairId);
+        } else {
+          setActivePair(null);
           setMessage(
             'Мама, эти карточки разные. Запомни их и открой следующую пару. Тишка',
           );
+        }
         setOpened([]);
       },
       same ? 450 : 1100,
@@ -91,10 +96,35 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
         <br />
         Найди шесть пар и прочитай признания Иксика в любви.
       </p>
-      <p ref={messageBox} className="game-quote" aria-live="polite">
-        {complete
-          ? 'Моя Алина, каждое признание приближает меня к тебе хотя бы на одно слово. Я люблю тебя и очень жду нашей первой встречи. Иксик'
-          : message}
+      <p
+        ref={messageBox}
+        className="game-quote memory-confession"
+        aria-live="polite"
+        style={
+          activePair
+            ? ({
+                '--pair-color': lovePairAccents[activePair].color,
+              } as CSSProperties)
+            : undefined
+        }
+      >
+        {activePair && (
+          <span
+            className={`memory-confession-symbol${activePair === 'paws' ? ' memory-confession-paws' : ''}`}
+            aria-hidden="true"
+          >
+            {lovePairAccents[activePair].symbol}
+          </span>
+        )}
+        <span>{message}</span>
+        {activePair && (
+          <span
+            className={`memory-confession-symbol${activePair === 'paws' ? ' memory-confession-paws' : ''}`}
+            aria-hidden="true"
+          >
+            {lovePairAccents[activePair].symbol}
+          </span>
+        )}
       </p>
       <div className="memory-grid" aria-label="Карточки моста нежности">
         {deck.map((card, index) => {
@@ -104,6 +134,11 @@ export function MemoryGame({ onContinue }: MemoryGameProps) {
             <button
               key={card.id}
               className={`memory-card${revealed ? ' revealed' : ''}${found ? ' matched' : ''}`}
+              style={
+                {
+                  '--matched-color': lovePairAccents[card.pairId].color,
+                } as CSSProperties
+              }
               onClick={() => turn(card.id)}
               disabled={found || opened.length >= 2 || opened.includes(card.id)}
               aria-label={

@@ -115,3 +115,15 @@ export const heartPalette = [
   { color: '#9cddd5', name: 'бирюзовое' },
   { color: '#ffb0a3', name: 'коралловое' },
 ] as const;
+
+export const lovePairAccents: Record<
+  string,
+  { color: string; symbol: string }
+> = {
+  heart: { color: '#ffafd1', symbol: '♡' },
+  paws: { color: '#f4f0e8', symbol: '🐾' },
+  letter: { color: '#cab5ff', symbol: '💌' },
+  moon: { color: '#a9d9ff', symbol: '☾' },
+  star: { color: '#f6d28c', symbol: '✧' },
+  home: { color: '#a8e5cf', symbol: '⌂' },
+};

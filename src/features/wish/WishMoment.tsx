@@ -63,7 +63,6 @@ export function WishMoment({
     if (open && !dialog.current?.open) dialog.current?.showModal();
     else if (!open && dialog.current?.open) dialog.current.close();
     if (!open) microphone.stop();
-    if (!open) melody.current?.pause();
   }, [open, microphone.stop]);
 
   useEffect(() => {
@@ -80,7 +79,6 @@ export function WishMoment({
   }
   function close() {
     microphone.stop();
-    melody.current?.pause();
     if (dialog.current?.open) dialog.current.close();
     onClose();
   }
@@ -98,6 +96,7 @@ export function WishMoment({
           ref={melody}
           src={birthdayGuitarMelody}
           preload="metadata"
+          loop
           data-personal-message
           aria-hidden="true"
           onPlay={(event) => {
@@ -239,7 +238,7 @@ export function WishMoment({
         )}
         {blown && (
           <button
-            className="wish-keep"
+            className="wish-keep wish-album-cta"
             autoFocus
             onClick={() => {
               close();

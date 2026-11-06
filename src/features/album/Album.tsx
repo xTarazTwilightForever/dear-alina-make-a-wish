@@ -188,6 +188,7 @@ export function Album({ onFinish }: AlbumProps) {
             <span>С любовью, Никита ♡</span>
             {activeIndex === albumIllustrations.length - 1 ? (
               <button
+                className="art-finish"
                 onClick={() => {
                   dialog.current?.close();
                   onFinish();

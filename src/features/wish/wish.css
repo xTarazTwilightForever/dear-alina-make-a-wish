@@ -371,3 +371,51 @@
   font-size: 12px;
   margin: 8px 0 0;
 }
+
+.wish-guitar {
+  text-align: center;
+}
+.wish-guitar .text-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 8px auto 0;
+  width: fit-content;
+  max-width: 100%;
+  gap: 6px;
+  text-align: center;
+}
+.wish-dialog .wish-album-cta {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  width: min(100%, 390px);
+  margin: 28px auto 0;
+  min-height: 62px;
+  padding: 18px 24px;
+  border: 2px solid #ffe0c5;
+  border-radius: 32px;
+  background: linear-gradient(125deg, #e9bfd1, #ffd8ba);
+  color: #45243e;
+  font: 700 16px/1.5 var(--sans);
+  box-shadow:
+    0 0 30px #f7bbd54d,
+    0 8px 24px #11091c66;
+  animation: next-page-glow 2.6s ease-in-out infinite;
+}
+.wish-dialog .wish-album-cta span {
+  margin: 0;
+}
+@keyframes next-page-glow {
+  50% {
+    box-shadow:
+      0 0 44px #f7bbd580,
+      0 8px 24px #11091c66;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wish-dialog .wish-album-cta {
+    animation: none;
+  }
+}
