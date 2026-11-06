@@ -1,0 +1,74 @@
+.talking-cat {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 30%;
+  pointer-events: auto;
+}
+.talking-cat-heart {
+  position: absolute;
+  right: 0;
+  top: 4%;
+  color: #ffcee3;
+  font: 20px/1 var(--sans);
+  transition: transform 0.25s;
+}
+.talking-cat:hover .talking-cat-heart,
+.talking-cat:focus-visible .talking-cat-heart {
+  transform: translateY(-5px) scale(1.15);
+}
+.talking-cat:active .cat-character {
+  scale: 0.96;
+}
+.cat-dialog {
+  width: min(440px, calc(100% - 28px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  border: 1px solid #b783a1;
+  border-radius: 24px;
+  padding: 28px 24px;
+  background:
+    radial-gradient(ellipse at top, #76506c55, transparent 70%), #2c1d35;
+  color: #f8e5ed;
+  text-align: center;
+}
+.cat-dialog::backdrop {
+  background: #160d23dd;
+}
+.cat-dialog-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: 0;
+  color: #f2ccde;
+  font-size: 28px;
+}
+.cat-dialog-portrait {
+  width: 80px;
+  height: 96px;
+  margin: 0 auto 15px;
+}
+.cat-dialog h2 {
+  font: 30px/1.2 var(--serif);
+  margin: 0 0 18px;
+}
+.cat-dialog p {
+  font: 15px/1.8 var(--sans);
+  margin: 0 0 12px;
+  color: #f1dae5;
+}
+.cat-dialog .primary {
+  display: block;
+  margin: 16px auto 0;
+  font-size: 12px;
+  padding-inline: 18px;
+}

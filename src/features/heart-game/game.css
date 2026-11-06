@@ -137,3 +137,13 @@
 .heart:focus-visible {
   outline-color: var(--heart-color, var(--rose));
 }
+
+.hearts {
+  pointer-events: none;
+}
+.hearts .heart:not(:disabled) {
+  pointer-events: auto;
+}
+.journey-character {
+  pointer-events: auto;
+}

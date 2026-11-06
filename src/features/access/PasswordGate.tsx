@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { FormEvent } from 'react';
-import { CatCharacter } from '../../shared/characters/CatCharacter';
+import { TalkingCat } from '../../shared/characters/TalkingCat';
 import './access.css';
 
 interface PasswordGateProps {
@@ -29,7 +29,7 @@ export function PasswordGate({ onUnlock }: PasswordGateProps) {
       <time dateTime="2026-11-08">8 ноября 2026</time>
       <div className={`access-card${unlocking ? ' access-unlocking' : ''}`}>
         <div className="access-kitten">
-          <CatCharacter character="white" />
+          <TalkingCat character="white" />
         </div>
         <p className="step">ТОЛЬКО ДЛЯ ТЕБЯ</p>
         <h1>

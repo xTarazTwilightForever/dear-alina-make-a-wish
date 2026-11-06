@@ -10,6 +10,10 @@ import { MessageGame } from '../features/message-game/MessageGame';
 import { Album } from '../features/album/Album';
 import { Letter } from '../features/letter/Letter';
 import { VoiceMessage } from '../features/voice-message/VoiceMessage';
+import {
+  ChapterBookmarks,
+  useOpenedChapters,
+} from '../features/bookmarks/ChapterBookmarks';
 import { useMusic } from '../features/music/useMusic';
 import { chapters } from './chapters';
 import type { Chapter } from './chapters';
@@ -24,12 +28,23 @@ export function App() {
   const unlock = useCallback(() => setUnlocked(true), []);
   const section = useRef<HTMLElement>(null);
   const initialized = useRef(false);
+  const focusVoice = useRef(false);
+  const furthestChapter = useOpenedChapters(chapter);
   const [voicePlaying, setVoicePlaying] = useState(false);
   useMusic(voicePlaying);
 
   const navigate = useCallback(
-    (next: Chapter) => {
-      if (turning.current || next === chapter) return;
+    (next: Chapter, voice = false) => {
+      if (turning.current) return;
+      if (next === chapter) {
+        if (voice) {
+          const title = document.getElementById('voice-message-title');
+          title?.focus({ preventScroll: true });
+          title?.scrollIntoView({ block: 'center', behavior: 'instant' });
+        }
+        return;
+      }
+      focusVoice.current = voice;
       turning.current = true;
       setDestination(next);
     },
@@ -67,6 +82,13 @@ export function App() {
       return;
     }
     if (destination) return;
+    if (focusVoice.current) {
+      focusVoice.current = false;
+      const title = document.getElementById('voice-message-title');
+      title?.focus({ preventScroll: true });
+      title?.scrollIntoView({ block: 'center', behavior: 'instant' });
+      return;
+    }
     window.scrollTo({ top: 0, behavior: 'instant' });
     section.current
       ?.querySelector<HTMLElement>('h1,h2')
@@ -99,6 +121,13 @@ export function App() {
           8 ноября 2026
         </time>
       </header>
+      <ChapterBookmarks
+        chapter={chapter}
+        furthest={furthestChapter}
+        turning={destination !== null}
+        wishPending={chapter === 'letter' && wishGranted}
+        onSelect={navigate}
+      />
       <main inert={destination !== null}>
         <section
           ref={section}
@@ -157,6 +186,10 @@ export function App() {
                 Твой Никита. Твой Иксик. Всегда с любовью ♡
               </p>
               <VoiceMessage onPlaybackChange={setVoicePlaying} />
+              <p className="ending-reply">
+                Теперь напиши мне, моя Алина. Хочу узнать, на какой страничке ты
+                улыбнулась. Я буду очень рад услышать, что ты почувствовала ♡
+              </p>
               <button className="primary" onClick={() => navigate('album')}>
                 Вернуться в альбом <span>♡</span>
               </button>

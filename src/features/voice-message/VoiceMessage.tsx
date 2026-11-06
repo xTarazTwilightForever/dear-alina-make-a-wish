@@ -19,7 +19,9 @@ export function VoiceMessage({ onPlaybackChange }: VoiceMessageProps) {
       <span className="voice-message-heart" aria-hidden="true">
         ♡
       </span>
-      <h3 id="voice-message-title">Моим голосом, только для тебя</h3>
+      <h3 id="voice-message-title" tabIndex={-1}>
+        Моим голосом, только для тебя
+      </h3>
       <p>
         Моя Алина, есть слова, которые мне хочется произнести, чтобы ты услышала
         всю мою нежность. Твой Никита.

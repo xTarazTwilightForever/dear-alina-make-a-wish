@@ -1,5 +1,5 @@
 import './game.css';
-import { CatCharacter } from '../../shared/characters/CatCharacter';
+import { TalkingCat } from '../../shared/characters/TalkingCat';
 import { collectHeart, getJourneyProgress, heartPositions } from './model';
 import { useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
@@ -72,16 +72,14 @@ export function HeartGame({ onFinish }: HeartGameProps) {
         <div
           className="journey-character journey-character-tishka"
           style={{ left: `${travelerPosition}%` }}
-          aria-hidden="true"
         >
-          <CatCharacter character="dark" />
+          <TalkingCat character="dark" />
         </div>
         <div
           className="journey-character journey-character-white"
           style={{ left: `${companionPosition}%` }}
-          aria-hidden="true"
         >
-          <CatCharacter character="white" />
+          <TalkingCat character="white" />
         </div>
         <div className="hearts">
           {heartPositions.map(([left, top], index) => (

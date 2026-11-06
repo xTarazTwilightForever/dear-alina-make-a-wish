@@ -1,4 +1,4 @@
-import { CatCharacter } from '../../shared/characters/CatCharacter';
+import { TalkingCat } from '../../shared/characters/TalkingCat';
 import './journey.css';
 
 const stages = ['Тропа сердечек', 'Мост нежности', 'Признание Иксика'] as const;
@@ -11,7 +11,7 @@ export function JourneyMap({ stage }: JourneyMapProps) {
     <>
       <aside className="tishka-guide" aria-label="Подсказка Тишки">
         <span className="tishka-guide-avatar">
-          <CatCharacter character="dark" />
+          <TalkingCat character="dark" />
         </span>
         <span>
           <strong>Тишка рядом</strong>

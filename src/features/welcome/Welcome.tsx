@@ -1,4 +1,4 @@
-import { CatCharacter } from '../../shared/characters/CatCharacter';
+import { TalkingCat } from '../../shared/characters/TalkingCat';
 import './welcome.css';
 interface WelcomeProps {
   onStart: () => void;
@@ -33,7 +33,7 @@ export function Welcome({ onStart }: WelcomeProps) {
         </div>
         <div
           className="scene"
-          role="img"
+          role="group"
           aria-label="Тишка ждёт маму, а Иксик ждёт свою Пантерку. Они ждут Алину домой в Павлодар."
         >
           <span className="scene-star star-one">✧</span>
@@ -44,15 +44,15 @@ export function Welcome({ onStart }: WelcomeProps) {
           <div className="orbit orbit-two"></div>
           <div className="pink-planet"></div>
           <div className="scene-character scene-character-tishka">
-            <CatCharacter character="dark" />
+            <TalkingCat character="dark" />
           </div>
           <div className="scene-character scene-character-white">
-            <CatCharacter character="white" />
+            <TalkingCat character="white" />
           </div>
           <div className="floating-heart">♡</div>
           <div className="ground"></div>
           <p className="scene-note">
-            с тобой я дома
+            Погладь котиков, им есть что сказать
             <br />
             Твой Иксик ♡
           </p>
