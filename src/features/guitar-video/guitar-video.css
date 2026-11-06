@@ -54,3 +54,98 @@
     padding: 24px 16px;
   }
 }
+
+.guitar-video-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid #cd9bb34d;
+  background: #17111e;
+  box-shadow: 0 12px 32px #100a1e66;
+  isolation: isolate;
+}
+.guitar-video-stage video {
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
+}
+.guitar-video-play {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  border: 0;
+  color: #fff1e9;
+  background: linear-gradient(transparent, #110b204d 65%, #110b20aa);
+  font: 500 14px/1.6 var(--sans);
+  text-shadow: 0 2px 12px #100919;
+}
+.guitar-play-icon {
+  display: grid;
+  place-items: center;
+  width: 68px;
+  height: 68px;
+  padding-left: 4px;
+  border: 1px solid #ffdfedbb;
+  border-radius: 50%;
+  color: #fff3f8;
+  font-size: 24px;
+  background: #714763cc;
+  box-shadow: 0 0 30px #e3a1c14d;
+  transition:
+    background 0.2s,
+    box-shadow 0.2s;
+}
+.guitar-video-play:hover .guitar-play-icon,
+.guitar-video-play:focus-visible .guitar-play-icon {
+  background: #8e567c;
+  box-shadow: 0 0 38px #e3a1c180;
+}
+.guitar-video-play:focus-visible {
+  outline: 2px solid #ffd8ea;
+  outline-offset: -6px;
+  border-radius: 16px;
+}
+.guitar-video-dedication {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  max-width: calc(100% - 24px);
+  padding: 6px 9px;
+  border-radius: 18px;
+  background: #27172ec4;
+  color: #f3cde0;
+  font: 9px/1.5 var(--sans);
+  letter-spacing: 0.8px;
+  pointer-events: none;
+}
+.guitar-video-error {
+  margin: 16px auto 0 !important;
+}
+.guitar-video-error a {
+  color: #f5c6dc;
+}
+@media (max-width: 600px) {
+  .guitar-video-play {
+    gap: 10px;
+    font-size: 12px;
+  }
+  .guitar-play-icon {
+    width: 54px;
+    height: 54px;
+    font-size: 20px;
+  }
+  .guitar-video-dedication {
+    font-size: 8px;
+    top: 8px;
+    left: 8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .guitar-play-icon {
+    transition: none;
+  }
+}

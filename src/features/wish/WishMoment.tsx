@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import { useCandleBlow } from './useCandleBlow';
-import { birthdayGuitarVideo } from '../../content/birthdayGuitar';
+import { birthdayGuitarMelody } from '../../content/birthdayGuitar';
 import { pauseOtherPersonalMedia } from '../../shared/lib/pauseOtherPersonalMedia';
 import './wish.css';
 
@@ -42,7 +42,7 @@ export function WishMoment({
 
   const playMelody = useCallback(() => {
     const player = melody.current;
-    if (!player || !birthdayGuitarVideo) return;
+    if (!player || !birthdayGuitarMelody) return;
     setNeedsTap(false);
     if (player.readyState > 0) player.currentTime = 0;
     void player.play().catch(() => {
@@ -93,10 +93,10 @@ export function WishMoment({
       aria-labelledby="wish-title"
       aria-describedby="wish-promise"
     >
-      {birthdayGuitarVideo && (
+      {birthdayGuitarMelody && (
         <audio
           ref={melody}
-          src={birthdayGuitarVideo}
+          src={birthdayGuitarMelody}
           preload="metadata"
           data-personal-message
           aria-hidden="true"
@@ -210,7 +210,7 @@ export function WishMoment({
             </p>
           </>
         )}
-        {blown && birthdayGuitarVideo && (
+        {blown && birthdayGuitarMelody && (
           <div className="wish-guitar">
             <p role="status">
               {melodyError
