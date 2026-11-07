@@ -1,0 +1,61 @@
+.iksik-voice-dock {
+  display: block;
+  width: 80px;
+  height: 96px;
+  margin: 0 auto 20px;
+}
+.roaming-iksik {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 80px;
+  height: 96px;
+  z-index: 35;
+  pointer-events: none;
+}
+.roaming-iksik-touch {
+  width: 80px;
+  height: 96px;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: 28px;
+  background: transparent;
+  pointer-events: auto;
+}
+.roaming-iksik-touch:active {
+  scale: 0.96;
+}
+.roaming-iksik-bubble {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  width: min(240px, calc(100vw - 24px));
+  padding: 15px 36px 15px 16px;
+  border: 1px solid #b783a1;
+  border-radius: 18px;
+  background: #38243ef5;
+  color: #f5d8e7;
+  box-shadow: 0 8px 26px #12091e44;
+  pointer-events: auto;
+}
+.roaming-iksik-bubble p {
+  margin: 0;
+  font: 13px/1.6 var(--sans);
+}
+.roaming-iksik-bubble button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  min-width: 36px;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: #efbed7;
+  font-size: 23px;
+  border-radius: 16px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .roaming-iksik-touch:active {
+    scale: none;
+  }
+}
