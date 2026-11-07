@@ -33,6 +33,10 @@ jobs:
         run: npm ci
       - name: Build website
         run: npm run build -- --mode github-pages
+      - name: Prepare invitation link
+        run: |
+          mkdir -p dist/for-alina
+          cp dist/index.html dist/for-alina/index.html
       - name: Configure Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d
       - name: Upload website

@@ -20,6 +20,8 @@ import whiteKitten from '../assets/illustrations/iksik-portrait-for-alina.png';
 import littleShelter from '../assets/illustrations/alina-and-iksik-little-shelter.png';
 import crackedCooktop from '../assets/illustrations/alina-potatoes-and-cracked-cooktop.png';
 import sistersPhone from '../assets/illustrations/alina-sisters-broken-phone.png';
+import wrappingGift from '../assets/illustrations/iksik-wraps-alinas-gift.png';
+import sleepyVoice from '../assets/illustrations/iksik-falls-asleep-to-alinas-voice.png';
 
 export const diaryYear = 2026;
 export const futureDiaryPages = [
@@ -54,6 +56,30 @@ export interface AlbumIllustration {
 }
 
 export const albumIllustrations: readonly AlbumIllustration[] = [
+  {
+    src: wrappingGift,
+    id: 'iksik-wraps-alinas-gift',
+    title: 'Иксик старается упаковать подарок Алине',
+    note: 'Немножко неровно, зато от всего сердечка',
+    dialogue:
+      'Моя Алина, я совсем не умею красиво упаковывать подарки. У меня же лапки: бумага съезжает, уголочки не слушаются, а ленточка всё время путается. Я очень стесняюсь и переживаю, вдруг тебе не понравится. Но я правда стараюсь, Пантерка. В каждом неровном сгибе есть немного моей нежности и большое желание тебя порадовать. Твой Никита, твой зайка.',
+    alt: 'Смущённый Иксик с нимбом и крылышками старательно заворачивает подарок Dyson для Алины в фиолетовую бумагу среди лент и коробок',
+    width: 1312,
+    height: 1199,
+    priority: true,
+  },
+  {
+    src: sleepyVoice,
+    id: 'iksik-falls-asleep-to-alinas-voice',
+    title: 'Иксик засыпает под голос Алины',
+    note: 'Твой голос делает весь мир тише и теплее',
+    dialogue:
+      'Моя Алина, когда я слушаю твои голосовые, всё внутри понемногу успокаивается. Я обнимаю подушку, расслабляюсь и незаметно засыпаю. Мне так нравится твой голос: в нём столько тепла, что я чувствую себя дома, чувствую, что меня любят. Даже когда ты далеко, рядом с твоим голосом мне спокойно. Спасибо за эту нежность, моя любимая. Твой Никита, твой Иксик.',
+    alt: 'Иксик с нимбом и крылышками уютно обнимает подушку с пони и слушает голосовые Алины на телефоне перед сном',
+    width: 1254,
+    height: 1254,
+    priority: true,
+  },
   {
     src: crackedCooktop,
     id: 'alina-potatoes-and-cracked-cooktop',
