@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './voice-message.css';
 import { pauseOtherPersonalMedia } from '../../shared/lib/pauseOtherPersonalMedia';
 
@@ -13,12 +13,27 @@ interface VoiceMessageProps {
 }
 
 export function VoiceMessage({ onPlaybackChange }: VoiceMessageProps) {
-  useEffect(() => () => onPlaybackChange(false), [onPlaybackChange]);
+  const player = useRef<HTMLAudioElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    const audio = player.current;
+    return () => {
+      audio?.pause();
+      onPlaybackChange(false);
+    };
+  }, [onPlaybackChange]);
 
   return (
-    <section className="voice-message" aria-labelledby="voice-message-title">
+    <section
+      className={`voice-message${playing ? ' voice-message-playing' : ''}`}
+      aria-labelledby="voice-message-title"
+    >
       <span className="voice-message-heart" aria-hidden="true">
         ♡
+      </span>
+      <span className="voice-message-dedication">
+        ДЛЯ МОЕЙ АЛИНЫ · ГОЛОС НИКИТЫ
       </span>
       <h3 id="voice-message-title" tabIndex={-1}>
         Моим голосом, только для тебя
@@ -28,22 +43,49 @@ export function VoiceMessage({ onPlaybackChange }: VoiceMessageProps) {
         всю мою нежность. Твой Никита.
       </p>
       {recording ? (
-        <audio
-          controls
-          preload="metadata"
-          src={recording}
-          aria-label="Голосовое поздравление Никиты для Алины"
-          data-personal-message
-          onPlay={(event) => {
-            pauseOtherPersonalMedia(event.currentTarget);
-            onPlaybackChange(true);
-          }}
-          onPause={() => onPlaybackChange(false)}
-          onEnded={() => onPlaybackChange(false)}
-          onError={() => onPlaybackChange(false)}
-        >
-          <a href={recording}>Открыть голосовое поздравление</a>
-        </audio>
+        <div className="voice-message-player">
+          <span className="voice-message-wave" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+            <i />
+          </span>
+          <audio
+            ref={player}
+            controls
+            preload="metadata"
+            src={recording}
+            aria-label="Голосовое поздравление Никиты для Алины"
+            data-personal-message
+            onPlay={(event) => {
+              pauseOtherPersonalMedia(event.currentTarget);
+              setPlaying(true);
+              setError(false);
+              onPlaybackChange(true);
+            }}
+            onPause={() => {
+              setPlaying(false);
+              onPlaybackChange(false);
+            }}
+            onEnded={() => {
+              setPlaying(false);
+              onPlaybackChange(false);
+            }}
+            onError={() => {
+              setPlaying(false);
+              setError(true);
+              onPlaybackChange(false);
+            }}
+          >
+            <a href={recording}>Открыть голосовое поздравление</a>
+          </audio>
+          <span className="voice-message-listen-note">
+            Устройся поудобнее, моя Алина. Я хочу сказать тебе кое-что важное ♡
+          </span>
+        </div>
       ) : (
         <div className="voice-message-placeholder">
           <span className="voice-message-wave" aria-hidden="true">
@@ -57,6 +99,12 @@ export function VoiceMessage({ onPlaybackChange }: VoiceMessageProps) {
           </span>
           <span>Здесь будет моё голосовое для тебя ♡</span>
         </div>
+      )}
+      {recording && error && (
+        <p className="voice-message-error" role="status">
+          Если запись не включилась,{' '}
+          <a href={recording}>открой моё голосовое отдельно ♡</a>
+        </p>
       )}
     </section>
   );
