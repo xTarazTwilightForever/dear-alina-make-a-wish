@@ -497,3 +497,24 @@
   font: 700 15px/1.5 var(--sans);
   white-space: nowrap;
 }
+
+.album-grid > .album-card-main {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: min(100%, 620px);
+}
+.album-grid .album-card-main .album-image {
+  width: min(100%, 340px);
+  margin-inline: auto;
+}
+.album-grid .album-card-main figcaption {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr) 24px;
+  align-items: start;
+}
+.album-grid .album-card-main figcaption > span:nth-child(2) {
+  text-align: center;
+}
+.album-grid .album-card-main .album-heart {
+  margin-left: 0;
+}
