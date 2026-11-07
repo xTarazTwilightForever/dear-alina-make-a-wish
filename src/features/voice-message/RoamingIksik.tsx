@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { CatCharacter } from '../../shared/characters/CatCharacter';
 import './roaming-iksik.css';
@@ -15,21 +15,14 @@ const phrases = [
 ] as const;
 type Point = { x: number; y: number };
 
+// Document coordinates keep the kitten at his place when the page scrolls.
 function viewport() {
   const view = window.visualViewport;
   return {
-    left: view?.offsetLeft ?? 0,
-    top: view?.offsetTop ?? 0,
+    left: window.scrollX + (view?.offsetLeft ?? 0),
+    top: window.scrollY + (view?.offsetTop ?? 0),
     width: view?.width ?? document.documentElement.clientWidth,
     height: view?.height ?? window.innerHeight,
-  };
-}
-function fit(point: Point): Point {
-  const v = viewport();
-  const bottom = v.top + Math.max(12, v.height - 116);
-  return {
-    x: Math.max(v.left + 12, Math.min(point.x, v.left + v.width - 92)),
-    y: Math.max(Math.min(v.top + 135, bottom), Math.min(point.y, bottom)),
   };
 }
 
@@ -37,162 +30,195 @@ export function RoamingIksik() {
   const dock = useRef<HTMLSpanElement>(null);
   const kitten = useRef<HTMLDivElement>(null);
   const flight = useRef<Animation | null>(null);
-  const phraseIndex = useRef(0);
+  const nextSide = useRef<'left' | 'right'>('left');
+  const [point, setPoint] = useState<Point | null>(null);
   const [visible, setVisible] = useState(false);
   const [resting, setResting] = useState(false);
-  const [point, setPoint] = useState<Point | null>(null);
+  const [moving, setMoving] = useState(false);
   const [phrase, setPhrase] = useState(0);
-  const [bubble, setBubble] = useState(true);
+  const [cycle, setCycle] = useState(0);
+  const [bounds, setBounds] = useState(viewport);
+  const placed = point !== null;
 
-  function dockPosition() {
+  useLayoutEffect(() => {
     const rect = dock.current?.getBoundingClientRect();
-    return fit({ x: rect?.left ?? 16, y: rect?.top ?? 160 });
-  }
+    if (rect)
+      setPoint({ x: rect.left + window.scrollX, y: rect.top + window.scrollY });
+  }, []);
 
-  function jump() {
-    setBubble(true);
-    phraseIndex.current = (phraseIndex.current + 1) % phrases.length;
-    setPhrase(phraseIndex.current);
+  useLayoutEffect(() => {
+    const node = kitten.current;
+    if (!placed || !node) return;
+    function updateVisibility() {
+      const rect = node!.getBoundingClientRect();
+      const v = viewport();
+      const left = rect.left + window.scrollX;
+      const top = rect.top + window.scrollY;
+      setBounds(v);
+      setVisible(
+        !document.hidden &&
+          left >= v.left &&
+          left + rect.width <= v.left + v.width &&
+          top >= v.top &&
+          top + rect.height <= v.top + v.height,
+      );
+    }
+    const observer = new IntersectionObserver(updateVisibility, {
+      threshold: [0, 0.5, 1],
+    });
+    observer.observe(node);
+    let frame = 0;
+    function scheduleVisibility() {
+      window.cancelAnimationFrame(frame);
+      frame = window.requestAnimationFrame(updateVisibility);
+    }
+    updateVisibility();
+    window.addEventListener('scroll', scheduleVisibility, true);
+    window.addEventListener('resize', scheduleVisibility);
+    window.visualViewport?.addEventListener('scroll', scheduleVisibility);
+    window.visualViewport?.addEventListener('resize', scheduleVisibility);
+    document.addEventListener('visibilitychange', updateVisibility);
+    return () => {
+      observer.disconnect();
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', scheduleVisibility, true);
+      window.removeEventListener('resize', scheduleVisibility);
+      window.visualViewport?.removeEventListener('scroll', scheduleVisibility);
+      window.visualViewport?.removeEventListener('resize', scheduleVisibility);
+      document.removeEventListener('visibilitychange', updateVisibility);
+    };
+  }, [placed]);
+
+  useLayoutEffect(() => {
+    if (!flight.current) return;
+    if (!visible || resting) flight.current.pause();
+    else if (flight.current.playState === 'paused') flight.current.play();
+  }, [visible, resting]);
+
+  function jump(manual = false) {
+    if (!visible || document.hidden || (resting && !manual)) return;
+    if (manual) setResting(false);
+    setCycle((value) => value + 1);
+    setPhrase((value) => (value + 1) % phrases.length);
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const node = kitten.current;
+    if (!node) return;
     const v = viewport();
     const obstacles = [
       ...document.querySelectorAll<HTMLElement>(
         '[data-personal-message], .ending-replay',
       ),
     ].map((element) => element.getBoundingClientRect());
-    let target = dockPosition();
-    for (let attempt = 0; attempt < 20; attempt++) {
-      const candidate = fit({
-        x: v.left + Math.random() * (v.width - 96),
-        y: v.top + 150 + Math.random() * Math.max(0, v.height - 280),
-      });
+    let target: Point | null = null;
+    if (v.height < 270 || v.width < 140) return;
+    for (let attempt = 0; attempt < 24; attempt++) {
+      const candidate = {
+        x:
+          nextSide.current === 'left'
+            ? v.left + 16 + Math.random() * 24
+            : v.left + v.width - 96 - Math.random() * 24,
+        y: v.top + 140 + Math.random() * (v.height - 260),
+      };
+      const x = candidate.x - window.scrollX;
+      const y = candidate.y - window.scrollY;
       if (
         !obstacles.some(
           (rect) =>
-            candidate.x - 70 < rect.right &&
-            candidate.x + 150 > rect.left &&
-            candidate.y - 115 < rect.bottom &&
-            candidate.y + 100 > rect.top,
+            x - 70 < rect.right &&
+            x + 150 > rect.left &&
+            y - 115 < rect.bottom &&
+            y + 100 > rect.top,
         )
       ) {
         target = candidate;
         break;
       }
     }
-    const rect = kitten.current?.getBoundingClientRect();
+    if (!target) return;
+    nextSide.current = nextSide.current === 'left' ? 'right' : 'left';
+    const rect = node.getBoundingClientRect();
+    const start = {
+      x: rect.left + window.scrollX,
+      y: rect.top + window.scrollY,
+    };
     flight.current?.cancel();
     setPoint(target);
-    if (kitten.current && rect) {
-      setBubble(false);
-      flight.current = kitten.current.animate(
-        [
-          { transform: `translate(${rect.left}px, ${rect.top}px)` },
-          {
-            transform: `translate(${(rect.left + target.x) / 2}px, ${Math.max(v.top + 125, (rect.top + target.y) / 2 - 35)}px)`,
-          },
-          { transform: `translate(${target.x}px, ${target.y}px)` },
-        ],
-        { duration: 1050, easing: 'ease-in-out' },
-      );
-      flight.current.onfinish = () => setBubble(true);
-    }
+    setBounds(v);
+    setMoving(true);
+    const animation = node.animate(
+      [
+        { transform: `translate(${start.x}px, ${start.y}px)` },
+        {
+          transform: `translate(${(start.x + target.x) / 2}px, ${Math.max(v.top + 8, (start.y + target.y) / 2 - 35)}px)`,
+        },
+        { transform: `translate(${target.x}px, ${target.y}px)` },
+      ],
+      { duration: 1150, easing: 'ease-in-out' },
+    );
+    flight.current = animation;
+    animation.onfinish = () => {
+      if (flight.current === animation) {
+        flight.current = null;
+        setMoving(false);
+      }
+    };
   }
   const jumpRef = useRef(jump);
   jumpRef.current = jump;
 
-  useLayoutEffect(() => {
-    const section = dock.current?.closest('.voice-message');
-    if (!section) return;
-    const observer = new IntersectionObserver(([entry]) =>
-      setVisible(entry.isIntersecting && !document.hidden),
-    );
-    observer.observe(section);
-    function onVisibility() {
-      const rect = section!.getBoundingClientRect();
-      setVisible(
-        !document.hidden && rect.bottom > 0 && rect.top < window.innerHeight,
-      );
-    }
-    document.addEventListener('visibilitychange', onVisibility);
-    return () => {
-      observer.disconnect();
-      document.removeEventListener('visibilitychange', onVisibility);
-    };
-  }, []);
-
-  useLayoutEffect(() => {
-    if (!visible) {
-      flight.current?.cancel();
+  useEffect(() => {
+    if (
+      !visible ||
+      resting ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    )
       return;
-    }
-    setPoint((current) =>
-      resting ? dockPosition() : fit(current ?? dockPosition()),
-    );
-    setBubble(!resting);
-    function reposition() {
-      flight.current?.cancel();
-      setBubble(!resting);
-      setPoint((current) =>
-        resting ? dockPosition() : fit(current ?? dockPosition()),
-      );
-    }
-    const timer =
-      !resting && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        ? window.setInterval(() => jumpRef.current(), 10_000)
-        : undefined;
-    window.addEventListener('scroll', reposition, true);
-    window.addEventListener('resize', reposition);
-    window.visualViewport?.addEventListener('resize', reposition);
-    window.visualViewport?.addEventListener('scroll', reposition);
-    return () => {
-      window.clearInterval(timer);
-      flight.current?.cancel();
-      window.removeEventListener('scroll', reposition, true);
-      window.removeEventListener('resize', reposition);
-      window.visualViewport?.removeEventListener('resize', reposition);
-      window.visualViewport?.removeEventListener('scroll', reposition);
-    };
-  }, [visible, resting]);
+    const timer = window.setTimeout(() => jumpRef.current(), 10_000);
+    return () => window.clearTimeout(timer);
+  }, [visible, resting, cycle]);
+  useEffect(() => () => flight.current?.cancel(), []);
 
-  const v = visible ? viewport() : null;
-  const bubbleWidth = Math.min(240, (v?.width ?? 264) - 24);
-  const bubbleLeft =
-    point && v
-      ? Math.max(
-          v.left + 12,
-          Math.min(
-            point.x + 40 - bubbleWidth / 2,
-            v.left + v.width - bubbleWidth - 12,
-          ),
-        ) - point.x
-      : 0;
+  function rest() {
+    const rect = kitten.current?.getBoundingClientRect();
+    if (rect)
+      setPoint({ x: rect.left + window.scrollX, y: rect.top + window.scrollY });
+    flight.current?.cancel();
+    flight.current = null;
+    setMoving(false);
+    setResting(true);
+  }
+
+  const bubbleWidth = Math.min(240, bounds.width - 24);
+  const bubbleLeft = point
+    ? Math.max(
+        bounds.left + 12,
+        Math.min(
+          point.x + 40 - bubbleWidth / 2,
+          bounds.left + bounds.width - bubbleWidth - 12,
+        ),
+      ) - point.x
+    : 0;
+  const bubbleFits = point && point.y - 125 >= bounds.top;
   return (
     <>
       <span ref={dock} className="iksik-voice-dock" aria-hidden="true">
-        {!visible && <CatCharacter character="white" />}
+        {!placed && <CatCharacter character="white" />}
       </span>
-      {visible &&
-        point &&
+      {point &&
         createPortal(
           <div
             ref={kitten}
             className="roaming-iksik"
             style={{ transform: `translate(${point.x}px, ${point.y}px)` }}
           >
-            {bubble && (
+            {visible && !resting && !moving && bubbleFits && (
               <aside
                 className="roaming-iksik-bubble"
                 style={{ left: bubbleLeft, width: bubbleWidth }}
                 aria-label="Иксик говорит"
               >
                 <p>{phrases[phrase]}</p>
-                <button
-                  aria-label="Уложить зайку рядом с голосовым"
-                  onClick={() => {
-                    setResting(true);
-                    setBubble(false);
-                  }}
-                >
+                <button aria-label="Дать зайке отдохнуть" onClick={rest}>
                   ×
                 </button>
               </aside>
@@ -200,10 +226,7 @@ export function RoamingIksik() {
             <button
               className="roaming-iksik-touch"
               aria-label="Погладить Иксика, своего зайку"
-              onClick={() => {
-                setResting(false);
-                jump();
-              }}
+              onClick={() => jump(true)}
             >
               <CatCharacter character="white" />
             </button>
