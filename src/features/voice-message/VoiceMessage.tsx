@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import './voice-message.css';
+import { CatCharacter } from '../../shared/characters/CatCharacter';
 import { pauseOtherPersonalMedia } from '../../shared/lib/pauseOtherPersonalMedia';
 
 const recordings = import.meta.glob<string>(
@@ -44,14 +45,8 @@ export function VoiceMessage({ onPlaybackChange }: VoiceMessageProps) {
       </p>
       {recording ? (
         <div className="voice-message-player">
-          <span className="voice-message-wave" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-            <i />
-            <i />
-            <i />
-            <i />
+          <span className="voice-message-kitten" aria-hidden="true">
+            <CatCharacter character="white" />
           </span>
           <audio
             ref={player}
@@ -88,14 +83,8 @@ export function VoiceMessage({ onPlaybackChange }: VoiceMessageProps) {
         </div>
       ) : (
         <div className="voice-message-placeholder">
-          <span className="voice-message-wave" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-            <i />
-            <i />
-            <i />
-            <i />
+          <span className="voice-message-kitten" aria-hidden="true">
+            <CatCharacter character="white" />
           </span>
           <span>Здесь будет моё голосовое для тебя ♡</span>
         </div>

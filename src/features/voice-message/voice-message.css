@@ -122,3 +122,28 @@
     animation: none;
   }
 }
+
+.voice-message-kitten {
+  display: block;
+  width: 88px;
+  height: 106px;
+  margin: 0 auto 20px;
+  transform-origin: 50% 100%;
+}
+.voice-message-playing .voice-message-kitten {
+  animation: voice-kitten-listening 3.2s ease-in-out infinite;
+}
+@keyframes voice-kitten-listening {
+  0%,
+  100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg) translateY(-3px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .voice-message-playing .voice-message-kitten {
+    animation: none;
+  }
+}
